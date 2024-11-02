@@ -9,7 +9,6 @@ const StyledPlaylist = styled.footer`
 const StyledSection = styled.section`
     flex: 1;
 `
-
 interface PlaylistProps {
 
 }

@@ -15,8 +15,12 @@ const StyledAppLayout = styled.div`
     &>*:nth-child(1) {
         grid-column: 1 / span 3;
     }
+    &>*:nth-child(2) {
+        overflow-y: auto;
+    }
     &>*:nth-child(3) {
         grid-column: 2 / span 2;
+        overflow-y: auto;
     }
     &>*:nth-child(4) {
         grid-column: 1 / span 3;

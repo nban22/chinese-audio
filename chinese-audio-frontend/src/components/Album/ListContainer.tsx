@@ -50,6 +50,16 @@ const ListContainer: React.FC<ListContainerProps> = (props) => {
             <AlbumItem />
             <AlbumItem />
             <AlbumItem />
+            <AlbumItem />
+            <AlbumItem />
+            <AlbumItem />
+            <AlbumItem />
+            <AlbumItem />
+            <AlbumItem />
+            <AlbumItem />
+            <AlbumItem />
+            <AlbumItem />
+            <AlbumItem />
         </StyledListContainer>
     );
 };

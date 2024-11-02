@@ -59,6 +59,7 @@ body::-webkit-scrollbar-thumb {
 } */
 
 
+/* WebKit browsers (Chrome, Safari, etc.) */
 *::-webkit-scrollbar {
     width: 10px;
 }
@@ -66,7 +67,7 @@ body::-webkit-scrollbar-thumb {
     background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #585858;
     border-radius: 10px; /* Round the scrollbar thumb */
     visibility: hidden;
     transition: all 200ms ease;
@@ -77,4 +78,13 @@ body::-webkit-scrollbar-thumb {
 *::-webkit-scrollbar-thumb:hover {
     background: #555;
     visibility: visible;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin; /* Sets the scrollbar width */
+    scrollbar-color: #888 transparent; /* Thumb color and track color */
+}
+*:hover {
+    scrollbar-color: #555 transparent; /* Changes the thumb color on hover */
 }

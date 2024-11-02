@@ -1,14 +1,14 @@
 import styled from 'styled-components';
+import PlaylistHeader from './PlaylistHeader';
 
-const StyledPlaylist = styled.footer`
+const StyledPlaylist = styled.div`
     display: flex;
     flex-direction: row;
-    
 `;
 
-const StyledSection = styled.section`
-    flex: 1;
-`
+
+
+
 interface PlaylistProps {
 
 }
@@ -17,9 +17,8 @@ interface PlaylistProps {
 const Playlist: React.FC<PlaylistProps> = (props) => {
     return (
         <StyledPlaylist>
-            <StyledSection>First</StyledSection>
-            <StyledSection>Second</StyledSection>
-            <StyledSection>Third</StyledSection>
+            <PlaylistHeader />
+            
         </StyledPlaylist>
     );
 };

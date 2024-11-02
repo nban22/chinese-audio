@@ -15,6 +15,7 @@ const AlbumTitle = styled.h2`
     margin-block-end: 10px;
     margin-inline-start: 10px;
     display: inline-block;
+    cursor: pointer;
     &:hover {
         text-decoration: underline;
     }
@@ -28,6 +29,7 @@ const ShowAllButton = styled.button`
     align-self: flex-end;
     margin-block-end: 10px;
     font-weight: bold;
+    cursor: pointer;
     &:hover {
         text-decoration: underline;
     }
@@ -41,10 +43,8 @@ interface AlbumListProps {
 }
 
 const AlbumList: React.FC<AlbumListProps> = (props) => {
-
     return (
         <StyledAlbumList>
-
             <ListHeaderContainer>
                 <AlbumTitle>
                     Made for Nguyễn Bá An

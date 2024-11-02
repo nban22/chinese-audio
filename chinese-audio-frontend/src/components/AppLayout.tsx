@@ -31,7 +31,7 @@ const StyledAppLayout = styled.div`
 const MainContainer  = styled.main`
     background-color: #111;
     border-radius: 10px;
-    padding-inline: 10px;
+    
 `;
 
 

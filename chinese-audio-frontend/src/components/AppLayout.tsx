@@ -28,6 +28,12 @@ const StyledAppLayout = styled.div`
 `;
 
 
+const MainContainer  = styled.main`
+    background-color: #111;
+    border-radius: 10px;
+    padding-inline: 10px;
+`;
+
 
 interface AppLayoutProps {
     children?: React.ReactNode;
@@ -38,7 +44,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         <StyledAppLayout>
             <Header />
             <Sidebar />
-            {props.children}
+            <MainContainer>{props.children}</MainContainer>
             <MusicPlayer />
         </StyledAppLayout>
     );

@@ -1,13 +1,9 @@
 import styled from "styled-components";
 import SidebarHeader from "./SidebarHeader";
 import SidebarContent from "./SidebarContent";
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
-interface SidebarProps {
-    $width?: number;
-    $minWidth?: number;
-    $maxWidth?: number;
-}
+
 
 const SidebarWrapper = styled.div.attrs<SidebarProps>((props) => ({
     style: {
@@ -19,7 +15,7 @@ const SidebarWrapper = styled.div.attrs<SidebarProps>((props) => ({
     display: flex;
     position: relative;
     overflow: hidden;
-    margin-left: var(--panel-gap, 8px);
+    /* margin-left: var(--panel-gap, 8px); */
     transition: all 50ms linear;
 `;
 
@@ -51,10 +47,14 @@ const StyledResizeHandle = styled.div`
     }
 `;
 
-const Sidebar: React.FC = () => {
+interface SidebarProps extends React.HTMLProps<HTMLDivElement> {
+    [key: string]: any;
+}
+
+const Sidebar: React.FC<SidebarProps> = forwardRef<HTMLDivElement, SidebarProps>((props, ref) => {
     const [width, setWidth] = useState(220);
-    const isResizing = useRef(false);
-    const resizableBox = useRef<HTMLDivElement>(null);
+    // const isResizing = useRef(false);
+    // const resizableBox = useRef<HTMLDivElement>(null);
 
     const collapsedWidth = 60;
     const expandedWidth = 550;
@@ -77,54 +77,54 @@ const Sidebar: React.FC = () => {
         setWidth(width === collapsedWidth ? idleWidth : collapsedWidth);
     };
 
-    const handleMouseDown = (e: React.MouseEvent) => {
-        isResizing.current = true;
-        e.preventDefault(); // Prevent text selection
-    };
+    // const handleMouseDown = (e: React.MouseEvent) => {
+    //     isResizing.current = true;
+    //     e.preventDefault(); // Prevent text selection
+    // };
 
-    const handleMouseMove = (e: MouseEvent) => {
-        if (!isResizing.current) return;
-        const box = resizableBox.current;
-        if (box) {
-            const newWidth = Math.max(
-                e.clientX - box.getBoundingClientRect().left,
-                220
-            );
-            setWidth(Math.min(newWidth, 500));
-        }
-    };
+    // const handleMouseMove = (e: MouseEvent) => {
+    //     if (!isResizing.current) return;
+    //     const box = resizableBox.current;
+    //     if (box) {
+    //         const newWidth = Math.max(
+    //             e.clientX - box.getBoundingClientRect().left,
+    //             220
+    //         );
+    //         setWidth(Math.min(newWidth, 500));
+    //     }
+    // };
 
-    const handleMouseUp = () => {
-        isResizing.current = false;
-    };
+    // const handleMouseUp = () => {
+    //     isResizing.current = false;
+    // };
 
-    useEffect(() => {
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseup", handleMouseUp);
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseup", handleMouseUp);
-        };
-    }, []);
-
+    // useEffect(() => {
+    //     window.addEventListener("mousemove", handleMouseMove);
+    //     window.addEventListener("mouseup", handleMouseUp);
+    //     return () => {
+    //         window.removeEventListener("mousemove", handleMouseMove);
+    //         window.removeEventListener("mouseup", handleMouseUp);
+    //     };
+    // }, []);
     return (
-        <SidebarWrapper
-            $width={width}
-            $minWidth={collapsedWidth}
-            $maxWidth={expandedWidth}
-        >
-            <StyledSidebar ref={resizableBox}>
+        // <SidebarWrapper
+                // $width={width}
+                // $minWidth={collapsedWidth}
+                // $maxWidth={expandedWidth}
+                // ref={ref}
+            
+        // >
+            <StyledSidebar ref={ref}>
                 <SidebarHeader
                     isExpanded={isExpanded.current}
                     onCollapseToggle={handleCollapse}
                     onExpandToggle={handleExpand}
-                    
                 />
                 <SidebarContent />
             </StyledSidebar>
-            <StyledResizeHandle onMouseDown={handleMouseDown} />
-        </SidebarWrapper>
+        //     <StyledResizeHandle onMouseDown={handleMouseDown} />
+        // </SidebarWrapper>
     );
-};
+} );
 
 export default Sidebar;

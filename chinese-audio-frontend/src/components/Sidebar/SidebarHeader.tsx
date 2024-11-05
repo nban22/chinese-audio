@@ -54,7 +54,7 @@ interface SidebarHeaderProps {
 }
 
 const SidebarHeader: React.FC<SidebarHeaderProps> = (props) => {
-    console.log("isExpanded props: ", props.isExpanded);
+
     
     return (
         <StyledSidebarHeader>

@@ -5,19 +5,19 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 
 
 
-const SidebarWrapper = styled.div.attrs<SidebarProps>((props) => ({
-    style: {
-        width: `${props.$width || 220}px`,
-        minWidth: `${props.$minWidth || 60}px`,
-        maxWidth: `${props.$maxWidth || 550}px`,
-    },
-}))<SidebarProps>`
-    display: flex;
-    position: relative;
-    overflow: hidden;
-    /* margin-left: var(--panel-gap, 8px); */
-    transition: all 50ms linear;
-`;
+// const SidebarWrapper = styled.div.attrs<SidebarProps>((props) => ({
+//     style: {
+//         width: `${props.$width || 220}px`,
+//         minWidth: `${props.$minWidth || 60}px`,
+//         maxWidth: `${props.$maxWidth || 550}px`,
+//     },
+// }))<SidebarProps>`
+//     display: flex;
+//     position: relative;
+//     overflow: hidden;
+//     /* margin-left: var(--panel-gap, 8px); */
+//     transition: all 50ms linear;
+// `;
 
 const StyledSidebar = styled.div`
     background-color: #121212;
@@ -31,31 +31,12 @@ const StyledSidebar = styled.div`
     grid-template-rows: 60px 1fr;
 `;
 
-const StyledResizeHandle = styled.div`
-    position: absolute;
-    width: 8px;
-    height: 100%;
-    background-color: #ffffff1f;
-    cursor: ew-resize;
-    right: -4px;
-    top: 0;
-    z-index: 1;
-    opacity: 0;
-
-    &:hover {
-        opacity: 1;
-    }
-`;
-
 interface SidebarProps extends React.HTMLProps<HTMLDivElement> {
     [key: string]: any;
 }
 
 const Sidebar: React.FC<SidebarProps> = forwardRef<HTMLDivElement, SidebarProps>((props, ref) => {
     const [width, setWidth] = useState(220);
-    // const isResizing = useRef(false);
-    // const resizableBox = useRef<HTMLDivElement>(null);
-
     const collapsedWidth = 60;
     const expandedWidth = 550;
     const idleWidth = 220;
@@ -76,44 +57,7 @@ const Sidebar: React.FC<SidebarProps> = forwardRef<HTMLDivElement, SidebarProps>
     const handleCollapse = () => {
         setWidth(width === collapsedWidth ? idleWidth : collapsedWidth);
     };
-
-    // const handleMouseDown = (e: React.MouseEvent) => {
-    //     isResizing.current = true;
-    //     e.preventDefault(); // Prevent text selection
-    // };
-
-    // const handleMouseMove = (e: MouseEvent) => {
-    //     if (!isResizing.current) return;
-    //     const box = resizableBox.current;
-    //     if (box) {
-    //         const newWidth = Math.max(
-    //             e.clientX - box.getBoundingClientRect().left,
-    //             220
-    //         );
-    //         setWidth(Math.min(newWidth, 500));
-    //     }
-    // };
-
-    // const handleMouseUp = () => {
-    //     isResizing.current = false;
-    // };
-
-    // useEffect(() => {
-    //     window.addEventListener("mousemove", handleMouseMove);
-    //     window.addEventListener("mouseup", handleMouseUp);
-    //     return () => {
-    //         window.removeEventListener("mousemove", handleMouseMove);
-    //         window.removeEventListener("mouseup", handleMouseUp);
-    //     };
-    // }, []);
     return (
-        // <SidebarWrapper
-                // $width={width}
-                // $minWidth={collapsedWidth}
-                // $maxWidth={expandedWidth}
-                // ref={ref}
-            
-        // >
             <StyledSidebar ref={ref}>
                 <SidebarHeader
                     isExpanded={isExpanded.current}
@@ -122,8 +66,6 @@ const Sidebar: React.FC<SidebarProps> = forwardRef<HTMLDivElement, SidebarProps>
                 />
                 <SidebarContent />
             </StyledSidebar>
-        //     <StyledResizeHandle onMouseDown={handleMouseDown} />
-        // </SidebarWrapper>
     );
 } );
 

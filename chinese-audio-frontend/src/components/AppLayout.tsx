@@ -13,11 +13,8 @@ const StyledAppLayout = styled.div.attrs<{ $columnSizes: string }>((props) => ({
     background-color: #000000;
     display: grid;
     grid-template-rows: auto 1fr auto;
-
     color: #ffffff;
-    /* column-gap: calc(var(--panel-gap, 8px) / 2); */
     padding-inline: 10px;
-
     & > *:nth-child(1) {
         grid-column: 1 / span 4;
     }
@@ -32,7 +29,7 @@ const StyledAppLayout = styled.div.attrs<{ $columnSizes: string }>((props) => ({
         overflow-y: auto;
     }
     & > *:nth-child(5) {
-        grid-column: 1 / span 3;
+        grid-column: 1 / span 4;
     }
 `;
 
@@ -43,7 +40,7 @@ const ResizeHandle = styled.div`
     position: relative;
     border-radius: 10px;
     transition: all 100ms linear;
-    cursor: col-resize;
+    cursor: grab;
 
     &::before {
         border-radius: 10px;
@@ -77,33 +74,29 @@ interface AppLayoutProps {
 }
 
 const AppLayout: React.FC<AppLayoutProps> = (props) => {
-    const [columnSizes, setColumnSizes] = useState("auto auto 1fr auto");
+    const [columnSizes, setColumnSizes] = useState(
+        "minmax(220px, auto) auto minmax(300px, 1fr) auto"
+    );
     const [isDragging, setIsDragging] = useState(false);
-    // const [startX, setStartX] = useState(0);
     const startX = useRef(0);
-    // const [initialWidth, setInitialWidth] = useState(0);
     const sidebarWidth = useRef(0);
     const sidebarRef = useRef<HTMLDivElement>(null);
 
     const handleMouseMove = useCallback((e: MouseEvent) => {
-        // console.log("MOVE");
         const diff = e.clientX - startX.current;
-        console.log("diff", diff);
-        console.log("initialWidth ", sidebarWidth.current);
 
-        setColumnSizes(`${sidebarWidth.current + diff}px auto 1fr auto`);
+        setColumnSizes(
+            `minmax(220px, ${sidebarWidth.current + diff}px) auto minmax(300px, 1fr) auto`
+        );
     }, []);
 
     const handleMouseUp = useCallback(() => {
-        // console.log("UP");
         setIsDragging(false);
         window.removeEventListener("mousemove", handleMouseMove);
         console.log("remove mousemove");
     }, []);
 
     const resizeHandleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-        // console.log("MouseDown");
-
         setIsDragging(true);
         startX.current = e.clientX;
         window.addEventListener("mousemove", handleMouseMove);
@@ -112,35 +105,10 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
 
     useEffect(() => {
         if (isDragging === false) {
+            sidebarWidth.current = sidebarRef.current?.getBoundingClientRect().width || 0;
             window.removeEventListener("mouseup", handleMouseUp);
         }
-        // console.log("remove mouseup");
     }, [isDragging]);
-
-    // useEffect(() => {
-    //     const resizeObserver = new ResizeObserver((entries) => {
-    //         if (entries.length > 0) {
-    //             const sidebarWidth = entries[0].contentRect.width;
-    //             setInitialWidth(sidebarWidth);
-    //             console.log("sidebarWidth ", sidebarWidth);
-    //         }
-    //     });
-    //     if (sidebarRef.current) {
-    //         resizeObserver.observe(sidebarRef.current);
-    //     }
-    //     return () => {
-    //         resizeObserver.disconnect();
-    //     };
-    // }, []);
-
-    useEffect(() => {
-        if (isDragging === false) {
-            sidebarWidth.current = sidebarRef.current?.getBoundingClientRect().width || 0;
-            console.log("set sidebar width");
-            
-        }
-    }, [isDragging]);
-
     return (
         <StyledAppLayout $columnSizes={columnSizes}>
             <Header />

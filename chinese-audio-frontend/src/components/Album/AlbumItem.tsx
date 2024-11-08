@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import IconPlayCircle from "../../icons/IconPlayCircle";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
 
 const StyledAlbumItem = styled.div`
     padding: 10px;
     width: 100%;
     height: fit-content;
     border-radius: 4px;
+    cursor: pointer;
     &:hover, &:active {
         background-color: #222222bc;
     }
@@ -83,8 +85,15 @@ const DescriptionText = styled.p`
 interface AlbumItemProps {}
 
 const AlbumItem: React.FC<AlbumItemProps> = (props) => {
+    const navigate = useNavigate();
+
     return (
-        <StyledAlbumItem>
+        <StyledAlbumItem onClick={() => {
+            console.log("clicked");
+            navigate("/albums/id");
+            
+        }}>
+            
             <AvatarContainer className="avatar-container">
                 <img src="https://placehold.co/600x400" alt="placeholder" />
                 <IconPlayCircle className="play-icon"

@@ -10,7 +10,7 @@ const StyledPlaylistHeader = styled.header.attrs<{ $containerWidth: number }>((p
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-image: linear-gradient(to top right, #081029df -20%, #2e3c73e1 200%);
+    background-image: linear-gradient(to top right, #466cb4df -20%, #2734697a 200%);
 `;
 
 const AlbumAvatar = styled.div`

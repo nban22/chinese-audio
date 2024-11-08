@@ -1,15 +1,14 @@
-import styled from 'styled-components';
-import AlbumItem from './AlbumItem';
-import ListContainer from './ListContainer';
+import styled from "styled-components";
+import AlbumItem from "./AlbumItem";
+import ListContainer from "./ListContainer";
+import { useNavigate } from "react-router-dom";
 
-const StyledAlbumList = styled.div`
-    
-`;
+const StyledAlbumList = styled.div``;
 
 const ListHeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
-`
+`;
 
 const AlbumTitle = styled.h2`
     margin-block-end: 10px;
@@ -19,7 +18,7 @@ const AlbumTitle = styled.h2`
     &:hover {
         text-decoration: underline;
     }
-`
+`;
 
 const ShowAllButton = styled.button`
     background-color: transparent;
@@ -33,27 +32,24 @@ const ShowAllButton = styled.button`
     &:hover {
         text-decoration: underline;
     }
-
-`
-
-
+`;
 
 interface AlbumListProps {
-    
+    showAll?: boolean;
 }
 
-const AlbumList: React.FC<AlbumListProps> = (props) => {
+const AlbumList: React.FC<AlbumListProps> = ({ showAll = false }, props) => {
+    const navigate = useNavigate();
+    const handleShowAll = () => {
+        navigate("/albums-list/id");
+    };
     return (
         <StyledAlbumList>
             <ListHeaderContainer>
-                <AlbumTitle>
-                    Made for Nguyễn Bá An
-                </AlbumTitle>
-                <ShowAllButton>
-                    Show all
-                </ShowAllButton>
+                <AlbumTitle onClick={handleShowAll}>Made for Nguyễn Bá An</AlbumTitle>
+                {showAll ? "" : <ShowAllButton onClick={handleShowAll}>Show all</ShowAllButton>}
             </ListHeaderContainer>
-            <ListContainer />
+            <ListContainer showAll={showAll} />
         </StyledAlbumList>
     );
 };

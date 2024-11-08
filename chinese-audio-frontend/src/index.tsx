@@ -8,6 +8,9 @@ import Playlist from "./components/Playlist/Playlist";
 import HomePage from "./pages/HomePage";
 import AlbumListDetailPage from "./pages/AlbumListDetailPage";
 import AlbumDetailPage from "./pages/AlbumDetailPage";
+import AuthPage from "./pages/auth/AuthPage";
+import LoginContainer from "./pages/auth/LoginContainer";
+import SignupContainer from "./pages/auth/SignupContainer";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -31,6 +34,19 @@ const router = createBrowserRouter([
                 element: <AlbumDetailPage />
             },
 
+        ]
+    },
+    {
+        index: false,
+        element: <AuthPage />,
+        children: [
+            {
+                path: "/login",
+                element: <LoginContainer />
+            }, {
+                path: "/signup",
+                element: <SignupContainer />
+            }
         ]
     }
 ], {

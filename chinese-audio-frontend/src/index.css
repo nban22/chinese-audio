@@ -18,7 +18,7 @@ code {
 
 /* Tạo biến --vh để lưu chiều cao khắc phục lỗi trên mobile */
 :root {
-    --vh: 100vh;
+    --vh: 1vh;
     --primary-color: #007bff;
     --panel-gap: 8px;
 }

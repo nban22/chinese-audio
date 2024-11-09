@@ -3,7 +3,7 @@ import AlbumItem from "./AlbumItem";
 import ListContainer from "./ListContainer";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { AlbumAttributes } from "../../pages/AlbumListDetailPage";
+import { AlbumAttributes, AlbumListAttributes } from "../../pages/AlbumListDetailPage";
 
 const StyledAlbumList = styled.div``;
 
@@ -38,13 +38,12 @@ const ShowAllButton = styled.button`
 
 interface AlbumListProps {
     showAll?: boolean;
-    albumList?: AlbumAttributes[];
+    albumList?: AlbumListAttributes;
 }
 
 
-const AlbumList: React.FC<AlbumListProps> = ({ showAll = false, albumList=[] }, props) => {
-    const [albums, setAlbums] = useState<AlbumAttributes[]>([]);
-
+const AlbumList: React.FC<AlbumListProps> = ({ showAll = false, albumList}, props) => {
+    
     const navigate = useNavigate();
     const handleShowAll = () => {
         navigate("/albums-list/id");
@@ -52,10 +51,10 @@ const AlbumList: React.FC<AlbumListProps> = ({ showAll = false, albumList=[] }, 
     return (
         <StyledAlbumList>
             <ListHeaderContainer>
-                <AlbumTitle onClick={handleShowAll}>Made for Nguyễn Bá An</AlbumTitle>
+                <AlbumTitle onClick={handleShowAll}>{albumList?.title}</AlbumTitle>
                 {showAll ? "" : <ShowAllButton onClick={handleShowAll}>Show all</ShowAllButton>}
             </ListHeaderContainer>
-            <ListContainer showAll={showAll}  />
+            <ListContainer showAll={showAll} albums={albumList?.albums} />
         </StyledAlbumList>
     );
 };

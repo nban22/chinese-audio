@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       avatar: {
-        type: Sequelize.BLOB,
+        type: Sequelize.TEXT,
         defaultValue: null
       },
       releaseDate: {

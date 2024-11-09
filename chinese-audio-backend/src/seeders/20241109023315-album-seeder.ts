@@ -21,6 +21,7 @@ module.exports = {
         description: faker.lorem.sentence({min: 5, max: 20}),
         releaseDate: new Date(),
         isPublic: !!faker.number.int({min: 0, max: 1}),
+        avatar: faker.image.dataUri({type: 'svg-base64', width: 200, height: 200})
       })
     }
     await queryInterface.bulkInsert('Album', albums)

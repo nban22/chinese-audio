@@ -13,14 +13,14 @@ import AlbumList from "./albumlist";
 export interface AlbumAttributes {
     title: string;
     description: string;
-    avatar: any;
+    avatar: string;
     releaseDate: Date;
     isPublic: boolean;
 }
 class Album extends Model<AlbumAttributes> implements AlbumAttributes {
     title!: string;
     description!: string;
-    avatar!: any;
+    avatar!: string;
     releaseDate!: Date;
     isPublic!: boolean;
 
@@ -48,7 +48,7 @@ Album.init(
         },
         description: DataTypes.STRING,
         avatar: {
-            type: DataTypes.BLOB,
+            type: DataTypes.TEXT,
             defaultValue: null,
         },
         releaseDate: DataTypes.DATE,

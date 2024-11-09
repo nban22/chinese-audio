@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import AlbumItem from "./AlbumItem";
 import { MouseEvent, useEffect, useRef, useState } from "react";
+import { AlbumAttributes } from "../../pages/AlbumListDetailPage";
 
 const StyledListContainer = styled.div<{ $length: number, $showAll: boolean }>`
     display: grid;
@@ -22,9 +23,10 @@ const StyledListContainer = styled.div<{ $length: number, $showAll: boolean }>`
 
 interface ListContainerProps {
     showAll?: boolean;
+    albums?: AlbumAttributes[];
 }
 
-const ListContainer: React.FC<ListContainerProps> = ({ showAll = false }, props) => {
+const ListContainer: React.FC<ListContainerProps> = ({ showAll = false, albums }, props) => {
     const containerTag = useRef<HTMLDivElement>(null);
     const [width, setWidth] = useState(0);
     const [length, setLength] = useState(0);
@@ -46,34 +48,11 @@ const ListContainer: React.FC<ListContainerProps> = ({ showAll = false }, props)
     }, [width]);
     return (
         <StyledListContainer ref={containerTag} $length={length} $showAll={showAll}>
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
-            <AlbumItem />
+            {albums?.map((album) => (
+                <AlbumItem key={album.id} album={album} />
+            ))}
+
+
         </StyledListContainer>
     );
 };

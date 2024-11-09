@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AlbumList from "./components/Album/AlbumList";
 import Playlist from "./components/Playlist/Playlist";
 import HomePage from "./pages/HomePage";
-import AlbumListDetailPage from "./pages/AlbumListDetailPage";
+import AlbumListDetailPage, { loader as abumListDetailLoader } from "./pages/AlbumListDetailPage";
 import AlbumDetailPage from "./pages/AlbumDetailPage";
 import AuthPage from "./pages/auth/AuthPage";
 import LoginContainer from "./pages/auth/LoginContainer";
@@ -27,7 +27,8 @@ const router = createBrowserRouter([
             }, 
             {
                 path: "albums-list/:id",
-                element: <AlbumListDetailPage />
+                element: <AlbumListDetailPage />,
+                loader: abumListDetailLoader
             },
             {
                 path: "albums/:id",

@@ -1,8 +1,7 @@
 const path = require("path");
 
 module.exports = {
-    env: process.env.NODE_ENV || "development",
-    config: path.resolve("sequelize.config.cjs"),
+    config: path.resolve("sequelize-cli.config.js"),
     "models-path": path.resolve("src", "models"),
     "seeders-path": path.resolve("src", "seeders"),
     "migrations-path": path.resolve("src", "migrations"),

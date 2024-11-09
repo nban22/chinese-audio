@@ -12,8 +12,8 @@ interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = (props) => {
     return (
         <StyledHomePage>
-            <AlbumList />
-            <AlbumList />
+            {/* <AlbumList /> */}
+            {/* <AlbumList /> */}
             <AlbumList />
         </StyledHomePage>
     );

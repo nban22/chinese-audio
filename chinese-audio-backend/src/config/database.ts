@@ -1,43 +1,32 @@
-import dotenv from "dotenv";
-dotenv.config({ path: ".env" });
 import { Dialect } from "sequelize";
 
-export interface ConfigDBArgs {
-    username: string;
-    password: string;
-    database: string;
-    host: string;
-    port: string;
-    dialect: Dialect;
-    dialectOptions?: any;
-}
+import dotenv from "dotenv";
+dotenv.config();
 
-
-const config: {[key: string]: ConfigDBArgs} = {
+const configDB = {
     development: {
-        username: process.env.MYSQL_USERNAME || "root",
-        password: process.env.MYSQL_PASSWORD || "",
-        database: process.env.MYSQL_DATABASE || "my_database",
-        host: process.env.MYSQL_HOST || "localhost",
-        port: process.env.MYSQL_PORT || "3306",
-        dialect: "mysql",
+        username: process.env.MYSQL_USERNAME,
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_DATABASE,
+        host: process.env.MYSQL_HOST,
+        dialect: "mysql" as Dialect,
+    },
+    test: {
+        username: process.env.MYSQL_USERNAME,
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_DATABASE,
+        host: process.env.MYSQL_HOST,
+        dialect: "mysql" as Dialect,
     },
     production: {
-        username: process.env.MYSQL_USERNAME || "root",
-        password: process.env.MYSQL_PASSWORD || "",
-        database: process.env.MYSQL_DATABASE || "express_mysql",
-        host: process.env.MYSQL_HOST || "",
-        port: process.env.MYSQL_PORT || "3306",
-        dialect: "mysql",
-        // dialectOptions: {
-        //     bigNumberStrings: true,
-        //     ssl: {
-        //         ca: fs.readFileSync(__dirname + "/mysql-ca-main.crt"),
-        //     },
-        // },
-    }
+        username: process.env.MYSQL_USERNAME,
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_DATABASE,
+        host: process.env.MYSQL_HOST,
+        dialect: "mysql" as Dialect,
+    },
 };
 
-console.log("Database Config:", config);
+export default configDB;
 
-export default config;
+exports.module = configDB;

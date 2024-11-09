@@ -53,10 +53,5 @@ Audio.sync();
 //   onDelete: "RESTRICT",
 //   foreignKeyConstraint: true,
 // });
-Audio.belongsToMany(Album, {
-  through: Album_Audio,
-  as: 'albums',
-  foreignKey: 'audioId',
-  otherKey: 'albumId'
-})
+
 export default Audio;

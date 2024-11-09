@@ -4,7 +4,9 @@ import { catchAsync } from "../utils/catchAsync";
 import AppError from "../utils/appError";
 
 export const getAlbums = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const albums = await Album.findAll();
+    const albums = await Album.findAll({
+   
+    });
 
     if (!albums) {
         return next(new AppError("Failed to get albums", 500));

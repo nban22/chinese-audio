@@ -7,6 +7,7 @@ import sequelize from './connection';
 import Album from './album';
 import Album_Audio from './album_audio';
 export interface AudioAttributes {
+  id?: string;
   title: string;
   description: string;
   file: any;
@@ -17,6 +18,7 @@ export interface AudioAttributes {
   fileName: string;
 }
 class Audio extends Model < AudioAttributes > implements AudioAttributes {
+  id?: string;
   title!: string;
   description!: string;
   file!: any;

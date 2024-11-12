@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import AlbumList from "../components/Album/AlbumList";
-import { useState } from "react";
-import { LoaderFunctionArgs, useLoaderData, useParams } from "react-router-dom";
-import { getAlbumList, getAlbumLists } from "../api/services/albumList";
+
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { getAlbumList } from "../services/albumList";
 
 const StyledAlbumListDetailPage = styled.div``;
 
@@ -17,13 +17,14 @@ export interface AlbumAttributes {
     isPublic: boolean;
 }
 export interface AlbumListAttributes {
+    id:string;
     title: string;
     albums: AlbumAttributes[];
 }
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
     const { id } = params;
-    return getAlbumList(id || "2");
+    return getAlbumList(id || '2');
 };
 
 const AlbumListDetailPage: React.FC<AlbumListDetailPageProps> = (props) => {

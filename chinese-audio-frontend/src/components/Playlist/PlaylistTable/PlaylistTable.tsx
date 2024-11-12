@@ -59,9 +59,11 @@ const TableRow = styled.tr`
     }
 `;
 
-interface PlaylistTableProps {}
+interface PlaylistTableProps {
+    audios?: any;
+}
 
-const PlaylistTable: React.FC<PlaylistTableProps> = (props) => {
+const PlaylistTable: React.FC<PlaylistTableProps> = ({audios, ...props}) => {
     return (
         <StyledPlaylistTable>
             <table>

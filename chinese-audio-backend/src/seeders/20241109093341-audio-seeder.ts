@@ -14,24 +14,21 @@ module.exports = {
          *   isBetaMember: false
          * }], {});
          */
-        const albumsToUpdate = [];
+        const audios = [];
+        for (let i = 0; i < 100; i++) {
+            audios.push({
+                title: faker.music.songName(),
+                description: faker.lorem.sentence(),
+                file: null,
+                playCount: faker.number.int({ min: 0, max: 1000 }),
 
-        // Giả sử bạn muốn cập nhật avatar cho tất cả các album (hoặc có thể lọc theo ID hoặc điều kiện khác)
-        for (let i = 1; i < 21; i++) {
-            albumsToUpdate.push({
-                avatar: `https://robohash.org/${i}?set=set${parseInt(`${(i+2)/4}`)}`, // Tạo ảnh base64 mới
-                id: i
+                likeCount: faker.number.int({ min: 0, max: 1000 }),
+                isPublic: faker.number.int({ min: 0, max: 1 }) === 1,
+                duration: faker.number.int({ min: 0, max: 1000 }),
+                fileName: faker.system.fileName({ extensionCount: 0 }) + ".mp3",
             });
         }
-
-        // Sử dụng queryInterface để cập nhật avatar
-        for (const album of albumsToUpdate) {
-          await queryInterface.bulkUpdate(
-              'Album', // Tên bảng cần cập nhật
-              { avatar: album.avatar }, // Cập nhật trường avatar
-              { id: album.id } // Điều kiện để cập nhật theo id
-          );
-      }
+        await queryInterface.bulkInsert("Audios", audios, {});
     },
 
     async down(queryInterface: QueryInterface, Sequelize: typeof DataTypes) {

@@ -46,7 +46,7 @@ const AlbumList: React.FC<AlbumListProps> = ({ showAll = false, albumList}, prop
     
     const navigate = useNavigate();
     const handleShowAll = () => {
-        navigate("/albums-list/id");
+        navigate(`/section/${albumList?.id}`);
     };
     return (
         <StyledAlbumList>

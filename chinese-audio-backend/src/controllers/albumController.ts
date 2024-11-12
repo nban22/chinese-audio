@@ -2,11 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import Album from "../models/album";
 import { catchAsync } from "../utils/catchAsync";
 import AppError from "../utils/appError";
+import AlbumList_Album from "../models/albumlist_album";
 
 export const getAlbums = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const albums = await Album.findAll({
-   
-    });
+    const albums = await Album.findAll({});
 
     if (!albums) {
         return next(new AppError("Failed to get albums", 500));
@@ -22,11 +21,11 @@ export const getAlbums = catchAsync(async (req: Request, res: Response, next: Ne
 
 export const createAlbum = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const { title, description, isPublic, avatar, releaseDate } = req.body;
-    
+
     if (!title) {
         return next(new AppError("Title is required", 400));
     }
-    
+
     const album = await Album.create({ title, description, isPublic, avatar, releaseDate });
 
     if (!album) {
@@ -41,8 +40,11 @@ export const createAlbum = catchAsync(async (req: Request, res: Response, next: 
     });
 });
 
-export const getAlbum = catchAsync(async (req: Request<{id:string}>, res: Response, next: NextFunction) => {
-    const album = await Album.findByPk(req.params.id);
+export const getAlbum = catchAsync(async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
+    const album = await Album.findByPk(req.params.id, {
+        include: ['audios'],
+    });
+    
     if (!album) {
         return next(new AppError("Album not found", 404));
     }
@@ -52,10 +54,10 @@ export const getAlbum = catchAsync(async (req: Request<{id:string}>, res: Respon
         data: {
             album,
         },
-    })
-})
+    });
+});
 
-export const updateAlbum = catchAsync(async (req: Request<{id:string}>, res: Response, next: NextFunction) => {
+export const updateAlbum = catchAsync(async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     const album = await Album.findByPk(req.params.id);
     if (!album) {
         return next(new AppError("Album not found", 404));
@@ -85,5 +87,5 @@ export const updateAlbum = catchAsync(async (req: Request<{id:string}>, res: Res
         data: {
             album,
         },
-    })
-})
+    });
+});

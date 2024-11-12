@@ -98,7 +98,7 @@ const AlbumItem: React.FC<AlbumItemProps> = ({ album, ...props }) => {
         <StyledAlbumItem
             onClick={() => {
                 console.log("clicked");
-                navigate("/albums/id");
+                navigate("/playlist/id");
             }}
         >
             <AvatarContainer className="avatar-container">

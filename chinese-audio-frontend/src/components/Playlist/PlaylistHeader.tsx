@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { AlbumProps } from "../../services/albumService";
 
 const StyledPlaylistHeader = styled.header.attrs<{ $containerWidth: number }>((props) => ({
     style: {
@@ -57,9 +58,11 @@ const PlaylistTitle = styled.h2.attrs<{ $containerWidth: number }>((props) => ({
     width: 100%;
 `;
 
-interface PlaylistHeaderProps {}
+interface PlaylistHeaderProps {
+    albumDetail?: AlbumProps;
+}
 
-const PlaylistHeader: React.FC<PlaylistHeaderProps> = (props) => {
+const PlaylistHeader: React.FC<PlaylistHeaderProps> = ({albumDetail, ...props}) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [width, setWidth] = useState(0);
 
@@ -76,13 +79,13 @@ const PlaylistHeader: React.FC<PlaylistHeaderProps> = (props) => {
     return (
         <StyledPlaylistHeader ref={containerRef} $containerWidth={width}>
             <AlbumAvatar>
-                <img src="https://placehold.co/600x400" alt="placeholder" />
+                <img src={albumDetail?.avatar} alt={albumDetail?.title} />
             </AlbumAvatar>
             <TitleContainer>
-                <div>Public playlist</div>
-                <PlaylistTitle $containerWidth={width}>Playlist Title</PlaylistTitle>
+                <div>{albumDetail?.isPublic ? 'Public playlist' : 'Private playlist'}</div>
+                <PlaylistTitle $containerWidth={width}>{albumDetail?.title}</PlaylistTitle>
                 <div>
-                    <p>Playlist Description</p>
+                    <p>{albumDetail?.description}</p>
                 </div>
             </TitleContainer>
         </StyledPlaylistHeader>

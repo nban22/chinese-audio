@@ -3,7 +3,7 @@ import AlbumItem from "./AlbumItem";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { AlbumAttributes } from "../../pages/AlbumListDetailPage";
 
-const StyledListContainer = styled.div<{ $length: number, $showAll: boolean }>`
+const StyledListContainer = styled.div<{ $length: number; $showAll: boolean }>`
     display: grid;
     grid-template-columns: repeat(${(props) => props.$length}, 1fr);
     & > * {
@@ -26,11 +26,11 @@ interface ListContainerProps {
     albums?: AlbumAttributes[];
 }
 
-const ListContainer: React.FC<ListContainerProps> = ({ showAll = false, albums }, props) => {
+const ListContainer: React.FC<ListContainerProps> = ({ showAll = false, albums, ...props }) => {
     const containerTag = useRef<HTMLDivElement>(null);
-    const [width, setWidth] = useState(0);
-    const [length, setLength] = useState(0);
-    const minItemWidth = 140;
+    const [width, setWidth] = useState<number>(document.body.clientWidth*0.8);
+    const minItemWidth = 180;
+    const [length, setLength] = useState(Math.floor(width / minItemWidth));
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver((entries) => {
@@ -44,15 +44,12 @@ const ListContainer: React.FC<ListContainerProps> = ({ showAll = false, albums }
 
     useEffect(() => {
         setLength(Math.floor(width / minItemWidth));
-        console.log(length);
     }, [width]);
     return (
         <StyledListContainer ref={containerTag} $length={length} $showAll={showAll}>
             {albums?.map((album) => (
                 <AlbumItem key={album.id} album={album} />
             ))}
-
-
         </StyledListContainer>
     );
 };

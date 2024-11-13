@@ -12,6 +12,5 @@ export interface AlbumListAttributes {
 
 export const getAllAlbumLists = async () => {
     const response = await axios.get('/api/v1/album-lists');
-    console.log(response.data);
     return response.data as {albumLists: AlbumAttributes[]}; 
 }

@@ -31,8 +31,6 @@ export const albumListLoader = async ({ params }: LoaderFunctionArgs) => {
 const AlbumListDetailPage: React.FC<AlbumListDetailPageProps> = (props) => {
     const albumList = useLoaderData() as AlbumListAttributes;
 
-    
-
     return (
         <StyledAlbumListDetailPage>
             <AlbumList showAll={true} albumList={albumList} />

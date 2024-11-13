@@ -18,7 +18,7 @@ interface PlaylistProps {
 }
 
 
-const Playlist: React.FC<PlaylistProps> = ({albumDetail, ...props}) => {
+const Playlist: React.FC<PlaylistProps> = ({albumDetail, ...props}) => {    
     return (
         <StyledPlaylist>
             <PlaylistHeader albumDetail={albumDetail} />

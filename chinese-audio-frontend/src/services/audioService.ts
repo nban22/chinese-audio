@@ -8,6 +8,8 @@ export interface AudioAttributes {
     isPublic: boolean;
     duration: string;
     fileName: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
 }
+
+

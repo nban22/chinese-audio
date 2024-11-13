@@ -19,7 +19,7 @@ const StyledAppLayout = styled.div.attrs<{ $columnSizes: string }>((props) => ({
         grid-column: 1 / span 4;
     }
     & > *:nth-child(2) {
-        overflow-y: auto;;
+        overflow-y: auto;
     }
     /* &>*:nth-child(3) {
 

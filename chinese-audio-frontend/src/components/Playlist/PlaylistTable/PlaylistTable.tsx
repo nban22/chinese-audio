@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import IconBxTime from "../../../icons/IconBxTime";
+import AudioItem from "./AudioItem";
+import { AudioAttributes } from "../../../services/audioService";
 
 const StyledPlaylistTable = styled.div`
     /* background-color: red; */
@@ -36,34 +38,13 @@ const TableHeader = styled.thead`
 const TableBody = styled.tbody`
 `
 
-const TableRow = styled.tr`
-    &:hover {
-        background-color: #66666647;
-    }
-    td {
-        font-size: 0.9rem;
-        padding-block: 0.5rem;
-        padding-right: 1rem;
-        text-align: left;
-    }
-    td:nth-child(1) {
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-        width: 40px;
-        text-align: right;
-    }
-    td:nth-last-child(1) {
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-        text-align: right;
-    }
-`;
+
 
 interface PlaylistTableProps {
-    audios?: any;
+    audios?: AudioAttributes[];
 }
 
-const PlaylistTable: React.FC<PlaylistTableProps> = ({audios, ...props}) => {
+const PlaylistTable: React.FC<PlaylistTableProps> = ({audios, ...props}) => {    
     return (
         <StyledPlaylistTable>
             <table>
@@ -71,7 +52,6 @@ const PlaylistTable: React.FC<PlaylistTableProps> = ({audios, ...props}) => {
                     <tr>
                         <th>#</th>
                         <th>Title</th>
-                        <th>Artist</th>
                         <th>Album</th>
                         <th>Date Added</th>
                         <th>
@@ -80,30 +60,10 @@ const PlaylistTable: React.FC<PlaylistTableProps> = ({audios, ...props}) => {
                     </tr>
                 </TableHeader>
                 <TableBody>
-                    <TableRow>
-                        <td>1</td>
-                        <td>The Lazy Song</td>
-                        <td>Test Artist</td>
-                        <td>Test Album</td>
-                        <td>Test Date Added</td>
-                        <td>3:21</td>
-                    </TableRow>
-                    <TableRow>
-                        <td>2</td>
-                        <td>The Lazy Song</td>
-                        <td>Test Artist</td>
-                        <td>Test Album</td>
-                        <td>Test Date Added</td>
-                        <td>3:21</td>
-                    </TableRow>
-                    <TableRow>
-                        <td>3 </td>
-                        <td>The Lazy Song</td>
-                        <td>Test Artist</td>
-                        <td>Test Album</td>
-                        <td>Test Date Added</td>
-                        <td>3:21</td>
-                    </TableRow>
+                    {audios?.map((audio, i) => (
+                        <AudioItem key={audio.id} audio={audio} index={i}/>
+                    ))}
+
                 </TableBody>
             </table>
         </StyledPlaylistTable>

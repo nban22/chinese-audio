@@ -76,6 +76,7 @@ const PlaylistHeader: React.FC<PlaylistHeaderProps> = ({albumDetail, ...props}) 
             resizeObserver.disconnect();
         };
     }, []);
+    
     return (
         <StyledPlaylistHeader ref={containerRef} $containerWidth={width}>
             <AlbumAvatar>

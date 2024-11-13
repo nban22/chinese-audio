@@ -15,7 +15,7 @@ export interface AlbumAttributes {
 
 
 export const getAlbum = async (id: string) => {
-    const response = (await axios.get(`/api/v1/albums/${id}`)) as ResponseProps;
-    response.isError = response.status !== 'success'
-    return response;
+    const response = await axios.get(`/api/v1/albums/${id}`);
+    const album = response.data.album;    
+    return album;
 };

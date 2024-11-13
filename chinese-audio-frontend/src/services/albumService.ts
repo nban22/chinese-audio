@@ -1,6 +1,7 @@
 import axios, { ResponseProps } from "../utils/axiosCustomize";
+import { AudioAttributes } from "./audioService";
 
-export interface AlbumProps {
+export interface AlbumAttributes {
     id: string;
     title: string;
     description: string;
@@ -9,17 +10,12 @@ export interface AlbumProps {
     isPublic: true;
     createdAt: Date;
     updatedAt: Date;
-    audios: [];
+    audios: AudioAttributes[];
 }
 
 
-
 export const getAlbum = async (id: string) => {
-    const response = (await axios.get("/api/v1/albums/" + id)) as ResponseProps;
-    if (response.status === 'success') {
-        response.isError = false;
-    } else {
-        response.isError = true;
-    }
+    const response = (await axios.get(`/api/v1/albums/${id}`)) as ResponseProps;
+    response.isError = response.status !== 'success'
     return response;
 };

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import AlbumItem from "./AlbumItem";
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import { AlbumAttributes } from "../../pages/AlbumListDetailPage";
+import { AlbumAttributes } from "../../services/albumService";
 
 const StyledListContainer = styled.div<{ $length: number; $showAll: boolean }>`
     display: grid;

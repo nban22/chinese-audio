@@ -61,31 +61,31 @@ export const deleteAudio = async (req: Request, res: Response, next: NextFunctio
         },
     });
     if (num === 0) {
-        return next(new AppError('Something wrong when delete a Audio', 400));
+        return next(new AppError("Something wrong when delete a Audio", 400));
     }
     res.status(200).json({
-        status: 'success',
+        status: "success",
         data: {
             audio: null,
-        }
-    })
+        },
+    });
 };
 export const updateAudio = async (req: Request, res: Response, next: NextFunction) => {
-    const {id} = req.params;
+    const { id } = req.params;
 
-    const {title, description, isPublic} = req.body;
-    
+    const { title, description, isPublic } = req.body;
+
     const audio = await Audio.findByPk(id);
     if (!audio) {
         return next(new AppError(`audio with id:${id} not found`, 400));
     }
-    
-    await audio.update({title, description, isPublic});
+
+    await audio.update({ title, description, isPublic });
 
     res.status(200).json({
-        status: 'success',
+        status: "success",
         data: {
-            audio: audio
-        }
-    })
+            audio: audio,
+        },
+    });
 };

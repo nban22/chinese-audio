@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { AlbumProps } from "../../services/albumService";
+import { AlbumAttributes } from "../../services/albumService";
 
 const StyledPlaylistHeader = styled.header.attrs<{ $containerWidth: number }>((props) => ({
     style: {
@@ -59,7 +59,7 @@ const PlaylistTitle = styled.h2.attrs<{ $containerWidth: number }>((props) => ({
 `;
 
 interface PlaylistHeaderProps {
-    albumDetail?: AlbumProps;
+    albumDetail?: AlbumAttributes;
 }
 
 const PlaylistHeader: React.FC<PlaylistHeaderProps> = ({albumDetail, ...props}) => {

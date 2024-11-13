@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import IconPlayCircle from "../../icons/IconPlayCircle";
 import { useNavigate } from "react-router-dom";
-import { AlbumAttributes } from "../../pages/AlbumListDetailPage";
 import { useEffect, useState } from "react";
+import { AlbumAttributes } from "../../services/albumService";
 
 const StyledAlbumItem = styled.div`
     padding: 10px;
@@ -89,9 +89,7 @@ const AlbumItem: React.FC<AlbumItemProps> = ({ album, ...props }) => {
         if (album?.avatar === null) {
             return;
         }
-        console.log(album?.avatar);
-
-        setAvatar(album?.avatar);
+        setAvatar(album?.avatar || null);
     }, []);
 
     return (

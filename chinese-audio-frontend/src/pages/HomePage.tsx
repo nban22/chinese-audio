@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import AlbumList from '../components/Album/AlbumList';
-import { getAlbumLists } from '../services/albumList';
-import { useLoaderData } from 'react-router-dom';
+import { getAllAlbumLists } from '../services/albumListService';
+import { LoaderFunction, useLoaderData } from 'react-router-dom';
 
 const StyledHomePage = styled.div`
     
@@ -11,8 +11,8 @@ interface HomePageProps {
 
 }
 
-export const loader = async () => {
-    const albumLists = await getAlbumLists();
+export const albumListsLoader: LoaderFunction = async () => {
+    const {albumLists} = await getAllAlbumLists();
     return { albumLists };
 }
 
@@ -25,8 +25,6 @@ const HomePage: React.FC<HomePageProps> = (props) => {
     
     return (
         <StyledHomePage>
-            {/* <AlbumList /> */}
-            {/* <AlbumList /> */}
             {albumLists?.map((albumList) => (
                 <AlbumList key={albumList.id} albumList={albumList} />
             ))}

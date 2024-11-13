@@ -1,5 +1,5 @@
 "use strict";
-import { faker } from "@faker-js/faker";
+import { fakerEN as faker } from "@faker-js/faker";
 import { QueryInterface, DataTypes } from "sequelize";
 
 /** @type {import('sequelize-cli').Migration} */
@@ -28,7 +28,7 @@ module.exports = {
                 fileName: faker.system.fileName({ extensionCount: 0 }) + ".mp3",
             });
         }
-        await queryInterface.bulkInsert("Audios", audios, {});
+        await queryInterface.bulkInsert("Audio", audios, {});
     },
 
     async down(queryInterface: QueryInterface, Sequelize: typeof DataTypes) {
@@ -38,5 +38,6 @@ module.exports = {
          * Example:
          * await queryInterface.bulkDelete('People', null, {});
          */
+        await queryInterface.bulkDelete('Audio', {}, {});
     },
 };

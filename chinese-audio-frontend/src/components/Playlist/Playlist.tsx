@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import PlaylistHeader from './PlaylistHeader';
 import PlaylistTable from './PlaylistTable/PlaylistTable';
 import PlaylistControl from './PlaylistControl';
-import { AlbumProps } from '../../services/albumService';
+import { AlbumAttributes } from '../../services/albumService';
 
 const StyledPlaylist = styled.div`
     display: flex;
@@ -14,7 +14,7 @@ const StyledPlaylistContent = styled.div`
 `
 
 interface PlaylistProps {
-    albumDetail?: AlbumProps;
+    albumDetail?: AlbumAttributes;
 }
 
 

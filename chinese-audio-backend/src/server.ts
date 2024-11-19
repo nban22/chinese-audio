@@ -9,8 +9,6 @@ import sequelizeConnection from "./models/connection";
 const port = parseInt(process.env.PORT || "3001");
 const hostname = process.env.HOST || "localhost";
 
-
-
 sequelizeConnection.sync().then(() => {
     const modelCount = Object.keys(sequelizeConnection.models).length;
     console.log(`Number of models synced: ${modelCount}`);

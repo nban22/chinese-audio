@@ -1,10 +1,4 @@
-import axios, {
-    AxiosError,
-    AxiosRequestConfig,
-    AxiosResponse,
-    InternalAxiosRequestConfig,
-    ResponseType,
-} from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export interface ResponseProps {
     isError: boolean;

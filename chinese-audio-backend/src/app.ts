@@ -8,15 +8,11 @@ import cors from "cors";
 import albumListRouter from "./routers/albumListRouter";
 import audioRouter from "./routers/audioRouter";
 
-
-
 const app = express();
 
 app.use(cors());
 
 app.use(express.json());
-
-
 
 app.use(morgan("dev"));
 

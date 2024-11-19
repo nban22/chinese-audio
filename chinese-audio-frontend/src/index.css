@@ -20,6 +20,7 @@ code {
 :root {
     --vh: 1vh;
     --primary-color: #007bff;
+    --white-color: #ffffffe9;
     --panel-gap: 8px;
 }
 

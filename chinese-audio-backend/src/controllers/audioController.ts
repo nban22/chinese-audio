@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import Audio from "../models/audio";
 import AppError from "../utils/appError";
+import { StatusCodes } from "http-status-codes";
+import { isRequired } from "../utils/isRequired";
+import { fetchUploadAudio, getAccessToken, uploadAudioToDropbox } from "../services/dropboxAPIServices";
 
 export const getAllAudios = async (req: Request, res: Response, next: NextFunction) => {
     const audios = await Audio.findAll();
@@ -27,28 +30,35 @@ export const getAudio = async (req: Request, res: Response, next: NextFunction) 
         },
     });
 };
-export const createAudio = async (req: Request, res: Response, next: NextFunction) => {
+export const uploadAudio = async (req: Request, res: Response, next: NextFunction) => {
     const { title, description, isPublic } = req.body;
-    if (!title) {
-        return next(new AppError("title is required", 400));
+
+    isRequired(title, "title", next);
+    isRequired(isPublic, "isPublic", next);
+    isRequired(req.file, "audio", next, "audio file is required, with fieldname is audio");
+
+    if (req.file!.mimetype !== "audio/mpeg" && req.file!.mimetype !== "audio/wav") {
+        return next(new AppError("Only .mp3 and .wav format allowed!", StatusCodes.BAD_REQUEST));
     }
-    if (!isPublic) {
-        return next(new AppError("isPublic is required", 400));
-    }
+    const { buffer, ...fileWithoutBuffer } = req.file as Express.Multer.File;
+
+    const dataFromDropboxAPI = await uploadAudioToDropbox(buffer);
+    console.log({dataFromDropboxAPI});
 
     const audio = await Audio.create({
         title: title,
         description: description,
         isPublic: isPublic,
-    } as Audio);
-
-    if (!audio) {
-        return next(new AppError("ST wrong with audio creation", 500));
-    }
+        originalFileName: fileWithoutBuffer.originalname,
+        fileName: fileWithoutBuffer.originalname,
+        size: fileWithoutBuffer.size || 0,
+        url: fileWithoutBuffer.path || "",
+    })
+    
     res.status(201).json({
         status: "success",
         data: {
-            auido: audio,
+            auido: fileWithoutBuffer,
         },
     });
 };

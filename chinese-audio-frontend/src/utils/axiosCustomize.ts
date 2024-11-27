@@ -25,7 +25,7 @@ interface JSendError {
 type JSendResponse<T> = JSendSuccess<T> | JSendFail | JSendError;
 
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_BACKEND_BASEURL,
+    baseURL: process.env.REACT_APP_BACKEND_BASEURL || "http://localhost:3000",
 });
 
 instance.interceptors.response.use(

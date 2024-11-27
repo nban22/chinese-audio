@@ -10,6 +10,7 @@ const configDB = {
         database: process.env.MYSQL_DATABASE,
         host: process.env.MYSQL_HOST,
         dialect: "mysql" as Dialect,
+        logging: false
     },
     test: {
         username: process.env.MYSQL_USERNAME,
@@ -24,6 +25,7 @@ const configDB = {
         database: process.env.MYSQL_DATABASE,
         host: process.env.MYSQL_HOST,
         dialect: "mysql" as Dialect,
+        logging: false
     },
 };
 

@@ -31,115 +31,25 @@ const SidebarContent: React.FC<SidebarContentProps> = (props) => {
             />
             <SidebarItem
                 avatar="https://via.placeholder.com/150"
-                title="John Doe"
+                title="Your Playlist"
                 type="Artist"
                 axtraInfo="5 songs"
             />
             <SidebarItem
                 avatar="https://via.placeholder.com/150"
-                title="John Doe"
+                title="Recently Played"
                 type="Artist"
                 axtraInfo="5 songs"
             />
             <SidebarItem
                 avatar="https://via.placeholder.com/150"
-                title="John Doe"
+                title="Liked Songs"
                 type="Artist"
                 axtraInfo="5 songs"
             />
             <SidebarItem
                 avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
+                title="Playlists 1 "
                 type="Artist"
                 axtraInfo="5 songs"
             />

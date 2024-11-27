@@ -1,47 +1,69 @@
-'use strict';
-import {
-  Model,
-  DataTypes
-} from 'sequelize';
-import sequelize from './connection';
-import Album from './album';
-import Album_Audio from './album_audio';
+"use strict";
+import { Model, DataTypes } from "sequelize";
+import sequelize from "./connection";
+import Album from "./album";
+import Album_Audio from "./album_audio";
 export interface AudioAttributes {
-  id?: string;
-  title: string;
-  description: string;
-  file: any;
-  playCount: number;
-  likeCount: number;
-  isPublic: boolean;
-  duration: number;
-  fileName: string;
+    id?: string;
+    title: string;
+    description: string;
+    playCount?: number;
+    likeCount?: number;
+    isPublic?: boolean;
+    duration?: number;
+    fileName: string;
+    size: number;
+    originalFileName: string;
+    url: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
-class Audio extends Model < AudioAttributes > implements AudioAttributes {
-  id?: string;
-  title!: string;
-  description!: string;
-  file!: any;
-  playCount!: number;
-  likeCount!: number;
-  isPublic!: boolean;
-  duration!: number;
-  fileName!: string;
+class Audio extends Model<AudioAttributes> implements AudioAttributes {
+    id!: string;
+    title!: string;
+    description!: string;
+    playCount!: number;
+    likeCount!: number;
+    isPublic!: boolean;
+    duration!: number;
+    fileName!: string;
+    size!: number;
+    originalFileName!: string;
+    url!: string;
+    createdAt!: Date;
+    updatedAt!: Date;
 }
-Audio.init({
-  title: DataTypes.STRING,
-  description: DataTypes.STRING,
-  file: DataTypes.BLOB('long'),
-  playCount: DataTypes.INTEGER,
-  likeCount: DataTypes.INTEGER,
-  isPublic: DataTypes.BOOLEAN,
-  duration: DataTypes.INTEGER,
-  fileName: DataTypes.STRING
-}, {
-  sequelize,
-  modelName: 'Audio',
-  freezeTableName: true
-});
+Audio.init(
+    {
+        title: DataTypes.STRING,
+        description: DataTypes.STRING,
+        playCount: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        likeCount: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        isPublic: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+        },
+        duration: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        fileName: DataTypes.STRING,
+        size: DataTypes.INTEGER,
+        originalFileName: DataTypes.STRING,
+        url: DataTypes.STRING,
+    },
+    {
+        sequelize,
+        modelName: "Audio",
+        freezeTableName: true,
+    }
+);
 
 Audio.sync();
 

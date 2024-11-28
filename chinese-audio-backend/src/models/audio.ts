@@ -1,8 +1,6 @@
 "use strict";
 import { Model, DataTypes } from "sequelize";
 import sequelize from "./connection";
-import Album from "./album";
-import Album_Audio from "./album_audio";
 export interface AudioAttributes {
     id?: string;
     title: string;

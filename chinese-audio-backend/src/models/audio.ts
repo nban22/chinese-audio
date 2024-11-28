@@ -17,6 +17,7 @@ export interface AudioAttributes {
     url: string;
     createdAt?: Date;
     updatedAt?: Date;
+    dropboxPath?: string;
 }
 class Audio extends Model<AudioAttributes> implements AudioAttributes {
     id!: string;
@@ -32,6 +33,7 @@ class Audio extends Model<AudioAttributes> implements AudioAttributes {
     url!: string;
     createdAt!: Date;
     updatedAt!: Date;
+    dropboxPath!: string;
 }
 Audio.init(
     {
@@ -57,6 +59,7 @@ Audio.init(
         size: DataTypes.INTEGER,
         originalFileName: DataTypes.STRING,
         url: DataTypes.STRING,
+        dropboxPath: DataTypes.STRING,
     },
     {
         sequelize,

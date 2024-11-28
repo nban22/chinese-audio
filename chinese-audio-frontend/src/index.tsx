@@ -38,7 +38,6 @@ const router = createBrowserRouter(
             ],
         },
         {
-            index: false,
             element: <AuthPage />,
             children: [
                 {

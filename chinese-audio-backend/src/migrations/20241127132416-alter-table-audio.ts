@@ -11,16 +11,18 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
 
-    await queryInterface.addColumn('Audio', 'size', {
-      type: DataTypes.INTEGER,
-    });
-    await queryInterface.addColumn('Audio', 'url', {
+    // await queryInterface.addColumn('Audio', 'size', {
+    //   type: DataTypes.INTEGER,
+    // });
+    // await queryInterface.addColumn('Audio', 'url', {
+    //   type: DataTypes.STRING,
+    // });
+    // await queryInterface.addColumn('Audio', 'originalFileName', {
+    //   type: DataTypes.STRING,
+    // });
+    await queryInterface.addColumn('Audio', 'dropboxPath', {
       type: DataTypes.STRING,
     });
-    await queryInterface.addColumn('Audio', 'originalFileName', {
-      type: DataTypes.STRING,
-    });
-
   },
 
   async down (queryInterface: QueryInterface, Sequelize: typeof DataTypes) {

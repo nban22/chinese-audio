@@ -32,7 +32,6 @@ export const getAudio = async (req: Request, res: Response, next: NextFunction) 
 };
 export const uploadAudio = async (req: Request, res: Response, next: NextFunction) => {
     const { title, description, isPublic } = req.body;
-
     isRequired(title, "title", next);
     isRequired(isPublic, "isPublic", next);
     isRequired(req.file, "audio", next, "audio file is required, with fieldname is audio");
@@ -42,7 +41,7 @@ export const uploadAudio = async (req: Request, res: Response, next: NextFunctio
     }
     const { buffer, ...fileWithoutBuffer } = req.file as Express.Multer.File;
 
-    const dataFromDropboxAPI = await uploadAudioToDropbox(buffer);
+    const dataFromDropboxAPI = await uploadAudioToDropbox(buffer, fileWithoutBuffer.originalname);
     console.log({dataFromDropboxAPI});
 
     const audio = await Audio.create({
@@ -50,15 +49,16 @@ export const uploadAudio = async (req: Request, res: Response, next: NextFunctio
         description: description,
         isPublic: isPublic,
         originalFileName: fileWithoutBuffer.originalname,
-        fileName: fileWithoutBuffer.originalname,
-        size: fileWithoutBuffer.size || 0,
-        url: fileWithoutBuffer.path || "",
+        fileName: dataFromDropboxAPI.name || "",
+        dropboxPath: dataFromDropboxAPI.path_display || "",
+        size: dataFromDropboxAPI.size || 0,
+        url: dataFromDropboxAPI.url || "",
     })
     
     res.status(201).json({
         status: "success",
         data: {
-            auido: fileWithoutBuffer,
+            auido: audio,
         },
     });
 };

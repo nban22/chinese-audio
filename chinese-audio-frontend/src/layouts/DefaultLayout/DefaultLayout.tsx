@@ -67,7 +67,7 @@ const ResizeHandle = styled.div`
 `;
 
 const MainContainer = styled.main`
-  background-color: #111;
+  background-color: #111111;
   border-radius: 10px;
 `;
 

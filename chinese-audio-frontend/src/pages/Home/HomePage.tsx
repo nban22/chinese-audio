@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import AlbumList from '../components/Album/AlbumList';
-import { getAllAlbumLists } from '../services/albumListService';
+import AlbumList from '../../components/Album/AlbumList';
+import { getAllAlbumLists } from '../../services/albumListService';
 import { LoaderFunction, useLoaderData } from 'react-router-dom';
 
 const StyledHomePage = styled.div`

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import IconEye from "../../icons/IconEye";
 import IconEyeInvisible from "../../icons/IconEyeInvisible";
-import { Input } from "./auth.styled";
+import { Input } from "../../pages/auth/auth.styled";
 
 const StyledInputPasswordField = styled.div<{ $eyeColor: string }>`
     position: relative;

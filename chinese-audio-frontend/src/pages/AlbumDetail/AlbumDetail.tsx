@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import Playlist from "../components/Playlist/Playlist";
+import Playlist from "../../components/Playlist/Playlist";
 import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
-import { AlbumAttributes, getAlbum } from "../services/albumService";
+import { AlbumAttributes, getAlbum } from "../../services/albumService";
 
-const StyledPlaylistPage = styled.div``;
+const StyledAlbumDetail = styled.div``;
 
-interface PlaylistPageProps {}
+interface AlbumDetailProps {}
 
 export const albumDetailLoader = async ({ params }: LoaderFunctionArgs) => {
     const { id } = params;
@@ -13,12 +13,12 @@ export const albumDetailLoader = async ({ params }: LoaderFunctionArgs) => {
     return { albumDetail };
 };
 
-const PlaylistPage: React.FC<PlaylistPageProps> = (props) => {
+const AlbumDetail: React.FC<AlbumDetailProps> = (props) => {
     const { albumDetail } = useLoaderData() as { albumDetail: AlbumAttributes };
     return (
-        <StyledPlaylistPage>
+        <StyledAlbumDetail>
             <Playlist albumDetail={albumDetail} />
-        </StyledPlaylistPage>
+        </StyledAlbumDetail>
     );
 };
-export default PlaylistPage;
+export default AlbumDetail;

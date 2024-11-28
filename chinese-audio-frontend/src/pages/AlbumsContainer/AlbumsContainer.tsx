@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import AlbumList from "../components/Album/AlbumList";
+import AlbumList from "../../components/Album/AlbumList";
 
 import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
-import { getAlbumList } from "../services/albumList";
-import { AlbumListAttributes } from "../services/albumListService";
+import { getAlbumList } from "../../services/albumList";
+import { AlbumListAttributes } from "../../services/albumListService";
 
-const StyledAlbumListDetailPage = styled.div``;
+const StyledAlbumsContainer = styled.div``;
 
-interface AlbumListDetailPageProps {}
+interface AlbumsContainerProps {}
 
 // export interface AlbumAttributes {
 //     id: string;
@@ -28,14 +28,14 @@ export const albumListLoader = async ({ params }: LoaderFunctionArgs) => {
     return getAlbumList(id || '2');
 };
 
-const AlbumListDetailPage: React.FC<AlbumListDetailPageProps> = (props) => {
+const AlbumsContainer: React.FC<AlbumsContainerProps> = (props) => {
     const albumList = useLoaderData() as AlbumListAttributes;
 
     return (
-        <StyledAlbumListDetailPage>
+        <StyledAlbumsContainer>
             <AlbumList showAll={true} albumList={albumList} />
-        </StyledAlbumListDetailPage>
+        </StyledAlbumsContainer>
     );
 };
 
-export default AlbumListDetailPage;
+export default AlbumsContainer;

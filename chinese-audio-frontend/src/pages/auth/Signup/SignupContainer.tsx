@@ -1,7 +1,7 @@
 import { Form } from "react-router-dom";
 import styled from "styled-components";
-import InputPasswordField from "./InputPasswordField";
-import { Header, Input, StyledForm, SubmitButton } from "./auth.styled";
+import InputPasswordField from "../../../components/auth/InputPasswordField";
+import { Header, Input, StyledForm, SubmitButton } from "../auth.styled";
 
 const StyledSignupContainer = styled.div`
 

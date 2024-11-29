@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import IconDelete from '../../../../../icons/IconDelete';
+import styled from "styled-components";
+import IconDelete from "../../../../../icons/IconDelete";
 
 const StyledDeleteButton = styled.button`
     background-color: #333;
     border-radius: 50%;
     border: none;
     cursor: pointer;
-    color: crimson  ;
+    color: crimson;
     aspect-ratio: 1/1;
     display: flex;
     justify-content: center;
@@ -16,16 +16,13 @@ const StyledDeleteButton = styled.button`
     &:hover {
         background-color: #555;
     }
-    
 `;
 
-interface DeleteButtonProps {
-    
-}
+interface DeleteButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const DeleteButton: React.FC<DeleteButtonProps> = (props) => {
     return (
-        <StyledDeleteButton>
+        <StyledDeleteButton {...props}>
             <IconDelete size={25} />
         </StyledDeleteButton>
     );

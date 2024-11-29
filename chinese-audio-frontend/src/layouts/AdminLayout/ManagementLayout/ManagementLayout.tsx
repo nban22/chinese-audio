@@ -49,7 +49,7 @@ const ManagementLayout: React.FC<ManagementLayoutProps> = (props) => {
         <StyledManagementLayout>
             <TitleContainer>
                 <Title>{props.title}</Title>
-                {!props.onAddItem && <AddItemButton onClick={props.onAddItem}><IconPlusCircle size={20}/> Add Item</AddItemButton>}
+                {props.onAddItem && <AddItemButton onClick={props.onAddItem}><IconPlusCircle size={20}/> Add Item</AddItemButton>}
             </TitleContainer>
             <DataTable columns={props.columnNames} data={props.data} Actions={props.Actions} />
         </StyledManagementLayout>

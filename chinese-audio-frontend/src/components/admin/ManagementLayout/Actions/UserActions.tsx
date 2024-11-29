@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import DeleteButton from "./Buttons/DeleteButton";
 import EditButton from "./Buttons/EditButton";
+import DeleteUserModal from "../../../Modal/DeleteUserModal";
+import EditUserModal from "../../../Modal/EditUserModal";
+import { useState } from "react";
 
 const StyledUserActions = styled.div`
     display: flex;
@@ -12,10 +15,15 @@ interface UserActionsProps {
 }
 
 const UserActions: React.FC<UserActionsProps> = (props) => {
+    const [showEdit, setShowEdit] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
     return (
         <StyledUserActions>
-            <EditButton />
-            <DeleteButton />
+            <EditButton onClick={() => setShowEdit(true)} />
+            <DeleteButton onClick={() => setShowDelete(true)} />
+
+            <EditUserModal show={showEdit} setShow={setShowEdit} />
+            <DeleteUserModal show={showDelete} setShow={setShowDelete} />
         </StyledUserActions>
     );
 };

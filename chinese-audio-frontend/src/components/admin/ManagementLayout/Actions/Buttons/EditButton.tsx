@@ -1,5 +1,8 @@
-import styled from 'styled-components';
-import IconEdit from '../../../../../icons/IconEdit';
+import styled from "styled-components";
+import IconEdit from "../../../../../icons/IconEdit";
+import { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
+import EditAudioModal from "../../../../Modal/EditAudioModal";
 
 const StyledEditButton = styled.button`
     background-color: #333;
@@ -18,13 +21,11 @@ const StyledEditButton = styled.button`
     }
 `;
 
-interface EditButtonProps {
-
-}
+interface EditButtonProps extends React.HTMLAttributes<HTMLButtonElement> {}
 
 const EditButton: React.FC<EditButtonProps> = (props) => {
     return (
-        <StyledEditButton>
+        <StyledEditButton {...props}>
             <IconEdit size={25} />
         </StyledEditButton>
     );

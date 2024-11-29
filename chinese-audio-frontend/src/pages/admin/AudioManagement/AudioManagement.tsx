@@ -4,6 +4,8 @@ import { ppid } from "process";
 import AudioActions from "../../../components/admin/ManagementLayout/Actions/AudioActions";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { AudioAttributes, getAllAudios } from "../../../services/audioService";
+import AddNewAudioModal from "../../../components/Modal/AddNewAudioModal";
+import { useState } from "react";
 
 const StyledAudioManagement = styled.div``;
 
@@ -34,13 +36,16 @@ export const audioLoader: LoaderFunction = async (props) => {
     return { audios: data.audios, audios_total: data.audios_total };
 };
 
+
+
 const AudioManagement: React.FC<AudioManagementProps> = (props) => {
     const columnNames = ["Id" ,"Audio Name", "Audio Duration", "Audio Size", "Link"];
     const { audios } = useLoaderData() as { audios: AudioAttributes[] };
-    console.log({ audios });
     const audiosData = audios.map((audio) => {
         return [audio.id, audio.fileName, audio.duration, audio.size, audio.url];
     });
+
+    const [showAddModal, setShowAddModal] = useState(false);
 
     return (
         <StyledAudioManagement>
@@ -49,7 +54,9 @@ const AudioManagement: React.FC<AudioManagementProps> = (props) => {
                 columnNames={columnNames}
                 data={audiosData}
                 Actions={AudioActions}
+                onAddItem={() => setShowAddModal(true)}
             />
+            <AddNewAudioModal show={showAddModal} setShow={setShowAddModal}/>
         </StyledAudioManagement>
     );
 };

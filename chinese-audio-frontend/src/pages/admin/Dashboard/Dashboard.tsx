@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Example from '../../../components/Example';
 
 const StyledDashboard = styled.div`
     
@@ -12,6 +13,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     return (
         <StyledDashboard>
             <h1>Dashboard</h1>
+            <Example />
         </StyledDashboard>
     );
 };

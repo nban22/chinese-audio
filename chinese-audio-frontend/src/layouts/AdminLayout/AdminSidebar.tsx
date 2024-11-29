@@ -36,9 +36,9 @@ const AdminSidebar: React.FC<AdminSidebarProps> = (props) => {
             <AboveSection>
                 <AdminSiderbarHead />
                 <AdminSiderbarItem title="Dashboard" icon={<IconHome size={30} />} to="dashboard"/>
-                <AdminSiderbarItem title="Users" icon={<IconUsers size={30} />} to="user-management"/>
-                <AdminSiderbarItem title="Audio Management" icon={<IconFileAudio size={30} />} to="audio-management"/>
-                <AdminSiderbarItem title="Album Management" icon={<IconAlbums size={30} />} to="album-management"/>
+                <AdminSiderbarItem title="Users" icon={<IconUsers size={30} />} to="management/user"/>
+                <AdminSiderbarItem title="Audio Management" icon={<IconFileAudio size={30} />} to="management/audio"/>
+                <AdminSiderbarItem title="Album Management" icon={<IconAlbums size={30} />} to="management/album"/>
             </AboveSection>
             <AdminSiderbarFoot>
                 <AdminSiderbarItem title="Settings" icon={<IconSetting size={30} />} to="settings"/>

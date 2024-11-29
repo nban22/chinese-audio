@@ -3,10 +3,11 @@ import "react-h5-audio-player/lib/styles.css";
 import H5AudioPlayer from "react-h5-audio-player";
 import audio from "../../assets/01_2_hsk2_workbook.mp3";
 
-const StyledControlPlayer = styled.footer``;
+const StyledMusicPlayer = styled.footer`
+    grid-area: musicplayer;
+`;
 
 const AudioPlayer = styled(H5AudioPlayer)`
-    /* $rhap_background-color: red !important; */
     background-color: transparent;
 
     .rhap_button-clear {
@@ -54,21 +55,21 @@ const AudioPlayer = styled(H5AudioPlayer)`
     }
 `;
 
-interface ControlPlayerProps {}
+interface MusicPlayerProps {}
 
-const ControlPlayer: React.FC<ControlPlayerProps> = (props) => {
+const MusicPlayer: React.FC<MusicPlayerProps> = (props) => {
     return (
-        <StyledControlPlayer>
+        <StyledMusicPlayer>
             <AudioPlayer
-            layout="stacked-reverse"
-            volumeJumpStep={0.5}
+                layout="stacked-reverse"
+                volumeJumpStep={0.5}
                 showFilledVolume={true}
                 showSkipControls
                 src={audio}
                 onPlay={(e) => console.log("onPlay")}
             />
-        </StyledControlPlayer>
+        </StyledMusicPlayer>
     );
 };
 
-export default ControlPlayer;
+export default MusicPlayer;

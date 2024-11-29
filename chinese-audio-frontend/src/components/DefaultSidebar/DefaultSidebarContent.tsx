@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import SidebarItem from "./SidebarItem";
+import SidebarItem from "./DefaultSidebarItem";
 
 const StyledSidebarContent = styled.div`
     overflow-y: auto;

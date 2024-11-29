@@ -1,34 +1,21 @@
 import styled from "styled-components";
-import SmallLogo from "../../icons/SmallLogo";
-import logo from "../../assets/SmallLogo.svg";
-import Tooltip from "../utitils/Tooltip";
-import IconSearch from "../../icons/IconSearch";
 import IconHome from "../../icons/IconHome";
 import IconBrowse from "../../icons/IconBrowse";
-import { useNavigate } from "react-router-dom";
+import IconSearch from "../../icons/IconSearch";
 import IconTimes from "../../icons/IconTimes";
+import { useNavigate } from "react-router-dom";
 
-const StyledHeader = styled.div`
-    height: calc(48px + var(--panel-gap) * 2);
-    padding: var(--panel-gap);
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-`;
-
-const StyledSmallLogo = styled.img`
-    height: 100%;
-    background-color: #ffffffbd;
-    border-radius: 50%;
-    margin-left: 20px;
-    display: block;
-    box-sizing: border-box;
-`;
-
-const NavSection = styled.div`
+const StyledHeaderControls = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+    max-width: 450px;
+    min-width: 200px;
+    margin-inline: 10px;
+
+    flex: 1 1 auto;
+
+
 
     .homeButton {
         height: 100%;
@@ -46,7 +33,8 @@ const NavSection = styled.div`
 const FormContainer = styled.div`
     display: flex;
     height: 100%;
-    min-width: 400px;
+    width: 100%;
+    
     position: relative;
     border-radius: 100px;
     overflow: hidden;
@@ -60,7 +48,6 @@ const FormContainer = styled.div`
         align-items: center;
         height: 100%;
         position: absolute;
-        
     }
 
     .browseButton,
@@ -138,64 +125,30 @@ const FormContainer = styled.div`
         }
     }
 `;
-const AccountSection = styled.div`
-    height: 100%;
-    display: flex;
-    background-color: #78777769;
-    border-radius: 50%;
-    aspect-ratio: 1;
-    justify-content: center;
-    align-items: center;
 
-    object-fit: cover;
-    img {
-        height: calc(100% - 10px);
-        border-radius: 50%;
-        aspect-ratio: 1;
-        background-color: #ffffffbd;
-    }
-`;
+interface HeaderControlsProps {}
 
-interface HeaderProps {}
-
-const Header: React.FC<HeaderProps> = (props) => {
+const HeaderControls: React.FC<HeaderControlsProps> = (props) => {
     const navigate = useNavigate();
     return (
-        <StyledHeader>
-            <div
-                style={{
-                    height: "100%",
-                    width: "fit-content",
-                    padding: "5px 0px",
-                }}
-            >
-                <Tooltip text="Logo" style={{ height: "100%" }} bottom="-74%" left="84%">
-                    <StyledSmallLogo src={logo} alt="Small Logo" />
-                </Tooltip>
-            </div>
-            <NavSection>
-                <button className="homeButton" onClick={() => navigate("/")}>
-                    <IconHome size={24} />
+        <StyledHeaderControls>
+            <button className="homeButton" onClick={() => navigate("/")}>
+                <IconHome size={24} />
+            </button>
+            <FormContainer>
+                <div className="searchButton">
+                    <IconSearch size={24} />
+                </div>
+                <input type="text" placeholder="What do you want to play?" />
+                <button className="browseButton">
+                    <IconBrowse size={24} />
                 </button>
-                <FormContainer>
-                    <div className="searchButton">
-                        <IconSearch size={24} />
-                    </div>
-                    <input type="text" placeholder="What do you want to play?" />
-                    <button className="browseButton">
-                        <IconBrowse size={24} />
-                    </button>
-                    <button className="clear-search">
-                        <IconTimes size={34} />
-                    </button>
-                </FormContainer>
-            </NavSection>
-
-            <AccountSection>
-                <img src="https://robohash.org/16?set=set4" alt="avatar" />
-            </AccountSection>
-        </StyledHeader>
+                <button className="clear-search">
+                    <IconTimes size={34} />
+                </button>
+            </FormContainer>
+        </StyledHeaderControls>
     );
 };
 
-export default Header;
+export default HeaderControls;

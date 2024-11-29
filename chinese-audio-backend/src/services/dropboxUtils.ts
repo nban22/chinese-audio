@@ -1,5 +1,6 @@
 import { Response } from "express";
 import AppError from "../utils/appError";
+import { access } from "fs";
 
 export const getAccessToken = async () => {
     const refreshToken = process.env.DROPBOX_REFRESH_TOKEN;
@@ -23,7 +24,7 @@ export const getAccessToken = async () => {
 };
 
 export const fetchUploadAudio = async (asscessToken: string, buffer: Buffer, originalFileName: string) => {
-    const response = await fetch("https://content.dropboxapi.com/2/files/upload", {
+    return await fetch("https://content.dropboxapi.com/2/files/upload", {
         method: "POST",
         headers: {
             Authorization: `Bearer ${asscessToken}`,
@@ -36,29 +37,19 @@ export const fetchUploadAudio = async (asscessToken: string, buffer: Buffer, ori
         },
         body: buffer,
     });
-
-    return response as any;
 };
 
-export const uploadAudioToDropbox = async (buffer: Buffer, originalFileName: string) => {
-    let accessToken = process.env.DROPBOX_ACCESS_TOKEN;
-    if (!accessToken) {
-        accessToken = await getAccessToken();
-    }
-    let uploadResponse = await fetchUploadAudio(accessToken!, buffer, originalFileName);
-    if (uploadResponse.status === 401) {
-        console.log("Access token expired, refreshing token...");
-        accessToken = await getAccessToken();
-        uploadResponse = await fetchUploadAudio(accessToken!, buffer, originalFileName);
-    }
-    if (uploadResponse.status !== 200) {
-        throw new AppError("Error uploading audio to Dropbox", 500);
-    }
-    const uploadData = await uploadResponse.json();
-
-    uploadData.url = await createSharedLink(accessToken!, uploadData.path_display);
-
-    return uploadData;
+export const fetchDeleteAudio = async (accessToken: string, path: string) => {
+    return await fetch("https://api.dropboxapi.com/2/files/delete_v2", {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            path: path,
+        }),
+    });
 };
 
 export const createSharedLink = async (accessToken: string, path: string) => {

@@ -26,6 +26,7 @@ const AboveSection = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow-y: auto;
 `;
 
 interface AdminSidebarProps {}

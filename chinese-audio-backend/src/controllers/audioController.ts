@@ -3,7 +3,7 @@ import Audio from "../models/audio";
 import AppError from "../utils/appError";
 import { StatusCodes } from "http-status-codes";
 import { isRequired } from "../utils/isRequired";
-import { uploadAudioToDropbox } from "../services/dropboxAPIServices";
+import { deleteAudioFromDropbox, uploadAudioToDropbox } from "../services/dropboxServices";
 import { catchAsync } from "../utils/catchAsync";
 import * as mm from "music-metadata";
 
@@ -19,9 +19,6 @@ export const uploadAudio = catchAsync(async (req: Request, res: Response, next: 
     const { buffer, ...fileWithoutBuffer } = req.file as Express.Multer.File;
 
     const dataFromDropboxAPI = await uploadAudioToDropbox(buffer, fileWithoutBuffer.originalname);
-    console.log({ dataFromDropboxAPI });
-
-    console.log({ mimeType: req.file!.mimetype });
 
     const metadata = await mm.parseBuffer(buffer);
 
@@ -78,6 +75,14 @@ export const getAudio = async (req: Request, res: Response, next: NextFunction) 
 
 export const deleteAudio = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
+    const audio = await Audio.findByPk(id);
+    if (!audio) {
+        return next(new AppError(`audio with id:${id} not found`, 400));
+    }
+    const dataFromDropboxAPI = await deleteAudioFromDropbox(audio.dropboxPath);
+    if (!dataFromDropboxAPI) {
+        return next(new AppError("Can't delete audio from Dropbox", 500));
+    }
     const num = await Audio.destroy({
         where: {
             id: id,

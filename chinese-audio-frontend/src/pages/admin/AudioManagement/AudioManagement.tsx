@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import ManagementLayout from '../../../layouts/AdminLayout/ManagementLayout/ManagementLayout';
-import { ppid } from 'process';
-import AudioActions from '../../../components/admin/ManagementLayout/Actions/AudioActions';
+import styled from "styled-components";
+import ManagementLayout from "../../../layouts/AdminLayout/ManagementLayout/ManagementLayout";
+import { ppid } from "process";
+import AudioActions from "../../../components/admin/ManagementLayout/Actions/AudioActions";
+import { LoaderFunction, useLoaderData } from "react-router-dom";
+import { AudioAttributes, getAllAudios } from "../../../services/audioService";
 
-const StyledAudioManagement = styled.div`
-    
-`;
+const StyledAudioManagement = styled.div``;
 
 const StyledTitle = styled.h1`
     font-size: 1.5rem;
@@ -14,9 +14,9 @@ const StyledTitle = styled.h1`
     font-weight: 600;
     text-shadow: 0 0 2px #ffffff, 0 0 2px #ff79d2;
     padding-bottom: 10px;
-    padding-left: 10px; 
+    padding-left: 10px;
     border-bottom: 1px solid #ffffff1f;
-`
+`;
 
 // const audioActions = (id: string) => {
 //     return (
@@ -27,26 +27,27 @@ const StyledTitle = styled.h1`
 //     )
 // }
 
-interface AudioManagementProps {
+interface AudioManagementProps {}
 
-}
+export const audioLoader: LoaderFunction = async (props) => {
+    const data = await getAllAudios();
+    return { audios: data.audios, audios_total: data.audios_total };
+};
 
 const AudioManagement: React.FC<AudioManagementProps> = (props) => {
-    const columnNames = ["Audio Name", "Audio File", "Audio Duration", "Audio Size"];
-    const data = [
-        ["Audio 1", "audio1.mp3", "5:00", "5MB"],
-        ["Audio 2", "audio2.mp3", "3:00", "3MB"],
-        ["Audio 3", "audio3.mp3", "7:00", "7MB"],
-        ["Audio 4", "audio4.mp3", "2:00", "2MB"],
-        ["Audio 5", "audio5.mp3", "1:00", "1MB"],
-    ]
+    const columnNames = ["Id" ,"Audio Name", "Audio Duration", "Audio Size", "Link"];
+    const { audios } = useLoaderData() as { audios: AudioAttributes[] };
+    console.log({ audios });
+    const audiosData = audios.map((audio) => {
+        return [audio.id, audio.fileName, audio.duration, audio.size, audio.url];
+    });
 
     return (
         <StyledAudioManagement>
-            <ManagementLayout 
-                title="Audio Management" 
+            <ManagementLayout
+                title="Audio Management"
                 columnNames={columnNames}
-                data={data}
+                data={audiosData}
                 Actions={AudioActions}
             />
         </StyledAudioManagement>

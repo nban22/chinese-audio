@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import AlbumList from "../../components/Album/AlbumList";
+import AlbumList from "../../../components/Album/AlbumList";
 
 import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
-import { getAlbumList } from "../../services/albumList";
-import { AlbumListAttributes } from "../../services/albumListService";
+import { getAlbumList } from "../../../services/albumList";
+import { AlbumListAttributes } from "../../../services/albumListService";
 
 const StyledAlbumsContainer = styled.div``;
 

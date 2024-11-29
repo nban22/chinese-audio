@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Playlist from "../../components/Playlist/Playlist";
+import Playlist from "../../../components/Playlist/Playlist";
 import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
-import { AlbumAttributes, getAlbum } from "../../services/albumService";
+import { AlbumAttributes, getAlbum } from "../../../services/albumService";
 
 const StyledAlbumDetail = styled.div``;
 

@@ -6,7 +6,7 @@ const StyledDeleteButton = styled.button`
     border-radius: 50%;
     border: none;
     cursor: pointer;
-    color: red;
+    color: crimson  ;
     aspect-ratio: 1/1;
     display: flex;
     justify-content: center;

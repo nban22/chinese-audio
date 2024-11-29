@@ -15,16 +15,31 @@ const StyledDataTable = styled.table`
     td {
         border-bottom: 1px solid #ddd;
         padding: 8px;
+        align-content: center;
     }
 `;
 
 interface DataTableProps {
     columns: string[];
-    data: string[][];
+    data: any[][];
     Actions?: React.FC<{id: string}>;
 }
 
+
 const DataTable: React.FC<DataTableProps> = (props) => {
+    const filterDataRender = (data: any) => {
+        if (typeof data === 'string') {
+            if (data.includes('http') && data.includes('.mp3')) {
+                return (
+                    <audio controls>
+                        <source src={data} type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                    </audio>
+                )
+            }
+        }
+        return data;
+    }
     return (
         <StyledDataTable>
             <thead>
@@ -39,7 +54,7 @@ const DataTable: React.FC<DataTableProps> = (props) => {
                 {props.data.map((row, rowIndex) => (
                     <tr key={rowIndex}>
                         {row.map((data, dataIndex) => (
-                            <td key={dataIndex}>{data}</td>
+                            <td key={dataIndex}>{filterDataRender(data)}</td>
                         ))}
                         {props.Actions && <td>{props.Actions({id: row[0]})}</td>}
                     </tr>

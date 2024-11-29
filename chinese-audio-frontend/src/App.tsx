@@ -1,16 +1,16 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import AlbumListDetailPage, { albumListLoader } from "./pages/AlbumsContainer/AlbumsContainer";
+import AlbumListDetailPage, { albumListLoader } from "./pages/default/AlbumsContainer/AlbumsContainer";
 import LoginContainer from "./pages/auth/Login/LoginContainer";
 import SignupContainer from "./pages/auth/Signup/SignupContainer";
-import ErrorPage from "./pages/Error/ErrorPage";
+import ErrorPage from "./pages/error/ErrorPage";
 import HomePage, { albumListsLoader } from "./pages/Home/HomePage";
-import PlaylistPage, { albumDetailLoader } from "./pages/AlbumDetail/AlbumDetail";
+import PlaylistPage, { albumDetailLoader } from "./pages/default/AlbumDetail/AlbumDetail";
 import AuthenticationLayout from "./layouts/AuthenticationLayout/AuthenticationLayout";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard/Dashboard";
 import UserManagement from "./pages/admin/UserManagement/UserManagement";
-import AudioManagement from "./pages/admin/AudioManagement/AudioManagement";
+import AudioManagement, { audioLoader } from "./pages/admin/AudioManagement/AudioManagement";
 import AlbumManagement from "./pages/admin/AlbumManagement/AlbumManagement";
 import Settings from "./pages/admin/Setting/Settings";
 import AccountProfile from "./pages/admin/AccountProfile/AccountProfile";
@@ -83,6 +83,8 @@ const router = createBrowserRouter(
                         {
                           path: "audio",
                           element: <AudioManagement />,
+                          loader: audioLoader,
+                          
                         },
                         {
                           path: "album",
@@ -109,6 +111,7 @@ const router = createBrowserRouter(
             v7_partialHydration: true,
             v7_skipActionErrorRevalidation: true,
         },
+          
     }
 );
 

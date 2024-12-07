@@ -16,7 +16,7 @@ export interface AlbumAttributes {
 
 export const getAlbum = async (id: string) => {
     try {
-        const data = await axiosCustom.get<AlbumAttributes>(`/albums/${id}`);
+        const data = await axiosCustom.get(`api/v1/albums/${id}`);
         return data;
     } catch (error) {
         console.error("Error in getAlbum", error);

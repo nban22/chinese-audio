@@ -1,20 +1,32 @@
 import styled from "styled-components";
 import Playlist from "../../../components/Playlist/Playlist";
-import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { LoaderFunction, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import { AlbumAttributes, getAlbum } from "../../../services/albumService";
+import { toast } from "react-toastify";
 
 const StyledAlbumDetail = styled.div``;
 
 interface AlbumDetailProps {}
 
-export const albumDetailLoader = async ({ params }: LoaderFunctionArgs) => {
-    const { id } = params;
-    const albumDetail = await getAlbum(id!);
-    return { albumDetail };
+export const albumDetailLoader: LoaderFunction = async ({ params }) => {
+    try {
+        const data = await getAlbum(params.id as string);
+        return { data };
+    } catch (error: any) {
+        console.error("Error in albumDetailLoader", error);
+        toast.error(error.message || "An error occurred");
+        return { data: null };
+    }
 };
 
 const AlbumDetail: React.FC<AlbumDetailProps> = (props) => {
-    const { albumDetail } = useLoaderData() as { albumDetail: AlbumAttributes };
+    const { data } = useLoaderData() as { data: any };
+
+    if (!data) {
+        return <div>Loading...</div>;
+    }
+
+    const albumDetail = data.album || {};
     return (
         <StyledAlbumDetail>
             <Playlist albumDetail={albumDetail} />

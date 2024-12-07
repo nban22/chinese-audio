@@ -96,7 +96,6 @@ export const seriesSeeder = async () => {
                 ranAlbumSet.add(album);
             }
             const ranAlbumList = [...ranAlbumSet];
-            console.log({ ranAlbumList });
             // Create series-album relationship
             for (let album of ranAlbumList) {
                 const seriesAlbum = {

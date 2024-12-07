@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", albumController.getAllAlbums);
 router.post("/", albumController.createAlbum);
-router.get("/:id", albumController.getAlbum);
+router.get("/:id", albumController.getAlbumById);
 
 const albumRouter = router;
 export default albumRouter;

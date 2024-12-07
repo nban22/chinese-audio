@@ -48,7 +48,7 @@ export const createAlbum = catchAsync(async (req: Request, res: Response, next: 
     });
 });
 
-export const getAlbum = catchAsync(async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
+export const getAlbumById = catchAsync(async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     const album = await Album.findByPk(req.params.id, {
         include: ["audios"],
     });

@@ -16,7 +16,6 @@ import AudioManagement, { audioLoader } from "./pages/admin/AudioManagement/Audi
 import AlbumManagement from "./pages/admin/AlbumManagement/AlbumManagement";
 import Settings from "./pages/admin/Setting/Settings";
 import AccountProfile from "./pages/admin/AccountProfile/AccountProfile";
-import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter(
     [
@@ -120,7 +119,6 @@ function App() {
     return (
         <>
             <RouterProvider router={router} />
-           
         </>
     );
 }

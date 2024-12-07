@@ -5,7 +5,29 @@ import AppError from "../utils/appError";
 import Album from "../models/album";
 
 export const getSeriesList = catchAsync(async (req: Request, res: Response, next: NextFunction) => {    
-    const series = await AlbumList.findAll({
+    const seriesList = await AlbumList.findAll({
+        include: {
+            model: Album,
+            as: "albums",
+        },
+    });
+
+    if (!seriesList) {
+        return next(new AppError("Failed to get album list", 500));
+    }
+
+    res.status(200).json({
+        status: "success",
+        data: {
+            seriesList_total: seriesList.length,
+            seriesList: seriesList,
+        },
+    });
+});
+
+
+export const getSeriesById = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const series = await AlbumList.findByPk(req.params.id, {
         include: {
             model: Album,
             as: "albums",
@@ -13,34 +35,13 @@ export const getSeriesList = catchAsync(async (req: Request, res: Response, next
     });
 
     if (!series) {
-        return next(new AppError("Failed to get album list", 500));
-    }
-
-    res.status(200).json({
-        status: "success",
-        data: {
-            series: series,
-        },
-    });
-});
-
-
-export const getSeriesById = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const albumList = await AlbumList.findByPk(req.params.id, {
-        include: {
-            model: Album,
-            as: "albums",
-        },
-    });
-
-    if (!albumList) {
         return next(new AppError("Album list not found", 404));
     }
 
     res.status(200).json({
         status: "success",
         data: {
-            albumList,
+            series: series,
         },
     });
 });

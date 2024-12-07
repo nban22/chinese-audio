@@ -3,7 +3,7 @@ import AlbumItem from "./AlbumItem";
 import ListContainer from "./ListContainer";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { AlbumListAttributes } from "../../services/albumListService"; 
+import { AlbumListAttributes } from "../../services/seriesService"; 
 import { AlbumAttributes } from "../../services/albumService";
 const StyledAlbumList = styled.div``;
 

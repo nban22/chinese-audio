@@ -1,40 +1,36 @@
 import styled from "styled-components";
 import AlbumList from "../../../components/Album/AlbumList";
-import { getAllAlbumLists } from "../../../services/albumListService";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getAllSeries } from "../../../services/seriesService";
 
 const StyledHomePage = styled.div``;
 
 interface HomePageProps {}
 
 export const albumListsLoader: LoaderFunction = async () => {
-    // const {albumLists} = await getAllAlbumLists();
-    // return { albumLists };
     try {
-        const data = await getAllAlbumLists();
+        const data = await getAllSeries();
         return { data };
     } catch (error: any) {
         console.error("Error in albumListsLoader", error);
         toast.error(error.message || "An error occurred");
-        return { albumLists: [] };
+        return { data: null };
     }
 };
 
 const HomePage: React.FC<HomePageProps> = (props) => {
-    const data = useLoaderData() as { albumLists: any[] };
-    console.log({ data });
+    const { data } = useLoaderData() as { data: any };
 
-    const albumLists = data.albumLists;
-    
+    const seriesList = data.seriesList;
 
-    if (1) {
+    if (!seriesList) {
         return <div>Loading...</div>;
     }
 
     return (
         <StyledHomePage>
-            {albumLists?.map((albumList: any) => (
+            {seriesList?.map((albumList: any) => (
                 <AlbumList key={albumList.id} albumList={albumList} />
             ))}
         </StyledHomePage>

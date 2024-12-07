@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ManagementLayout from "../../../layouts/AdminLayout/ManagementLayout/ManagementLayout";
 import { ppid } from "process";
 import AudioActions from "../../../components/admin/ManagementLayout/Actions/AudioActions";
-import { LoaderFunction, useLoaderData } from "react-router-dom";
+import { LoaderFunction, Navigate, useLoaderData } from "react-router-dom";
 import { AudioAttributes, getAllAudios } from "../../../services/audioService";
 import AddNewAudioModal from "../../../components/Modal/AddNewAudioModal";
 import { useState } from "react";
@@ -39,13 +39,14 @@ export const audioLoader: LoaderFunction = async (props) => {
 
 
 const AudioManagement: React.FC<AudioManagementProps> = (props) => {
-    const columnNames = ["Id" ,"Audio Name", "Audio Duration", "Audio Size", "Link"];
     const { audios } = useLoaderData() as { audios: AudioAttributes[] };
+    const columnNames = ["Id" ,"Audio Name", "Audio Duration", "Audio Size", "Link"];
     const audiosData = audios.map((audio) => {
         return [audio.id, audio.fileName, audio.duration, audio.size, audio.url];
     });
 
     const [showAddModal, setShowAddModal] = useState(false);
+
 
     return (
         <StyledAudioManagement>

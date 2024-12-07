@@ -1,9 +1,11 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import AlbumListDetailPage, { albumListLoader } from "./pages/default/AlbumsContainer/AlbumsContainer";
+import AlbumListDetailPage, {
+    albumListLoader,
+} from "./pages/default/AlbumsContainer/AlbumsContainer";
 import LoginContainer from "./pages/auth/Login/LoginContainer";
 import SignupContainer from "./pages/auth/Signup/SignupContainer";
 import ErrorPage from "./pages/error/ErrorPage";
-import HomePage, { albumListsLoader } from "./pages/Home/HomePage";
+import HomePage, { albumListsLoader } from "./pages/default/Home/HomePage";
 import PlaylistPage, { albumDetailLoader } from "./pages/default/AlbumDetail/AlbumDetail";
 import AuthenticationLayout from "./layouts/AuthenticationLayout/AuthenticationLayout";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
@@ -14,6 +16,7 @@ import AudioManagement, { audioLoader } from "./pages/admin/AudioManagement/Audi
 import AlbumManagement from "./pages/admin/AlbumManagement/AlbumManagement";
 import Settings from "./pages/admin/Setting/Settings";
 import AccountProfile from "./pages/admin/AccountProfile/AccountProfile";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter(
     [
@@ -81,15 +84,14 @@ const router = createBrowserRouter(
                             element: <UserManagement />,
                         },
                         {
-                          path: "audio",
-                          element: <AudioManagement />,
-                          loader: audioLoader,
-                          
+                            path: "audio",
+                            element: <AudioManagement />,
+                            loader: audioLoader,
                         },
                         {
-                          path: "album",
-                          element: <AlbumManagement />,
-                        }
+                            path: "album",
+                            element: <AlbumManagement />,
+                        },
                     ],
                 },
                 {
@@ -111,12 +113,16 @@ const router = createBrowserRouter(
             v7_partialHydration: true,
             v7_skipActionErrorRevalidation: true,
         },
-          
     }
 );
 
 function App() {
-    return <RouterProvider router={router} />;
+    return (
+        <>
+            <RouterProvider router={router} />
+           
+        </>
+    );
 }
 
 export default App;

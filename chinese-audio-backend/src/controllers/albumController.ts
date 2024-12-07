@@ -2,19 +2,27 @@ import { NextFunction, Request, Response } from "express";
 import Album from "../models/album";
 import { catchAsync } from "../utils/catchAsync";
 import AppError from "../utils/appError";
-import AlbumList_Album from "../models/albumlist_album";
 
-export const getAlbums = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const albums = await Album.findAll({});
+export const getAllAlbums = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const limit = req.query?.limit ? parseInt(req.query.limit as string) : undefined;
+    const page = req.query?.page ? parseInt(req.query.page as string) : undefined;
+
+    const albums = await Album.findAll({
+        limit: limit,
+        offset: page && limit ? (page - 1) * limit : undefined,
+    });
 
     if (!albums) {
-        return next(new AppError("Failed to get albums", 500));
+        return next(new AppError("Failed to get album list", 500));
     }
 
     res.status(200).json({
         status: "success",
         data: {
-            albums,
+            albums: albums,
+            total_albums: albums.length,
+            page: page,
+            limit: limit,
         },
     });
 });
@@ -42,9 +50,9 @@ export const createAlbum = catchAsync(async (req: Request, res: Response, next: 
 
 export const getAlbum = catchAsync(async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     const album = await Album.findByPk(req.params.id, {
-        include: ['audios'],
+        include: ["audios"],
     });
-    
+
     if (!album) {
         return next(new AppError("Album not found", 404));
     }
@@ -57,7 +65,7 @@ export const getAlbum = catchAsync(async (req: Request<{ id: string }>, res: Res
     });
 });
 
-export const updateAlbum = catchAsync(async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
+export const updateAlbum = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const album = await Album.findByPk(req.params.id);
     if (!album) {
         return next(new AppError("Album not found", 404));

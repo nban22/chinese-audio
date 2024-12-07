@@ -4,7 +4,7 @@ import * as albumController from "../controllers/albumController";
 
 const router = express.Router();
 
-router.get("/", albumController.getAlbums);
+router.get("/", albumController.getAllAlbums);
 router.post("/", albumController.createAlbum);
 router.get("/:id", albumController.getAlbum);
 

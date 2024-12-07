@@ -2,51 +2,35 @@
 import {
     Model,
     DataTypes,
-    BelongsToManyAddAssociationMixin,
-    BelongsToManyGetAssociationsMixin,
-    BelongsToManyRemoveAssociationMixin,
-    NonAttribute,
+    CreationOptional,
+    InferAttributes,
+    InferCreationAttributes,
 } from "sequelize";
 import sequelize from "./connection";
-import AlbumList from "./albumlist";
 
-export interface AlbumAttributes {
-    title: string;
-    description: string;
-    avatar: string;
-    releaseDate: Date;
-    isPublic: boolean;
-}
-class Album extends Model<AlbumAttributes> implements AlbumAttributes {
-    title!: string;
-    description!: string;
-    avatar!: string;
-    releaseDate!: Date;
-    isPublic!: boolean;
-
-    // Các phương thức quản lý quan hệ nhiều-nhiều với AlbumList
-    public addAlbumList!: BelongsToManyAddAssociationMixin<AlbumList, number>;
-    public getAlbumLists!: BelongsToManyGetAssociationsMixin<AlbumList>;
-    public removeAlbumList!: BelongsToManyRemoveAssociationMixin<AlbumList, number>;
-
-    // Thuộc tính để chứa danh sách albumLists khi sử dụng include
-    public readonly albumLists?: NonAttribute<AlbumList[]>;
-
-    public static associate() {
-        Album.belongsToMany(AlbumList, {
-            through: "AlbumAlbumList", // Tên bảng trung gian
-            as: "albumLists", // Alias cho quan hệ
-            foreignKey: "albumId",
-        });
-    }
+class Album extends Model<InferAttributes<Album>, InferCreationAttributes<Album>> {
+    declare id: CreationOptional<number>;
+    declare title: string;
+    declare description: CreationOptional<string>;
+    declare avatar: CreationOptional<string>;
+    declare releaseDate: CreationOptional<Date>;
+    declare isPublic: CreationOptional<boolean>;
 }
 Album.init(
     {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        description: DataTypes.STRING,
+        description: {
+            type: DataTypes.TEXT,
+            defaultValue: null,
+        },
         avatar: {
             type: DataTypes.TEXT,
             defaultValue: null,
@@ -63,7 +47,5 @@ Album.init(
         freezeTableName: true,
     }
 );
-
-Album.sync();
 
 export default Album;

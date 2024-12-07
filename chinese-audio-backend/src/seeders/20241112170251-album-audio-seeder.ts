@@ -1,6 +1,6 @@
 'use strict';
 import { QueryInterface, DataTypes } from 'sequelize';
-import { Album_AudioAttributes } from '../models/album_audio';
+import { Album_AudioAttributes } from '../models/albumAudio';
 import { faker } from '@faker-js/faker';
 
 /** @type {import('sequelize-cli').Migration} */

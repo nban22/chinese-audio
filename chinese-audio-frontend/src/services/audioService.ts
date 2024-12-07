@@ -1,4 +1,4 @@
-import axios from "../utils/axiosCustomize";
+import axiosCustom from "../utils/axiosCustomize";
 
 export interface AudioAttributes {
     id?: string;
@@ -17,7 +17,22 @@ export interface AudioAttributes {
     dropboxPath?: string;
 }
 
-export const getAllAudios = async () => {
-    const response = await axios.get('/api/v1/audios');    
-    return response.data as {audios: AudioAttributes[], audios_total: number}; 
+export const getAllAudios = async (): Promise<any> => {
+    try {
+        const data = await axiosCustom.get("/api/v1/audios");
+        return data
+    } catch  (error) {
+        console.error("Error in getAllAudios", error);
+        throw error;
+    }
+}
+
+export const deleteAudio = async (id: string): Promise<any> => {
+    try {
+        const data = await axiosCustom.delete(`/api/v1/audios/${id}`);
+        return data;
+    } catch (error) {
+        console.error("Error in deleteAudio", error);
+        throw error;
+    }
 }

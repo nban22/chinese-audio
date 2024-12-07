@@ -5,8 +5,8 @@ const env = process.env.NODE_ENV || "development";
 
 const config = require(path.join(__dirname, "/../config/database.ts")).default[env];
 
-const sequelizeConnection: Sequelize = new Sequelize(config.database, config.username, config.password, config);
+const sequelize: Sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-module.exports = sequelizeConnection;
+module.exports = sequelize;
 
-export default sequelizeConnection;
+export default sequelize;

@@ -1,16 +1,27 @@
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import styled from "styled-components";
+import { deleteAudio } from "../../services/audioService";
+import { Form } from "react-router-dom";
 
 const StyledDeleteAudioModal = styled(Modal)``;
 
 interface DeleteAudioModalProps {
     show: boolean;
     setShow: (show: boolean) => void;
+    audioId: string;
 }
 
-const DeleteAudioModal: React.FC<DeleteAudioModalProps> = ({ show, setShow }) => {
+const DeleteAudioModal: React.FC<DeleteAudioModalProps> = ({ show, setShow,...props }) => {
     const handleClose = () => setShow(false);
+
+    const handleDeleteAudio = async () => {
+        const data = await deleteAudio(props.audioId);
+        if (data) {
+            setShow(false);
+        }
+    }
+    
 
     return (
         <StyledDeleteAudioModal show={show} onHide={handleClose} backdrop="static" keyboard={true}>
@@ -27,9 +38,11 @@ const DeleteAudioModal: React.FC<DeleteAudioModalProps> = ({ show, setShow }) =>
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Delete
-                </Button>
+                <Form action="destroy" method="POST">
+                    <Button variant="primary" onClick={handleDeleteAudio}>
+                        Delete
+                    </Button>
+                </Form>
             </Modal.Footer>
         </StyledDeleteAudioModal>
     );

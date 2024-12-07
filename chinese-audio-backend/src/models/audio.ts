@@ -1,40 +1,28 @@
 "use strict";
-import { Model, DataTypes } from "sequelize";
+import { Model, DataTypes, CreationOptional, InferAttributes, InferCreationAttributes } from "sequelize";
 import sequelize from "./connection";
-export interface AudioAttributes {
-    id?: string;
-    title: string;
-    description: string;
-    playCount?: number;
-    likeCount?: number;
-    isPublic?: boolean;
-    duration?: number;
-    fileName: string;
-    size: number;
-    originalFileName: string;
-    url: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    dropboxPath?: string;
-}
-class Audio extends Model<AudioAttributes> implements AudioAttributes {
-    id!: string;
-    title!: string;
-    description!: string;
-    playCount!: number;
-    likeCount!: number;
-    isPublic!: boolean;
-    duration!: number;
-    fileName!: string;
-    size!: number;
-    originalFileName!: string;
-    url!: string;
-    createdAt!: Date;
-    updatedAt!: Date;
-    dropboxPath!: string;
+
+class Audio extends Model<InferAttributes<Audio>, InferCreationAttributes<Audio>> {
+    declare id: CreationOptional<number>;
+    declare title: string;
+    declare description: CreationOptional<string>;
+    declare playCount: CreationOptional<number>;
+    declare likeCount: CreationOptional<number>;
+    declare isPublic: CreationOptional<boolean>;
+    declare duration: CreationOptional<number>;
+    declare fileName: string;
+    declare size: number;
+    declare originalFileName: string;
+    declare url: string;
+    declare dropboxPath: string;
 }
 Audio.init(
     {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
         title: DataTypes.STRING,
         description: DataTypes.STRING,
         playCount: {
@@ -60,23 +48,13 @@ Audio.init(
         dropboxPath: DataTypes.STRING,
     },
     {
-        sequelize,
+        sequelize: sequelize,
         modelName: "Audio",
         freezeTableName: true,
+        timestamps: true,
     }
 );
 
 Audio.sync();
-
-// Associations
-// Audio.belongsTo(TargetModel, {
-//   as: 'custom_name',
-//   foreignKey: {
-//     name: 'foreign_key_column_name',
-//     allowNull: false,
-//   },
-//   onDelete: "RESTRICT",
-//   foreignKeyConstraint: true,
-// });
 
 export default Audio;

@@ -1,12 +1,14 @@
 import Album from "./album";
-import AlbumList from "./albumlist";
+import SeriesAlbum from "./seriesAlbum";
 import Audio from "./audio";
-import AlbumList_Album from "./albumlist_album";
-import Album_Audio from "./album_audio";
+import Series from "./series";
+import AlbumAudio from "./albumAudio";
 
-const models = [Album, AlbumList, Audio, AlbumList_Album, Album_Audio];
+const models = [Album, Series, Audio, SeriesAlbum, AlbumAudio];
 
-for (const model of models) {
-    model.sync();
-}
-
+export const syncModels = async () => {
+    for (const model of models) {
+        await model.sync({ alter: true });
+        // console.log(`Model ${model.name} synced`);
+    }
+};

@@ -1,30 +1,26 @@
 import express, { NextFunction, Request, Response } from "express";
+import morgan from "morgan";
+import cors from "cors";
 
+import AppError from "./utils/appError";
 import { globalErrorHandler } from "./controllers/errorController";
 import albumRouter from "./routers/albumRouter";
-import morgan from "morgan";
-import AppError from "./utils/appError";
-import cors from "cors";
-import albumListRouter from "./routers/albumListRouter";
+import seriesRouter from "./routers/seriesRouter";
 import audioRouter from "./routers/audioRouter";
 
 const app = express();
 
 app.use(cors());
-
 app.use(express.json());
-
 app.use(morgan("dev"));
 
-app.use('/api/v1/albums', albumRouter);
-app.use('/api/v1/album-lists', albumListRouter);
-app.use('/api/v1/audios', audioRouter);
+app.use("/api/v1/albums", albumRouter);
+app.use("/api/v1/series", seriesRouter);
+app.use("/api/v1/audios", audioRouter);
 
-
-app.all('*', (req: Request, res: Response, next: NextFunction) => {
+app.all("*", (req: Request, res: Response, next: NextFunction) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
-
 app.use(globalErrorHandler);
 
 export default app;

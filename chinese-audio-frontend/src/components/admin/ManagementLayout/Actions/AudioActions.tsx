@@ -18,14 +18,14 @@ interface AudioActionsProps {
 const AudioActions: React.FC<AudioActionsProps> = (props) => {
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
-
+    
     return (
         <StyledAudioActions>
             <EditButton onClick={() => setShowEdit(true)} />
             <DeleteButton onClick={() => setShowDelete(true)} />
 
             <EditAudioModal show={showEdit} setShow={setShowEdit} />
-            <DeleteAudioModal show={showDelete} setShow={setShowDelete} />
+            <DeleteAudioModal show={showDelete} setShow={setShowDelete} audioId={props.id}/>
         </StyledAudioActions>
     );
 };

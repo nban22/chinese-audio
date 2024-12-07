@@ -1,4 +1,5 @@
-import axios, { ResponseProps } from "../utils/axiosCustomize";
+// import axios, { ResponseProps } from "../utils/axiosCustomize";
+import axiosCustom from "../utils/axiosCustomize";
 import { AudioAttributes } from "./audioService";
 
 export interface AlbumAttributes {
@@ -13,9 +14,12 @@ export interface AlbumAttributes {
     audios: AudioAttributes[];
 }
 
-
 export const getAlbum = async (id: string) => {
-    const response = await axios.get(`/api/v1/albums/${id}`);
-    const album = response.data.album;    
-    return album;
+    try {
+        const data = await axiosCustom.get<AlbumAttributes>(`/albums/${id}`);
+        return data;
+    } catch (error) {
+        console.error("Error in getAlbum", error);
+        throw error;
+    }
 };

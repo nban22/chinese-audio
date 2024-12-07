@@ -6,6 +6,7 @@ import MusicPlayer from "./MusicPlayer";
 import DefaultSidebar from "./DefaultSidebar";
 import { Outlet, useNavigation } from "react-router-dom";
 import ResizeBar from "./ResizeBar";
+import ErrorBoundary from "../../pages/error/ErrorBoundary";
 
 const StyledDefaultLayout = styled.div.attrs<{ $columnSizes: string }>((props) => ({
     style: {
@@ -72,15 +73,17 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = (props) => {
         }
     }, [isDragging]);
     return (
-        <StyledDefaultLayout $columnSizes={columnSizes}>
-            <DefaultHeader />
-            <DefaultSidebar ref={sidebarRef} />
-            <ResizeBar resizeHandleMouseDown={resizeHandleMouseDown} />
-            <MainContainer>
-                <Outlet />
-            </MainContainer>
-            <MusicPlayer />
-        </StyledDefaultLayout>
+        <ErrorBoundary>
+            <StyledDefaultLayout $columnSizes={columnSizes}>
+                <DefaultHeader />
+                <DefaultSidebar ref={sidebarRef} />
+                <ResizeBar resizeHandleMouseDown={resizeHandleMouseDown} />
+                <MainContainer>
+                    <Outlet />
+                </MainContainer>
+                <MusicPlayer />
+            </StyledDefaultLayout>
+        </ErrorBoundary>
     );
 };
 

@@ -1,53 +1,64 @@
 import axios, { AxiosResponse } from "axios";
 
-export interface ResponseProps {
-    isError: boolean;
-    status: string;
-    data?: any;
-    [key: string]: any;
-}
+// export interface ResponseProps {
+//     isError: boolean;
+//     status: string;
+//     data?: any;
+//     [key: string]: any;
+// }
 
-interface JSendSuccess<T> {
-    status: "success";
-    data: T;
-}
-interface JSendFail {
-    status: "fail";
-    data: Record<string, unknown>;
-}
+// interface JSendSuccess<T> {
+//     status: "success";
+//     data: T;
+// }
+// interface JSendFail {
+//     status: "fail";
+//     data: Record<string, unknown>;
+// }
 
-interface JSendError {
-    status: "error";
-    message: string;
-    code?: number;
-}
+// interface JSendError {
+//     status: "error";
+//     message: string;
+//     code?: number;
+// }
 
-type JSendResponse<T> = JSendSuccess<T> | JSendFail | JSendError;
+// type JSendResponse<T> = JSendSuccess<T> | JSendFail | JSendError;
 
-const instance = axios.create({
-    baseURL: process.env.REACT_APP_BACKEND_BASEURL || "http://localhost:3000",
+const axiosCustom = axios.create({
+    baseURL: process.env.REACT_APP_BACKEND_BASEURL || "http://localhost:3001",
 });
 
-instance.interceptors.response.use(
-    (response: AxiosResponse<JSendSuccess<any>, any>) => {
+axiosCustom.interceptors.response.use(
+    (response) => {
         // Any status code that lie within the range of 2xx cause this function to trigger
         // Do something with response data
-        const data = response.data;
-        if (data.status === "success") {
-            return {
-                ...response,
-                data: data.data, // Return the `data` part of the JSend response
-            };
-        } else {
-            return Promise.reject({
-                ...response,
-                message: "🚀🚀🚀 With 2xx statusCode, status must be set 'success'!!!!!!",
-            });
-        }
+        return response?.data?.data; 
     },
     (error) => {
-        return Promise.reject(error);
+        const { response } = error;
+        const message = response?.data?.message || "Something went wrong";
+        if (response?.status >= 400 && response?.status < 500) {
+            return Promise.reject({
+                type: "fail",
+                status: response?.status,
+                message,
+                data: response?.data?.data || null,
+            });
+        } else if (response?.status >= 500) {
+            return Promise.reject({
+                type: "error",
+                status: response?.status,
+                message,
+            });
+        }
+
+        // not defined error (e.g. network error)
+        return Promise.reject({
+            type: "http",
+            message: error.message,
+            response: error.response,
+        });
     }
 );
 
-export default instance;
+export default axiosCustom;

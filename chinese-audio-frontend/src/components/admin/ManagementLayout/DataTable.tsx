@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const StyledDataTable = styled.table`
     width: 100%;
@@ -22,43 +22,54 @@ const StyledDataTable = styled.table`
 interface DataTableProps {
     columns: string[];
     data: any[][];
-    Actions?: React.FC<{id: string}>;
+    Actions?: React.FC<{ record: any }>;
 }
-
 
 const DataTable: React.FC<DataTableProps> = (props) => {
     const filterDataRender = (data: any) => {
-        if (typeof data === 'string') {
-            if (data.includes('http') && data.includes('.mp3')) {
+        if (typeof data === "string") {
+            if (data.includes("http") && data.includes(".mp3")) {
                 return (
                     <audio controls>
                         <source src={data} type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
-                )
+                );
             }
         }
         return data;
-    }
+    };
+    const renderContent = (data: any, columns: string[]) => {
+        return (
+            <>
+                {data?.map((row: any, rowIndex: number) => (
+                    <tr key={rowIndex}>
+                        {Object.entries(row).map((data, dataIndex) => {
+                            if (props.columns.includes(data[0])) {
+                                return <td key={dataIndex}>{filterDataRender(data[1])}</td>;
+                            } else {
+                                return null;
+                            }
+                        })}
+                        {props.Actions && <td>{props.Actions({ record: row })}</td>}
+                    </tr>
+                ))}
+            </>
+        );
+    };
+
     return (
         <StyledDataTable>
             <thead>
                 <tr>
                     {props.columns.map((column, index) => {
-                        return <th key={index}>{column}</th>
+                        return <th key={index}>{column}</th>;
                     })}
                     {props.Actions && <th>Actions</th>}
                 </tr>
             </thead>
             <tbody>
-                {props.data.map((row, rowIndex) => (
-                    <tr key={rowIndex}>
-                        {row.map((data, dataIndex) => (
-                            <td key={dataIndex}>{filterDataRender(data)}</td>
-                        ))}
-                        {props.Actions && <td>{props.Actions({id: row[0]})}</td>}
-                    </tr>
-                ))}
+                {renderContent(props.data, props.columns)}
             </tbody>
         </StyledDataTable>
     );

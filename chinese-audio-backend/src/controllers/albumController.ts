@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Album from "../models/album";
 import { catchAsync } from "../utils/catchAsync";
 import AppError from "../utils/appError";
+import Series from "../models/series";
 
 export const getAllAlbums = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const limit = req.query?.limit ? parseInt(req.query.limit as string) : undefined;
@@ -19,10 +20,10 @@ export const getAllAlbums = catchAsync(async (req: Request, res: Response, next:
     res.status(200).json({
         status: "success",
         data: {
-            albums: albums,
             total_albums: albums.length,
             page: page,
             limit: limit,
+            albums: albums,
         },
     });
 });
@@ -97,3 +98,20 @@ export const updateAlbum = catchAsync(async (req: Request, res: Response, next: 
         },
     });
 });
+
+
+export const deleteAlbum = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const albumId = req.params.id;
+    
+    const album = await Album.findByPk(albumId);
+    if (!album) {
+        return next(new AppError(`Album with id ${req.params.id} not found`, 404));
+    }
+
+    await album.destroy();
+
+    res.status(200).json({
+        status: "success",
+        data: null,
+    });
+})

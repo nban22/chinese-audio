@@ -3,15 +3,16 @@ import "react-h5-audio-player/lib/styles.css";
 import H5AudioPlayer from "react-h5-audio-player";
 import audio from "../../assets/01_2_hsk2_workbook.mp3";
 
-const StyledMusicPlayer = styled.footer`
-    grid-area: musicplayer;
-`;
-
 const AudioPlayer = styled(H5AudioPlayer)`
-    background-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
 
-    .rhap_button-clear {
-        /* color: #861919; */
+  .rhap_controls-section {
+    margin: 0;
+  }
+
+  /* .rhap_button-clear {
     }
     .rhap_play-pause-button {
         color: #fff;
@@ -52,24 +53,26 @@ const AudioPlayer = styled(H5AudioPlayer)`
     }
     .rhap_download-progress {
         background-color: #868686;
-    }
+    } */
 `;
 
-interface MusicPlayerProps {}
+interface NowPlayingBarProps {}
 
-const MusicPlayer: React.FC<MusicPlayerProps> = (props) => {
-    return (
-        <StyledMusicPlayer>
-            <AudioPlayer
-                layout="stacked-reverse"
-                volumeJumpStep={0.5}
-                showFilledVolume={true}
-                showSkipControls
-                src={audio}
-                onPlay={(e) => console.log("onPlay")}
-            />
-        </StyledMusicPlayer>
-    );
+const NowPlayingBar: React.FC<NowPlayingBarProps> = (props) => {
+  return (
+    <footer className="flex h-[72px] items-center">
+      <div className="mx-auto w-5/6 sm:w-1/2 lg:w-1/3">
+        <AudioPlayer
+          layout="stacked-reverse"
+          volumeJumpStep={0.5}
+          showFilledVolume={true}
+          showSkipControls
+          src={audio}
+          onPlay={(e) => console.log("onPlay")}
+        />
+      </div>
+    </footer>
+  );
 };
 
-export default MusicPlayer;
+export default NowPlayingBar;

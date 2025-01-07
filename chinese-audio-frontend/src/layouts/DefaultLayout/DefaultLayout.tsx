@@ -1,87 +1,36 @@
-import styled from "styled-components";
-
-import { useCallback, useEffect, useRef, useState } from "react";
 import DefaultHeader from "./DefaultHeader";
-import MusicPlayer from "./MusicPlayer";
+import NowPlayingBar from "./NowPlayingBar";
 import DefaultSidebar from "./DefaultSidebar";
-import { Outlet, useNavigation } from "react-router-dom";
-import ResizeBar from "./ResizeBar";
+import NowPlayingView from "./NowPlayingView";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
-const StyledDefaultLayout = styled.div.attrs<{ $columnSizes: string }>((props) => ({
-    style: {
-        gridTemplateColumns: props.$columnSizes,
-    },
-}))`
-    display: grid;
-    grid-template-areas:
-        "header header header header"
-        "sidebar tabresize main main"
-        "musicplayer musicplayer musicplayer musicplayer";
-    grid-template-rows: auto 1fr auto;
-    height: 100vh;
-    background-color: #000000;
-    color: #ffffff;
-    padding: 10px;
-    row-gap: 10px;
-`;
-
-const MainContainer = styled.main`
-    grid-area: main;
-    background-color: #111111;
-    border-radius: 10px;
-    overflow: auto;
-`;
 
 interface DefaultLayoutProps {}
 
 const DefaultLayout: React.FC<DefaultLayoutProps> = (props) => {
-    const navigation = useNavigation();
-    const [columnSizes, setColumnSizes] = useState(
-        "minmax(220px, auto) auto minmax(300px, 1fr) auto"
-    );
-    const [isDragging, setIsDragging] = useState(false);
-    const startX = useRef(0);
-    const sidebarWidth = useRef(0);
-    const sidebarRef = useRef<HTMLDivElement>(null);
+    const [hasNowPlayingView, setHasNowPlayingView] = useState(true);
 
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-        const diff = e.clientX - startX.current;
 
-        setColumnSizes(
-            `minmax(220px, ${sidebarWidth.current + diff}px) auto minmax(300px, 1fr) auto`
-        );
-    }, []);
-
-    const handleMouseUp = useCallback(() => {
-        setIsDragging(false);
-        window.removeEventListener("mousemove", handleMouseMove);
-        console.log("remove mousemove");
-    }, []);
-
-    const resizeHandleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-        setIsDragging(true);
-        startX.current = e.clientX;
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseup", handleMouseUp);
-    };
-
-    useEffect(() => {
-        if (isDragging === false) {
-            sidebarWidth.current = sidebarRef.current?.getBoundingClientRect().width || 0;
-            window.removeEventListener("mouseup", handleMouseUp);
-        }
-    }, [isDragging]);
-    return (
-            <StyledDefaultLayout $columnSizes={columnSizes}>
-                <DefaultHeader />
-                <DefaultSidebar ref={sidebarRef} />
-                <ResizeBar resizeHandleMouseDown={resizeHandleMouseDown} />
-                <MainContainer>
-                    <Outlet />
-                </MainContainer>
-                <MusicPlayer />
-            </StyledDefaultLayout>
-    );
+  return (
+    <div className={`${hasNowPlayingView ? 'grid-layout' : 'grid-layout-no-right-sidebar'} h-screen w-screen gap-[var(--panel-gap)] p-[var(--panel-gap)]`}>
+      <div className="grid-global-nav bg-red-400">
+        <DefaultHeader />
+      </div>
+      <div className="grid-left-sidebar bg-zinc-900">
+        <DefaultSidebar />
+      </div>
+      <div className="grid-main-view bg-blue-400"><Outlet /></div>
+        {hasNowPlayingView && (
+            <div className="grid-now-playing-view bg-green-400">
+            <NowPlayingView />
+            </div>
+        )}
+      <div className="grid-now-playing-bar bg-yellow-300">
+        <NowPlayingBar />
+      </div>
+    </div>
+  );
 };
 
 export default DefaultLayout;

@@ -39,9 +39,9 @@ const AddItemButton = styled.button`
 interface ManagementLayoutProps {
     title: string;
     columnNames: string[];
-    data: any[][];
+    data: any;
     onAddItem?: () => void;
-    Actions?: React.FC<{id: string}>;
+    Actions?: React.FC<{record: any}>;
 }
 
 const ManagementLayout: React.FC<ManagementLayoutProps> = (props) => {

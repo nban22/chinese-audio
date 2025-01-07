@@ -23,3 +23,23 @@ export const getAlbum = async (id: string) => {
         throw error;
     }
 };
+
+export const getAllAlbums = async (): Promise<any> => {
+    try {
+        const data = await axiosCustom.get("api/v1/albums");
+        return data; 
+    } catch (error) {
+        console.error("Error in getAllAlbums", error);
+        throw error;
+    }
+}
+
+export const deleteAlbumById = async (id: string): Promise<any> => {
+    try {
+        const data = await axiosCustom.delete(`api/v1/albums/${id}`);
+        return data;
+    } catch (error) {
+        console.error("Error in deleteAlbumById", error);
+        throw error;
+    }
+}

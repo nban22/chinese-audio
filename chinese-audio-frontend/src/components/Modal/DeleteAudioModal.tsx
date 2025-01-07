@@ -9,19 +9,19 @@ const StyledDeleteAudioModal = styled(Modal)``;
 interface DeleteAudioModalProps {
     show: boolean;
     setShow: (show: boolean) => void;
-    audioId: string;
+    audio: any;
 }
 
-const DeleteAudioModal: React.FC<DeleteAudioModalProps> = ({ show, setShow,...props }) => {
+const DeleteAudioModal: React.FC<DeleteAudioModalProps> = ({ show, setShow, ...props }) => {
     const handleClose = () => setShow(false);
+    const audio = props.audio;
 
     const handleDeleteAudio = async () => {
-        const data = await deleteAudio(props.audioId);
+        const data = await deleteAudio(audio.id);
         if (data) {
             setShow(false);
         }
-    }
-    
+    };
 
     return (
         <StyledDeleteAudioModal show={show} onHide={handleClose} backdrop="static" keyboard={true}>
@@ -30,8 +30,8 @@ const DeleteAudioModal: React.FC<DeleteAudioModalProps> = ({ show, setShow,...pr
             </Modal.Header>
             <Modal.Body>
                 <p>
-                    Are you sure you want to delete the audio{" "}
-                    <strong>{0 || "this file"}</strong>? This action cannot be undone.
+                    Are you sure you want to delete the audio <strong>{audio.title  || "this file"}</strong>?
+                    This action cannot be undone.
                 </p>
             </Modal.Body>
             <Modal.Footer>

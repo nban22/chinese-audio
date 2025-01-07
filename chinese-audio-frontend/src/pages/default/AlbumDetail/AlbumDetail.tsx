@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Playlist from "../../../components/Playlist/Playlist";
-import { LoaderFunction, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
-import { AlbumAttributes, getAlbum } from "../../../services/albumService";
+import { LoaderFunction, useLoaderData } from "react-router-dom";
+import {  getAlbum } from "../../../services/albumService";
 import { toast } from "react-toastify";
 
 const StyledAlbumDetail = styled.div``;

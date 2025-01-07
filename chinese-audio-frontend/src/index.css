@@ -1,9 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    /* font-size: 62.5%; */
+    scroll-behavior: smooth;
+    @apply text-gray-300;
+}
+
 body {
     margin: 0;
+    padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
         "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    @apply text-gray-300;
 }
 
 code {
@@ -14,6 +26,7 @@ code {
 *::before,
 *::after {
     box-sizing: border-box;
+    @apply text-gray-200;
 }
 
 /* Tạo biến --vh để lưu chiều cao khắc phục lỗi trên mobile */
@@ -24,66 +37,46 @@ code {
     --panel-gap: 8px;
 }
 
-/* Reset mặc định cho HTML và body */
-html,
-body {
-    margin: 0;
-    padding: 0;
+.grid-layout {
+    display: grid;
+    grid-template-areas: 
+        "global-nav global-nav global-nav"
+        "left-sidebar main-view right-sidebar"
+        "now-playing-bar now-playing-bar now-playing-bar";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr auto;
 }
 
-/*! Firefox */
-/* html {
-    scrollbar-color: #128612 #05c605;
-} */
-
-/*! Other Browser */
-/* html {
-    --scrollbarBG: #0ee70e;
-    --thumbBG: #4cc34c;
-}
-body::-webkit-scrollbar {
-    width: 5px;
-}
-body {
-    scrollbar-width: thin;
-    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-body::-webkit-scrollbar-track {
-    background: var(--scrollbarBG);
-}
-body::-webkit-scrollbar-thumb {
-    background-color: var(--thumbBG);
-    border-radius: 6px;
-    border: 3px solid var(--scrollbarBG);
-} */
-
-
-/* WebKit browsers (Chrome, Safari, etc.) */
-*::-webkit-scrollbar {
-    width: 10px;
-}
-*::-webkit-scrollbar-track {
-    background: transparent;
-}
-*::-webkit-scrollbar-thumb {
-    background: #585858;
-    border-radius: 10px; /* Round the scrollbar thumb */
-    visibility: hidden;
-    transition: all 200ms ease;
-}
-*:hover > *::-webkit-scrollbar-thumb {
-    visibility: visible;
-}
-*::-webkit-scrollbar-thumb:hover {
-    background: #555;
-    visibility: visible;
+.grid-layout-no-right-sidebar {
+    display: grid;
+    grid-template-areas: 
+        "global-nav global-nav"
+        "left-sidebar main-view"
+        "now-playing-bar now-playing-bar";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr auto;
 }
 
-/* Firefox */
-* {
-    scrollbar-width: thin; /* Sets the scrollbar width */
-    scrollbar-color: #888 transparent; /* Thumb color and track color */
+.grid-global-nav {
+    grid-area: global-nav;
 }
-*:hover {
-    scrollbar-color: #555 transparent; /* Changes the thumb color on hover */
+
+.grid-left-sidebar {
+    grid-area: left-sidebar;
+}
+
+.grid-main-view {
+    grid-area: main-view;
+}
+
+.grid-right-sidebar {
+    grid-area: right-sidebar;
+}
+
+.grid-now-playing-bar {
+    grid-area: now-playing-bar;
+}
+
+.full-height {
+    height: calc(100vh - 17px); /* Trừ kích thước thanh cuộn nếu đã biết, thường 16px */
 }

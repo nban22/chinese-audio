@@ -1,30 +1,37 @@
-import styled from 'styled-components';
-import ManagementLayout from '../../../layouts/AdminLayout/ManagementLayout/ManagementLayout';
-import AlbumActions from '../../../components/admin/ManagementLayout/Actions/AlbumActions';
+import styled from "styled-components";
+import ManagementLayout from "../../../layouts/AdminLayout/ManagementLayout/ManagementLayout";
+import AlbumActions from "../../../components/admin/ManagementLayout/Actions/AlbumActions";
+import { LoaderFunction, useLoaderData } from "react-router-dom";
+import { getAllAlbums } from "../../../services/albumService";
+import { toast } from "react-toastify";
 
-const StyledAlbumManagement = styled.div`
-    
-`;
+const StyledAlbumManagement = styled.div``;
 
-interface AlbumManagementProps {
+interface AlbumManagementProps {}
 
-}
+export const albumLoader: LoaderFunction = async () => {
+    try {
+        const data = await getAllAlbums();
+        return { data };
+    } catch (error: any) {
+        console.error("Error in albumLoader", error);
+        toast.error(error.message || "An error occurred");
+        return { data: null };
+    }
+};
 
 const AlbumManagement: React.FC<AlbumManagementProps> = (props) => {
-    const columnNames = ["Album Name", "Album Cover", "Album Description"];
-    const data = [
-        ["Album 1", "album1.jpg", "This is album 1"],
-        ["Album 2", "album2.jpg", "This is album 2"],
-        ["Album 3", "album3.jpg", "This is album 3"],
-        ["Album 4", "album4.jpg", "This is album 4"],
-        ["Album 5", "album5.jpg", "This is album 5"],
-    ]
+    const { data } = useLoaderData() as { data: any };
+    const albums = data.albums;
+
+    const columnNames = ["id", "title", "avatar", "description"];
+
     return (
         <StyledAlbumManagement>
-            <ManagementLayout 
-                title='Album Management'
+            <ManagementLayout
+                title="Album Management"
                 columnNames={columnNames}
-                data={data}
+                data={albums}
                 Actions={AlbumActions}
             />
         </StyledAlbumManagement>

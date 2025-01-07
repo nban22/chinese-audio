@@ -1,56 +1,19 @@
-import styled from "styled-components";
 import logo from "../../assets/SmallLogo.svg";
-import { useNavigate } from "react-router-dom";
 import HeaderControls from "../../components/DefaultHeader/HeaderControls";
-
-const StyledDefaultHeader = styled.div`
-    grid-area: header;
-    height: calc(48px);
-    display: flex;
-    justify-content: space-between;
-    overflow: hidden;
-`;
-
-const StyledSmallLogo = styled.img`
-    height: 100%;
-    background-color: #ffffffbd;
-    border-radius: 50%;
-    margin-left: 20px;
-    display: block;
-    box-sizing: border-box;
-`;
-
-
-const AccountSection = styled.div`
-    height: 100%;
-    display: flex;
-    background-color: #78777769;
-    border-radius: 50%;
-    aspect-ratio: 1;
-    justify-content: center;
-    align-items: center;
-
-    object-fit: cover;
-    img {
-        height: calc(100% - 10px);
-        border-radius: 50%;
-        aspect-ratio: 1;
-        background-color: #ffffffbd;
-    }
-`;
 
 interface DefaultHeaderProps {}
 
 const DefaultHeader: React.FC<DefaultHeaderProps> = (props) => {
-    const navigate = useNavigate();
     return (
-        <StyledDefaultHeader>
-            <StyledSmallLogo src={logo} alt="Small Logo" onClick={() => navigate('/')}/>
+        <header className="h-12 flex justify-between">
+            <a href="/" className="h-full aspect-square block">
+                <img src={logo} alt="Small Logo" className="w-full h-auto" />
+            </a>
             <HeaderControls />
-            <AccountSection>
-                <img src="https://robohash.org/16?set=set4" alt="avatar" />
-            </AccountSection>
-        </StyledDefaultHeader>
+            <div className="h-full aspect-square border-2 border-x-zinc-400 rounded-full">
+                <img src="https://robohash.org/16?set=set4" className="w-full h-auto overflow-clip" alt="avatar" />
+            </div>
+        </header>
     );
 };
 

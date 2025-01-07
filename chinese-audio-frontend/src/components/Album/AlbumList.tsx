@@ -42,7 +42,7 @@ interface AlbumListProps {
 }
 
 
-const AlbumList: React.FC<AlbumListProps> = ({ showAll = false, albumList}, props) => {
+const AlbumList: React.FC<AlbumListProps> = ({ showAll = false, albumList}) => {
     
     const navigate = useNavigate();
     const handleShowAll = () => {

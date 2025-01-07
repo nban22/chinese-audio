@@ -4,8 +4,6 @@ import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAllSeries } from "../../../services/seriesService";
 
-const StyledHomePage = styled.div``;
-
 interface HomePageProps {}
 
 export const albumListsLoader: LoaderFunction = async () => {
@@ -24,16 +22,16 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 
     const seriesList = data?.seriesList;
     
-    if (!seriesList) {
-        return <div>Loading...</div>;
-    }
+    // if (!seriesList) {
+    //     return <div>Loading...</div>;
+    // }
 
     return (
-        <StyledHomePage>
+        <main className="h-full w-full overflow-auto custom-scrollbar">
             {seriesList?.map((albumList: any) => (
                 <AlbumList key={albumList.id} albumList={albumList} />
             ))}
-        </StyledHomePage>
+        </main>
     );
 };
 

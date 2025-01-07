@@ -46,11 +46,18 @@ const ListContainer: React.FC<ListContainerProps> = ({ showAll = false, albums, 
         setLength(Math.floor(width / minItemWidth));
     }, [width]);
     return (
-        <StyledListContainer ref={containerTag} $length={length} $showAll={showAll}>
-            {albums?.map((album) => (
-                <AlbumItem key={album.id} album={album} />
-            ))}
-        </StyledListContainer>
+        <div className="w-full overflow-auto custom-no-scrollbar">
+            <div ref={containerTag} className={`${showAll ? 'grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-4' : 'flex flex-nowrap'}`}>
+                {albums?.map((album) => (
+                    <AlbumItem key={album.id} album={album} />
+                ))}
+            </div>
+        </div>
+        // <StyledListContainer ref={containerTag} $length={length} $showAll={showAll}>
+        //     {albums?.map((album) => (
+        //         <AlbumItem key={album.id} album={album} />
+        //     ))}
+        // </StyledListContainer>
     );
 };
 

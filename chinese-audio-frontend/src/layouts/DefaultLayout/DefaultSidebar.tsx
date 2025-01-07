@@ -7,21 +7,15 @@ interface DefaultSidebarProps extends React.HTMLProps<HTMLDivElement> {
 }
 
 const DefaultSidebar: React.FC<DefaultSidebarProps> = (props) => {
-  const [width, setWidth] = useState(220); // Default width
+  const [width, setWidth] = useState(280); // Default width
   const collapsedWidth = 72;
   const expandedWidth = 420;
   const idleWidth = 280;
   const isResizing = useRef(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
-  const isExpanded = useRef(false);
-
-  useEffect(() => {
-    isExpanded.current = width > (expandedWidth + idleWidth) / 2;
-  }, [width]);
-
   const handleExpand = () => {
-    if (isExpanded.current) {
+    if (width === expandedWidth) {
       setWidth(idleWidth);
     } else {
       setWidth(expandedWidth);
@@ -34,6 +28,7 @@ const DefaultSidebar: React.FC<DefaultSidebarProps> = (props) => {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     isResizing.current = true;
+    document.body.style.userSelect = "none";
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
@@ -55,19 +50,23 @@ const DefaultSidebar: React.FC<DefaultSidebarProps> = (props) => {
 
   const handleMouseUp = () => {
     isResizing.current = false;
+    document.body.style.userSelect = "auto";
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
   };
 
   return (
     <div className="relative h-full" style={{ width }}>
-      <nav ref={sidebarRef} className="h-full" style={{ width }}>
+      <nav ref={sidebarRef} className="flex flex-col h-full" style={{ width }}>
         <DefaultSidebarHeader
-          isExpanded={isExpanded.current}
+          isCollapsed={width === collapsedWidth}
+          isExpanded={width === expandedWidth}
           onCollapseToggle={handleCollapse}
           onExpandToggle={handleExpand}
         />
-        <DefaultSidebarContent />
+        <DefaultSidebarContent 
+          isCollapsed={width === collapsedWidth}
+        />
       </nav>
       <div
         className="absolute right-[calc(-1*var(--panel-gap))] top-0 flex h-full w-[var(--panel-gap)] cursor-grab items-center justify-center before:z-10 before:h-[calc(100%-2rem)] before:w-[1px] before:rounded-lg before:bg-transparent before:shadow-lg before:transition-all before:duration-300 before:content-[''] before:hover:bg-neutral-800 before:hover:shadow-xl"

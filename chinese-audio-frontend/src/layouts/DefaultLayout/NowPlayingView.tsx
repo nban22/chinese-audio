@@ -30,6 +30,7 @@ const NowPlayingView: React.FC<NowPlayingViewProps> = (props) => {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     isResizing.current = true;
+    document.body.style.userSelect = "none";
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
@@ -46,6 +47,7 @@ const NowPlayingView: React.FC<NowPlayingViewProps> = (props) => {
 
   const handleMouseUp = () => {
     isResizing.current = false;
+    document.body.style.userSelect = "auto";
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
   };

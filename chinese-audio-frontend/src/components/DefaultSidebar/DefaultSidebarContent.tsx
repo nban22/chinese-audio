@@ -1,60 +1,85 @@
-import styled from "styled-components";
 import SidebarItem from "./DefaultSidebarItem";
 
-const StyledSidebarContent = styled.div`
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-        width: 10px;
-    }
-    &::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px; /* Round the scrollbar thumb */
-    }
-    &::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-`;
-
-interface SidebarContentProps {}
+interface SidebarContentProps {
+  isCollapsed?: boolean;
+}
 
 const SidebarContent: React.FC<SidebarContentProps> = (props) => {
-    return (
-        <StyledSidebarContent>
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="John Doe"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="Your Playlist"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="Recently Played"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="Liked Songs"
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-            <SidebarItem
-                avatar="https://via.placeholder.com/150"
-                title="Playlists 1 "
-                type="Artist"
-                axtraInfo="5 songs"
-            />
-        </StyledSidebarContent>
-    );
+  return (
+    <div className={`flex h-full flex-1 flex-col gap-3 overflow-auto ${props.isCollapsed ? 'custom-no-scrollbar' : 'custom-scrollbar'}`}>
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="John Doe tititi ni sẽ dài ra nè hehehe hehehe hhe"
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="Your Playlist"
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="John Doe tititi ni sẽ dài ra nè hehehe hehehe hhe"
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="Your Playlist"
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="John Doe tititi ni sẽ dài ra nè hehehe hehehe hhe"
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="Your Playlist"
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="John Doe tititi ni sẽ dài ra nè hehehe hehehe hhe"
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="Your Playlist"
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="Recently Played"
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+
+      <SidebarItem
+        isCollapsed={props.isCollapsed}
+        avatar="https://via.placeholder.com/150"
+        title="Playlists 1 "
+        type="Artist"
+        axtraInfo="5 songs"
+      />
+    </div>
+  );
 };
 
 export default SidebarContent;

@@ -9,9 +9,11 @@ interface HeaderControlsProps {}
 const HeaderControls: React.FC<HeaderControlsProps> = (props) => {
   return (
     <div className="flex gap-[var(--panel-gap)]">
-      <button className="flex aspect-square h-full transform items-center justify-center rounded-full bg-zinc-900 hover:scale-105">
-        <HomeIcon className="h-7 w-7 text-gray-500" />
-      </button>
+      <a href="/">
+        <button className="flex aspect-square h-full transform items-center justify-center rounded-full bg-zinc-900 hover:scale-105">
+          <HomeIcon className="h-7 w-7 text-gray-500" />
+        </button>
+      </a>
       <form className="relative flex">
         <button className="absolute left-0 flex aspect-square h-full items-center justify-center rounded-full">
           <MagnifyingGlassIcon className="h-6 w-6 text-gray-500" />

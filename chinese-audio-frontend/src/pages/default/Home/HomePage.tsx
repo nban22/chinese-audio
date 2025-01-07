@@ -22,8 +22,8 @@ export const albumListsLoader: LoaderFunction = async () => {
 const HomePage: React.FC<HomePageProps> = (props) => {
     const { data } = useLoaderData() as { data: any };
 
-    const seriesList = data.seriesList;
-
+    const seriesList = data?.seriesList;
+    
     if (!seriesList) {
         return <div>Loading...</div>;
     }

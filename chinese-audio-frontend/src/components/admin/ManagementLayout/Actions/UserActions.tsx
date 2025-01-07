@@ -11,7 +11,7 @@ const StyledUserActions = styled.div`
 `;
 
 interface UserActionsProps {
-    id: string;
+    record: any;
 }
 
 const UserActions: React.FC<UserActionsProps> = (props) => {

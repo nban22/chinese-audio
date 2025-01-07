@@ -11,19 +11,20 @@ const StyledAlbumActions = styled.div`
 `;
 
 interface AlbumActionsProps {
-    id: string;
+    record: any;
 }
 
 const AlbumActions: React.FC<AlbumActionsProps> = (props) => {
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
+    
     return (
         <StyledAlbumActions>
             <EditButton onClick={() => setShowEdit(true)} />
             <DeleteButton onClick={() => setShowDelete(true)} />
 
             <EditAlbumModal show={showEdit} setShow={setShowEdit} />
-            <DeleteAlbumModal show={showDelete} setShow={setShowDelete} />
+            <DeleteAlbumModal show={showDelete} setShow={setShowDelete} album={props.record} />
         </StyledAlbumActions>
     );
 };

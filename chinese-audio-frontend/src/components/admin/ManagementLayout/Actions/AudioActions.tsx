@@ -12,7 +12,7 @@ const StyledAudioActions = styled.div`
 `;
 
 interface AudioActionsProps {
-    id: string;
+    record: any;
 }
 
 const AudioActions: React.FC<AudioActionsProps> = (props) => {
@@ -25,7 +25,7 @@ const AudioActions: React.FC<AudioActionsProps> = (props) => {
             <DeleteButton onClick={() => setShowDelete(true)} />
 
             <EditAudioModal show={showEdit} setShow={setShowEdit} />
-            <DeleteAudioModal show={showDelete} setShow={setShowDelete} audioId={props.id}/>
+            <DeleteAudioModal show={showDelete} setShow={setShowDelete} audio={props.record}/>
         </StyledAudioActions>
     );
 };

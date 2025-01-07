@@ -13,9 +13,10 @@ import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard/Dashboard";
 import UserManagement from "./pages/admin/UserManagement/UserManagement";
 import AudioManagement, { audioLoader } from "./pages/admin/AudioManagement/AudioManagement";
-import AlbumManagement from "./pages/admin/AlbumManagement/AlbumManagement";
+import AlbumManagement, { albumLoader } from "./pages/admin/AlbumManagement/AlbumManagement";
 import Settings from "./pages/admin/Setting/Settings";
 import AccountProfile from "./pages/admin/AccountProfile/AccountProfile";
+import { albumDeletionAction } from "./components/Modal/DeleteAlbumModal";
 
 const router = createBrowserRouter(
     [
@@ -43,18 +44,17 @@ const router = createBrowserRouter(
         },
         {
             element: <AuthenticationLayout />,
-            path: "/auth",
             children: [
                 {
                     index: true,
                     element: <Navigate to="login" />,
                 },
                 {
-                    path: "login",
+                    path: "/login",
                     element: <LoginContainer />,
                 },
                 {
-                    path: "signup",
+                    path: "/signup",
                     element: <SignupContainer />,
                 },
             ],
@@ -90,6 +90,14 @@ const router = createBrowserRouter(
                         {
                             path: "album",
                             element: <AlbumManagement />,
+                            loader: albumLoader,
+                            children: [
+                                {
+                                    path: ":id/delete",
+                                    action: albumDeletionAction,
+                                    errorElement: <ErrorPage />,
+                                }
+                            ]
                         },
                     ],
                 },

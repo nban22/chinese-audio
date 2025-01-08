@@ -8,7 +8,7 @@ const StyledAlbumItem = styled.div`
     padding: 10px;
     min-width: calc(180px + 2vw);
     width: 100%;
-
+    max-width: 200px;
     height: fit-content;
     border-radius: 4px;
     cursor: pointer;

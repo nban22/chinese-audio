@@ -2,8 +2,8 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import AlbumListDetailPage, {
     albumListLoader,
 } from "./pages/default/AlbumsContainer/AlbumsContainer";
-import LoginContainer from "./pages/auth/Login/LoginContainer";
-import SignupContainer from "./pages/auth/Signup/SignupContainer";
+import LoginContainer, { LoginContainerLoader } from "./pages/auth/Login/LoginContainer";
+import SignupContainer, { SignupContainerLoader } from "./pages/auth/Signup/SignupContainer";
 import ErrorPage from "./pages/error/ErrorPage";
 import HomePage, { albumListsLoader } from "./pages/default/Home/HomePage";
 import PlaylistPage, { albumDetailLoader } from "./pages/default/AlbumDetail/AlbumDetail";
@@ -52,10 +52,12 @@ const router = createBrowserRouter(
                 {
                     path: "/login",
                     element: <LoginContainer />,
+                    loader: LoginContainerLoader,
                 },
                 {
                     path: "/signup",
                     element: <SignupContainer />,
+                    loader: SignupContainerLoader,
                 },
             ],
         },

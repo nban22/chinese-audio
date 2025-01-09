@@ -22,12 +22,12 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 
     const seriesList = data?.seriesList;
     
-    // if (!seriesList) {
-    //     return <div>Loading...</div>;
-    // }
+    if (!seriesList) {
+        return <div>Loading...</div>;
+    }
 
     return (
-        <main className="h-full w-full overflow-auto custom-scrollbar">
+        <main className="h-full w-full overflow-auto custom-scrollbar px-5">
             {seriesList?.map((albumList: any) => (
                 <AlbumList key={albumList.id} albumList={albumList} />
             ))}

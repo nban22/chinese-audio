@@ -1,32 +1,23 @@
 import axios, { AxiosResponse } from "axios";
 
-// export interface ResponseProps {
-//     isError: boolean;
-//     status: string;
-//     data?: any;
-//     [key: string]: any;
-// }
-
-// interface JSendSuccess<T> {
-//     status: "success";
-//     data: T;
-// }
-// interface JSendFail {
-//     status: "fail";
-//     data: Record<string, unknown>;
-// }
-
-// interface JSendError {
-//     status: "error";
-//     message: string;
-//     code?: number;
-// }
-
-// type JSendResponse<T> = JSendSuccess<T> | JSendFail | JSendError;
-
 const axiosCustom = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_BASEURL || "http://localhost:3001",
 });
+
+axiosCustom.interceptors.request.use(
+    (config) => {
+        // Do something before request is sent
+        const token = localStorage.getItem("token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        // Do something with request error
+        return Promise.reject(error);
+    }
+)
 
 axiosCustom.interceptors.response.use(
     (response) => {
@@ -42,12 +33,14 @@ axiosCustom.interceptors.response.use(
                 type: "fail",
                 status: response?.status,
                 message,
+                errorCode: response?.data?.errorCode || null,
                 data: response?.data?.data || null,
             });
         } else if (response?.status >= 500) {
             return Promise.reject({
                 type: "error",
                 status: response?.status,
+                errorCode: response?.data?.errorCode || null,
                 message,
             });
         }

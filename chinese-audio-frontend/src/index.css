@@ -2,10 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
 html {
-  /* font-size: 62.5%; */
   scroll-behavior: smooth;
-  @apply text-gray-300;
 }
 
 body {
@@ -16,7 +15,6 @@ body {
     "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @apply text-gray-300;
 }
 
 code {
@@ -28,13 +26,11 @@ code {
 *::before,
 *::after {
   box-sizing: border-box;
-  @apply text-gray-200;
 }
 
-/* Tạo biến --vh để lưu chiều cao khắc phục lỗi trên mobile */
 :root {
   --vh: 1vh;
-  --primary-color: #007bff;
+  --primary-color: #f4f4f5
   --white-color: #ffffffe9;
   --panel-gap: 8px;
 }
@@ -97,11 +93,11 @@ code {
 }
 
 .custom-no-scrollbar::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .custom-no-scrollbar {
-    scrollbar-width: none;
+  scrollbar-width: none;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -114,16 +110,14 @@ code {
 }
 
 .custom-scrollbar::-webkit-scrollbar-button {
-    /* display: none; */
-    background: blue;
-
+  /* display: none; */
+  background: blue;
 }
 .custom-scrollbar::-webkit-scrollbar-corner {
-    /* display: none; */
-    background: red;
+  /* display: none; */
+  background: red;
 }
-.custom-scrollbar::-webkit-scrollbar-track-piece  {
-    /* display: none; */
-    background: red;
+.custom-scrollbar::-webkit-scrollbar-track-piece {
+  /* display: none; */
+  background: red;
 }
-

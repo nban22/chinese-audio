@@ -1,11 +1,6 @@
-import styled from "styled-components";
-import AlbumItem from "./AlbumItem";
 import ListContainer from "./ListContainer";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { AlbumListAttributes } from "../../services/seriesService";
-import { AlbumAttributes } from "../../services/albumService";
-
 
 interface AlbumListProps {
   showAll?: boolean;
@@ -21,11 +16,11 @@ const AlbumList: React.FC<AlbumListProps> = ({
     navigate(`/section/${albumList?.id}`);
   };
   return (
-    <section>
+    <section className="">
       <div className="mb-2 mt-5 flex items-center justify-between">
         <h2
           onClick={handleShowAll}
-          className="cursor-pointer text-2xl font-bold hover:underline"
+          className="cursor-pointer text-2xl font-bold text-zinc-100 hover:underline"
         >
           {albumList?.title}
         </h2>
@@ -34,7 +29,7 @@ const AlbumList: React.FC<AlbumListProps> = ({
         ) : (
           <Link
             to={`/section/${albumList?.id}`}
-            className="text-sm font-bold hover:underline"
+            className="text-sm font-bold text-zinc-100 hover:underline"
           >
             Show all
           </Link>

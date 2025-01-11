@@ -12,6 +12,10 @@ module.exports = {
         primary: "var(--primary-color)",
         secondary: "var(--secondary-color)",
       },
+      backgroundColor: {
+        primary: "var(--primary-color)",
+        secondary: "var(--secondary-color)",
+      }
     },
   },
   plugins: [],

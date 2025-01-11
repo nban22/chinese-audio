@@ -1,64 +1,29 @@
-import styled from "styled-components";
 import AlbumItem from "./AlbumItem";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AlbumAttributes } from "../../services/albumService";
 
-const StyledListContainer = styled.div<{ $length: number; $showAll: boolean }>`
-    display: grid;
-    grid-template-columns: repeat(${(props) => props.$length}, 1fr);
-    & > * {
-        display: ${(props) => (props.$showAll ? "block" : "none")};
-    }
-    ${(props) =>
-        Array.from({ length: props.$length })
-            .map(
-                (_, index) => `
-                    & > *:nth-child(${index + 1}) {
-                        display: block;
-                    }
-                `
-            )
-            .join(" ")}
-`;
-
 interface ListContainerProps {
-    showAll?: boolean;
-    albums?: AlbumAttributes[];
+  showAll?: boolean;
+  albums?: AlbumAttributes[];
 }
 
-const ListContainer: React.FC<ListContainerProps> = ({ showAll = false, albums, ...props }) => {
-    const containerTag = useRef<HTMLDivElement>(null);
-    const [width, setWidth] = useState<number>(document.body.clientWidth*0.8);
-    const minItemWidth = 180;
-    const [length, setLength] = useState(Math.floor(width / minItemWidth));
+const ListContainer: React.FC<ListContainerProps> = ({
+  showAll = false,
+  albums,
+  ...props
+}) => {
+  const containerTag = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const resizeObserver = new ResizeObserver((entries) => {
-            setWidth(entries[0].contentRect.width);
-        });
-        resizeObserver.observe(containerTag.current!);
-        return () => {
-            resizeObserver.disconnect();
-        };
-    }, []);
-
-    useEffect(() => {
-        setLength(Math.floor(width / minItemWidth));
-    }, [width]);
-    return (
-        <div className="w-full overflow-auto custom-no-scrollbar">
-            <div ref={containerTag} className={`${showAll ? 'grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-4' : 'flex flex-nowrap'}`}>
-                {albums?.map((album) => (
-                    <AlbumItem key={album.id} album={album} />
-                ))}
-            </div>
-        </div>
-        // <StyledListContainer ref={containerTag} $length={length} $showAll={showAll}>
-        //     {albums?.map((album) => (
-        //         <AlbumItem key={album.id} album={album} />
-        //     ))}
-        // </StyledListContainer>
-    );
+  return (
+    <div className="custom-no-scrollbar w-full overflow-auto px-5">
+      <div
+        ref={containerTag}
+        className={`${showAll ? "grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))]" : "flex flex-nowrap"}`}
+      >
+        {albums?.map((album) => <AlbumItem key={album.id} album={album} />)}
+      </div>
+    </div>
+  );
 };
 
 export default ListContainer;

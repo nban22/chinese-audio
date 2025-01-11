@@ -1,112 +1,50 @@
 import styled from "styled-components";
-import IconPlayCircle from "../../icons/IconPlayCircle";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AlbumAttributes } from "../../services/albumService";
+import { PlayIcon } from "@heroicons/react/24/solid";
 
-const StyledAlbumItem = styled.div`
-    padding: 10px;
-    min-width: calc(180px + 2vw);
-    width: 100%;
-    max-width: 200px;
-    height: fit-content;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover,
-    &:active {
-        background-color: #222222bc;
-    }
 
-    .play-icon {
-        cursor: pointer;
-        opacity: 0;
-        transition: all 200ms ease;
-        bottom: -20px;
-        right: 5px;
-        z-index: 20;
-        background-color: #222;
-        border-radius: 50%;
-        clip-path: circle(21px);
-    }
-    &:hover .play-icon {
-        opacity: 1;
-        bottom: 5px;
-    }
-    .avatar-container::before {
-        content: " ";
-        display: block;
-        inset: 0;
-        position: absolute;
-        z-index: 10;
-    }
-    &:hover .avatar-container::before {
-        background-image: linear-gradient(to top, #000000e2 -20%, #ffffff69 200%);
-    }
-`;
-
-const AvatarContainer = styled.div`
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1/1;
-    border-radius: 5px;
-    overflow: hidden;
-    img {
-        position: absolute;
-        width: 100%;
-        inset: 0;
-        aspect-ratio: 1/1;
-        object-fit: cover;
-    }
-    .play-icon {
-        position: absolute;
-        color: var(--primary-color);
-    }
-`;
-
-const DescriptionText = styled.p`
-    width: 100%;
-    font-size: 0.82rem;
-    margin-block-start: 6px;
-    margin-block-end: 0;
-    color: #aaa;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    line-height: 1.35em;
-    max-height: 2.7em;
-    white-space: normal;
-`;
 
 interface AlbumItemProps {
-    album?: AlbumAttributes;
+  album?: AlbumAttributes;
 }
 
-const AlbumItem: React.FC<AlbumItemProps> = ({ album, ...props }) => {
-    const navigate = useNavigate();
-    const [avatar, setAvatar] = useState<string | null>(null);
+const AlbumItem: React.FC<AlbumItemProps> = ({ album }) => {
+  const navigate = useNavigate();
+  const [avatar, setAvatar] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (album?.avatar === null) {
-            return;
-        }
-        setAvatar(album?.avatar || null);
-    }, []);
+  useEffect(() => {
+    if (album?.avatar === null) {
+      return;
+    }
+    setAvatar(album?.avatar || null);
+  }, []);
 
-    return (
-        <StyledAlbumItem
-            onClick={() => {
-                navigate(`/playlist/${album?.id}`);
-            }}
-        >
-            <AvatarContainer className="avatar-container">
-                <img src={avatar || "https://placehold.co/600x400"} alt="placeholder" />
-                <IconPlayCircle className="play-icon" size={50} />
-            </AvatarContainer>
-            <DescriptionText>{album?.description}</DescriptionText>
-        </StyledAlbumItem>
-    );
+  return (
+    <div className="rounded-md hover:bg-zinc-700 hover:bg-opacity-50 group min-w-[180px] max-w-[220px]">
+      <button
+        onClick={() => {
+          navigate(`/playlist/${album?.id}`);
+        }}
+        className="p-4"
+      >
+        <div className="relative aspect-square w-full">
+          <img
+            src={avatar || "https://placehold.co/800x800"}
+            alt="placeholder"
+            className="h-auto w-full object-cover rounded-md"
+          />
+          <button className="absolute bottom-2 right-2 rounded-full bg-primary p-3 transition-all ease-out duration-300 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 ">
+            <PlayIcon className="h-6 w-6 text-black" />
+          </button>
+        </div>
+        <p className="line-clamp-2 overflow-hidden text-ellipsis text-white">
+          {album?.description}
+        </p>
+      </button>
+    </div>
+  );
 };
 
 export default AlbumItem;

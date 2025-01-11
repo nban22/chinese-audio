@@ -1,11 +1,8 @@
-import styled from "styled-components";
 import AlbumList from "../../../components/Album/AlbumList";
 
 import { LoaderFunction, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import { AlbumListAttributes, getSeriesById } from "../../../services/seriesService";
 import { toast } from "react-toastify";
-
-const StyledAlbumsContainer = styled.div``;
 
 interface AlbumsContainerProps {}
 
@@ -27,9 +24,9 @@ const AlbumsContainer: React.FC<AlbumsContainerProps> = (props) => {
     const series = data.series;
 
     return (
-        <StyledAlbumsContainer>
+        <div className="h-full overflow-auto custom-scrollbar px-5">
             <AlbumList showAll={true} albumList={series} />
-        </StyledAlbumsContainer>
+        </div>
     );
 };
 

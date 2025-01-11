@@ -22,10 +22,10 @@ const Playlist: React.FC<PlaylistProps> = ({albumDetail, ...props}) => {
     return (
         <StyledPlaylist>
             <PlaylistHeader albumDetail={albumDetail} />
-            <StyledPlaylistContent>
+            <div>
                 <PlaylistControl />
                 <PlaylistTable audios={albumDetail?.audios}/>
-            </StyledPlaylistContent>
+            </div>
         </StyledPlaylist>
     );
 };

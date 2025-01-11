@@ -17,7 +17,7 @@ const AlbumList: React.FC<AlbumListProps> = ({
   };
   return (
     <section className="">
-      <div className="mb-2 mt-5 flex items-center justify-between">
+      <div className="px-5 mb-2 mt-5 flex items-center justify-between">
         <h2
           onClick={handleShowAll}
           className="cursor-pointer text-2xl font-bold text-zinc-100 hover:underline"

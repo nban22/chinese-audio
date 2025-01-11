@@ -4,6 +4,8 @@ import IconPauseCircle from "../../icons/IconPauseCircle";
 import { useState } from "react";
 import IconArrowShuffle from "../../icons/IconArrowShuffle";
 import IconSearch from "../../icons/IconSearch";
+import { PauseIcon, PlayIcon } from "@heroicons/react/24/solid";
+import { ListBulletIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 
 const StyledPlaylistControl = styled.div`
     display: flex;
@@ -63,26 +65,26 @@ const PlaylistControl: React.FC<PlaylistControlProps> = (props) => {
     };
 
     return (
-        <StyledPlaylistControl>
-            <WrapperLeftside>
-                {isPlaying ? (
-                    <IconPlayCircle size={60} onClick={handlePlayPause} className="play-pause" />
-                ) : (
-                    <IconPauseCircle size={60} onClick={handlePlayPause} className="play-pause" />
-                )}
-                <IconArrowShuffle size={30} />
-            </WrapperLeftside>
+        <div className="flex justify-between items-center p-5">
+            <div className="flex items-center gap-5">
+                <button className="bg-primary p-3 rounded-full hover:transform hover:scale-105 hover:brightness-150">
+                    {isPlaying ? (
+                        <PlayIcon className="h-8 w-8 text-black" onClick={handlePlayPause}/>
+                    ) : (
+                        <PauseIcon className="h-8 w-8 text-black" onClick={handlePlayPause}/>
+                    )}
+                </button>
+                <button className="text-white">
+                    <PlusCircleIcon className="h-8 w-8" />
+                </button>
+            </div>
 
-            <WrapperRightside>
-                <form action="#" method="get" id="form-serch-inside-playlist">
-                    <input type="search" name="searchInsidePlaylist" id="q" />
-                    <label htmlFor="q" style={{display: 'flex'}}>
-                        <IconSearch size={26} />
-                    </label>
-                    <span>Search</span>
-                </form>
-            </WrapperRightside>
-        </StyledPlaylistControl>
+            <div>
+                <button className="text-zinc-300 flex items-center gap-1 hover:text-white">
+                    <span>List</span> <ListBulletIcon className="h-6 w-6" />
+                </button>
+            </div>
+        </div>
     );
 };
 

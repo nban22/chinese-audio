@@ -17,9 +17,13 @@ import AlbumManagement, { albumLoader } from "./pages/admin/AlbumManagement/Albu
 import Settings from "./pages/admin/Setting/Settings";
 import AccountProfile from "./pages/admin/AccountProfile/AccountProfile";
 import { albumDeletionAction } from "./components/Modal/DeleteAlbumModal";
+import Test from "./pages/Test";
 
 const router = createBrowserRouter(
-    [
+    [{
+        path: "/test",
+        element: <Test />,
+    },
         {
             path: "/",
             element: <DefaultLayout />,

@@ -21,7 +21,7 @@ const HeaderControls: React.FC<HeaderControlsProps> = (props) => {
         </button>
         <input
           type="text"
-          className="w-full min-w-0 rounded-full bg-zinc-900 px-12 py-3 outline-none hover:bg-zinc-800 hover:shadow-[inset_0_0_0_0.5px_#525252] focus:shadow-[inset_0_0_0_2px_#525252]"
+          className="w-full min-w-0 rounded-full bg-zinc-900 ps-12 pe-14 py-3 text-white outline-none hover:bg-zinc-800 hover:shadow-[inset_0_0_0_0.5px_#525252] focus:shadow-[inset_0_0_0_2px_#525252]"
         />
         <div className="absolute right-0 top-1/2 h-fit -translate-y-1/2 transform border-l border-zinc-700 pe-3 ps-3">
           <button className="flex aspect-square h-full items-center justify-center rounded-full">

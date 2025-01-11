@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html {
   scroll-behavior: smooth;
 }
@@ -30,7 +29,7 @@ code {
 
 :root {
   --vh: 1vh;
-  --primary-color: #f4f4f5
+  --primary-color: #32e544;
   --white-color: #ffffffe9;
   --panel-gap: 8px;
 }
@@ -75,16 +74,9 @@ code {
   grid-area: now-playing-bar;
 }
 
-.full-height {
-  height: calc(
-    100vh - 17px
-  ); /* Trừ kích thước thanh cuộn nếu đã biết, thường 16px */
-}
-
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #d5d5d58e transparent;
-  scrollbar-arrow-color: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -92,12 +84,8 @@ code {
   height: 8px;
 }
 
-.custom-no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.custom-no-scrollbar {
-  scrollbar-width: none;
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Đường ray trong suốt */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -109,15 +97,50 @@ code {
   background: transparent;
 }
 
-.custom-scrollbar::-webkit-scrollbar-button {
-  /* display: none; */
-  background: blue;
+
+.custom-no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-.custom-scrollbar::-webkit-scrollbar-corner {
-  /* display: none; */
-  background: red;
+
+.custom-no-scrollbar {
+  scrollbar-width: none;
 }
-.custom-scrollbar::-webkit-scrollbar-track-piece {
-  /* display: none; */
-  background: red;
+
+
+.custom-none-display-scrollbar {
+  position: relative; /* Thiết lập container */
+  overflow: hidden; /* Ẩn thanh cuộn mặc định */
+}
+
+.custom-none-display-scrollbar:hover {
+  overflow: auto; /* Bật cuộn khi hover */
+}
+
+.custom-none-display-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Hiển thị thanh cuộn khi hover */
+}
+
+.custom-none-display-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(213, 213, 213, 0.56); /* Màu thanh cuộn */
+  border-radius: 10px; /* Bo góc thanh cuộn */
+}
+
+.custom-none-display-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Đường ray trong suốt */
+}
+
+.custom-none-display-scrollbar::-webkit-scrollbar-thumb {
+  visibility: hidden; /* Mặc định ẩn */
+}
+
+.custom-none-display-scrollbar:hover::-webkit-scrollbar-thumb {
+  visibility: visible; /* Hiển thị khi hover */
+}
+
+.custom-none-display-scrollbar::-webkit-scrollbar {
+  pointer-events: none; /* Vô hiệu hóa tác động của scrollbar */
+}
+
+.custom-none-display-scrollbar:hover::-webkit-scrollbar {
+  pointer-events: auto; /* Cho phép tương tác với scrollbar khi hover */
 }

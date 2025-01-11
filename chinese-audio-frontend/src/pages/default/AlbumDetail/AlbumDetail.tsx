@@ -1,10 +1,7 @@
-import styled from "styled-components";
 import Playlist from "../../../components/Playlist/Playlist";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import {  getAlbum } from "../../../services/albumService";
 import { toast } from "react-toastify";
-
-const StyledAlbumDetail = styled.div``;
 
 interface AlbumDetailProps {}
 
@@ -28,9 +25,9 @@ const AlbumDetail: React.FC<AlbumDetailProps> = (props) => {
 
     const albumDetail = data.album || {};
     return (
-        <StyledAlbumDetail>
+        <div className="h-full w-full overflow-auto custom-scrollbar">
             <Playlist albumDetail={albumDetail} />
-        </StyledAlbumDetail>
+        </div>
     );
 };
 export default AlbumDetail;

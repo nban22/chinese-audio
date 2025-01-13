@@ -25,7 +25,7 @@ const AudioItem: React.FC<AudioItemProps> = ({ audio, index, ...props }) => {
         </div>
       </div>
       <div>None</div>
-      <div>{formatDistanceToNow(audio?.createdAt!)}</div>
+      <div>{formatDistanceToNow(audio?.uploadDate!)}</div>
       <div className="pe-5 text-end">3:21</div>
     </div>
   );

@@ -1,51 +1,61 @@
-import { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
-import styled from "styled-components";
+import { toast } from "react-toastify";
 import { deleteAudio } from "../../services/audioService";
+import BodyModal from "../admin/Modal/BodyModal";
+import FooterModal from "../admin/Modal/FooterModal";
+import HeaderModal from "../admin/Modal/HeaderModal";
+import ModalLayout from "../admin/Modal/ModalLayout";
+import ModalCloseButton from "../Button/ModalCloseButton";
+import ModalSubmitButton from "../Button/ModalSubmitButton";
+import { useState } from "react";
 import { Form } from "react-router-dom";
 
-const StyledDeleteAudioModal = styled(Modal)``;
-
 interface DeleteAudioModalProps {
-    show: boolean;
-    setShow: (show: boolean) => void;
-    audio: any;
+  show: boolean;
+  setShow: (show: boolean) => void;
+  audio: any;
+  onSuccess: () => Promise<void>;
 }
 
-const DeleteAudioModal: React.FC<DeleteAudioModalProps> = ({ show, setShow, ...props }) => {
-    const handleClose = () => setShow(false);
-    const audio = props.audio;
+const DeleteAudioModal: React.FC<DeleteAudioModalProps> = (props) => {
+  const [loading, setLoading] = useState(false);
+  const handleClose = () => props.setShow(false);
+  const audio = props.audio;
 
-    const handleDeleteAudio = async () => {
-        const data = await deleteAudio(audio.id);
-        if (data) {
-            setShow(false);
-        }
-    };
+  const handleDeleteAudio = async () => {
+    setLoading(true);
+    try {
+      await deleteAudio(audio.id);
+      await props.onSuccess();
+      handleClose();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to delete audio");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <StyledDeleteAudioModal show={show} onHide={handleClose} backdrop="static" keyboard={true}>
-            <Modal.Header closeButton>
-                <Modal.Title>Delete Confirmation</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <p>
-                    Are you sure you want to delete the audio <strong>{audio.title  || "this file"}</strong>?
-                    This action cannot be undone.
-                </p>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Cancel
-                </Button>
-                <Form action="destroy" method="POST">
-                    <Button variant="primary" onClick={handleDeleteAudio}>
-                        Delete
-                    </Button>
-                </Form>
-            </Modal.Footer>
-        </StyledDeleteAudioModal>
-    );
+  return (
+    <ModalLayout>
+      <HeaderModal title="Delete Confirmation" onClose={handleClose} />
+      <Form onSubmit={handleDeleteAudio}>
+        <BodyModal>
+          <p className="col-span-12">
+            Are you sure you want to delete the audio{" "}
+            <strong className="text-gray-200">
+              {audio.title || "this file"}
+            </strong>
+            ? This action cannot be undone.
+          </p>
+        </BodyModal>
+        <FooterModal>
+          <ModalCloseButton onClick={handleClose} />
+          <ModalSubmitButton backgroundColor="danger">
+            {loading ? "Deleting..." : "Delete"}
+          </ModalSubmitButton>
+        </FooterModal>
+      </Form>
+    </ModalLayout>
+  );
 };
 
 export default DeleteAudioModal;

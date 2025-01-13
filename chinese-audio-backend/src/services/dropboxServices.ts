@@ -1,3 +1,4 @@
+import { ERROR_CODES } from "../constants/errorCodes";
 import AppError from "../utils/appError";
 import { getAccessToken, fetchUploadAudio, createSharedLink, fetchDeleteAudio } from "./dropboxUtils";
 
@@ -36,7 +37,7 @@ export const deleteAudioFromDropbox = async (path: string) => {
         deleteResponse = await fetchDeleteAudio(accessToken!, path);
     }
     if (deleteResponse.status !== 200) {
-        throw new AppError("Error deleteing audio from Dropbox", 500);
+        throw new AppError(ERROR_CODES.DROPBOX.DROPBOX_DELETE_ERROR);
     }
     const data = await deleteResponse.json();
 

@@ -15,6 +15,8 @@ class Audio extends Model<InferAttributes<Audio>, InferCreationAttributes<Audio>
     declare originalFileName: string;
     declare url: string;
     declare dropboxPath: string;
+    declare uploadDate: CreationOptional<Date>;
+    declare updateDate: CreationOptional<Date>;
 }
 Audio.init(
     {
@@ -46,6 +48,14 @@ Audio.init(
         originalFileName: DataTypes.STRING,
         url: DataTypes.STRING,
         dropboxPath: DataTypes.STRING,
+        uploadDate: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+        },
+        updateDate: {
+            type: DataTypes.DATE,
+            defaultValue: null,
+        },
     },
     {
         sequelize: sequelize,

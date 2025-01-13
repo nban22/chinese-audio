@@ -72,12 +72,10 @@ const PlaylistTable: React.FC<PlaylistTableProps> = ({ audios, ...props }) => {
       likeCount: 5,
       isPublic: true,
       duration: 100,
-      fileName: "file1",
       size: 100,
       originalFileName: "originalFile1",
       url: "url1",
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      uploadDate: new Date(),
     },
     {
       id: "2",
@@ -87,12 +85,11 @@ const PlaylistTable: React.FC<PlaylistTableProps> = ({ audios, ...props }) => {
       likeCount: 10,
       isPublic: true,
       duration: 200,
-      fileName: "file2",
+
       size: 200,
       originalFileName: "originalFile2",
       url: "url2",
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      uploadDate: new Date(),
     },
     {
       id: "3",
@@ -102,17 +99,15 @@ const PlaylistTable: React.FC<PlaylistTableProps> = ({ audios, ...props }) => {
       likeCount: 15,
       isPublic: true,
       duration: 300,
-      fileName: "file3",
       size: 300,
       originalFileName: "originalFile3",
       url: "url3",
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      uploadDate: new Date(),
     },
   ];
   return (
     <div className="px-5 text-zinc-300">
-      <div className="grid grid-cols-[40px_2fr_1fr_1fr_60px] h-10 items-center">
+      <div className="grid h-10 grid-cols-[40px_2fr_1fr_1fr_60px] items-center">
         <div className="pe-3 text-end">#</div>
         <div>Title</div>
         <div>Album</div>

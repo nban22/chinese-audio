@@ -29,23 +29,25 @@ const AboveSection = styled.div`
     overflow-y: auto;
 `;
 
-interface AdminSidebarProps {}
+interface AdminSidebarProps {
+    className?: string;
+}
 
 const AdminSidebar: React.FC<AdminSidebarProps> = (props) => {
     return (
-        <StyledAdminSidebar>
-            <AboveSection>
+        <nav className="h-full flex flex-col justify-between">
+            <div className="flex flex-col gap-4 px-3">
                 <AdminSiderbarHead />
                 <AdminSiderbarItem title="Dashboard" icon={<IconHome size={30} />} to="dashboard"/>
                 <AdminSiderbarItem title="Users" icon={<IconUsers size={30} />} to="management/user"/>
                 <AdminSiderbarItem title="Audio Management" icon={<IconFileAudio size={30} />} to="management/audio"/>
                 <AdminSiderbarItem title="Album Management" icon={<IconAlbums size={30} />} to="management/album"/>
-            </AboveSection>
-            <AdminSiderbarFoot>
+            </div>
+            <div>
                 <AdminSiderbarItem title="Settings" icon={<IconSetting size={30} />} to="settings"/>
                 <AdminSiderbarItem title="Account Profile" icon={<IconAccountCircle size={30} />} to="account-profile"/>
-            </AdminSiderbarFoot>
-        </StyledAdminSidebar>
+            </div>
+        </nav>
     );
 };
 

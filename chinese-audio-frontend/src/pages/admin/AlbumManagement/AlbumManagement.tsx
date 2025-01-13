@@ -4,38 +4,56 @@ import AlbumActions from "../../../components/admin/ManagementLayout/Actions/Alb
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { getAllAlbums } from "../../../services/albumService";
 import { toast } from "react-toastify";
-
-const StyledAlbumManagement = styled.div``;
+import { useEffect, useState } from "react";
 
 interface AlbumManagementProps {}
 
 export const albumLoader: LoaderFunction = async () => {
-    try {
-        const data = await getAllAlbums();
-        return { data };
-    } catch (error: any) {
-        console.error("Error in albumLoader", error);
-        toast.error(error.message || "An error occurred");
-        return { data: null };
-    }
+  try {
+    const albumsData = await getAllAlbums();
+    return { albumsData };
+  } catch (error: any) {
+    console.error("Error in albumLoader", error);
+    toast.error(error.message || "An error occurred");
+    return { albumsData: null };
+  }
 };
 
 const AlbumManagement: React.FC<AlbumManagementProps> = (props) => {
-    const { data } = useLoaderData() as { data: any };
-    const albums = data.albums;
+  const { albumsData } = useLoaderData() as { albumsData: any };
+  const [albums, setAlbums] = useState([]);
+  const columnNames = {
+    id: "Id",
+    title: "Title",
+    description: "Description",
+    audios: "Audios",
+    createdAt: "Created At",
+    updatedAt: "Updated At",
+  };
 
-    const columnNames = ["id", "title", "avatar", "description"];
+  const fetchAlbums = async () => {
+    try {
+      const albumsData = await getAllAlbums();
+      setAlbums(albumsData.albums);
+    } catch (error: any) {
+      console.error("Error in fetchAlbums", error);
+    }
+  };
 
-    return (
-        <StyledAlbumManagement>
-            <ManagementLayout
-                title="Album Management"
-                columnNames={columnNames}
-                data={albums}
-                Actions={AlbumActions}
-            />
-        </StyledAlbumManagement>
-    );
+  useEffect(() => {
+    fetchAlbums();
+  }, []);
+
+  return (
+    <main className="custom-scrollbar h-full overflow-auto">
+      <ManagementLayout
+        title="Album Management"
+        columnNames={columnNames}
+        data={albumsData.albums}
+        Actions={AlbumActions}
+      />
+    </main>
+  );
 };
 
 export default AlbumManagement;

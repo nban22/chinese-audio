@@ -1,62 +1,55 @@
-import styled from "styled-components";
 import ManagementLayout from "../../../layouts/AdminLayout/ManagementLayout/ManagementLayout";
-import { ppid } from "process";
 import AudioActions from "../../../components/admin/ManagementLayout/Actions/AudioActions";
-import { LoaderFunction, Navigate, useLoaderData } from "react-router-dom";
 import { AudioAttributes, getAllAudios } from "../../../services/audioService";
-import AddNewAudioModal from "../../../components/Modal/AddNewAudioModal";
-import { useState } from "react";
-
-const StyledAudioManagement = styled.div``;
-
-const StyledTitle = styled.h1`
-    font-size: 1.5rem;
-    margin-block: 0;
-    margin-inline: 0;
-    font-weight: 600;
-    text-shadow: 0 0 2px #ffffff, 0 0 2px #ff79d2;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    border-bottom: 1px solid #ffffff1f;
-`;
-
-// const audioActions = (id: string) => {
-//     return (
-//         <div>
-//             <button>Edit</button>
-//             <button>Delete</button>
-//         </div>
-//     )
-// }
+import ModalAddNewAudio from "../../../components/Modal/ModalAddNewAudio";
+import { useEffect, useState } from "react";
 
 interface AudioManagementProps {}
 
-export const audioLoader: LoaderFunction = async (props) => {
-    const data = await getAllAudios();
-    return { audios: data.audios, audios_total: data.audios_total };
-};
-
 const AudioManagement: React.FC<AudioManagementProps> = (props) => {
-    const { audios } = useLoaderData() as { audios: AudioAttributes[] };
-    const columnNames = ["Id", "Audio Name", "Audio Duration", "Audio Size", "Link"];
-    const audiosData = audios.map((audio) => {
-        return [audio.id, audio.fileName, audio.duration, audio.size, audio.url];
-    });
+  const audioKeys = {
+    id: "Id",
+    title: "Title",
+    description: "Description",
+    originalFileName: "Audio Name",
+    duration: "Audio Duration",
+    size: "Audio Size",
+    url: "Link",
+  };
 
-    const [showAddModal, setShowAddModal] = useState(false);
+  const [audiosData, setAudiosData] = useState<AudioAttributes[]>([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [isDataChanged, setIsDataChanged] = useState(false);
+  const fetchAudios = async () => {
+    try {
+      const data = await getAllAudios();
+      setAudiosData(data.audios);
+    } catch (error) {
+      console.error("Error in audioLoader", error);
+    }
+  };
 
-    return (
-        <StyledAudioManagement>
-            <ManagementLayout
-                title="Audio Management"
-                columnNames={columnNames}
-                data={audiosData}
-                Actions={AudioActions}
-                onAddItem={() => setShowAddModal(true)}
-            />
-            <AddNewAudioModal show={showAddModal} setShow={setShowAddModal} />
-        </StyledAudioManagement>
-    );
+  useEffect(() => {
+    fetchAudios();
+  }, [isDataChanged]);
+
+  return (
+    <main className="">
+      <ManagementLayout
+        title="Audio Management"
+        columnNames={audioKeys}
+        data={audiosData || []}
+        Actions={(props) => <AudioActions {...props} onSuccess={fetchAudios} />}
+        onAddItem={() => setShowAddModal(true)}
+      />
+      {showAddModal && (
+        <ModalAddNewAudio
+          onClose={() => setShowAddModal(false)}
+          onSuccess={fetchAudios}
+        />
+      )}
+    </main>
+  );
 };
 
 export default AudioManagement;

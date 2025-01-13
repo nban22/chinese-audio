@@ -62,6 +62,21 @@ export const ERROR_CODES = {
             message: "Error processing audio",
             statusCode: 500,
         },
+        UNSUPPORTED_FORMAT: {
+            code: 'AUDIO_4002',
+            message: 'Only .mp3 and .wav format allowed!',
+            statusCode: 400,
+        },
+        AUDIO_FIELD_MISSING: {
+            code: 'AUDIO_4003',
+            message: 'Audio file is required',
+            statusCode: 400,
+        },
+        AUDIO_DELETE_ERROR: {
+            code: "AUDIO_5002",
+            message: "Error deleting audio",
+            statusCode: 500,
+        }
     },
     GENERAL: {
         INTERNAL_SERVER_ERROR: {
@@ -74,5 +89,22 @@ export const ERROR_CODES = {
             message: "JWT_SECRET is not defined in env file",
             statusCode: 400,
         },
-    },
+        INVALID_FIELDNAME: {
+            code: "GEN_4003",
+            message: "Invalid fieldname",
+            statusCode: 400,
+        }
+    },  
+    DROPBOX: {
+        DROPBOX_UPLOAD_ERROR: {
+            code: "DROPBOX_5001",
+            message: "Error uploading audio to Dropbox",
+            statusCode: 500,
+        },
+        DROPBOX_DELETE_ERROR: {
+            code: "DROPBOX_5002",
+            message: "Error deleting audio from Dropbox",
+            statusCode: 500,
+        },
+    }  
 };

@@ -7,27 +7,42 @@ import EditAudioModal from "../../../Modal/EditAudioModal";
 import DeleteAudioModal from "../../../Modal/DeleteAudioModal";
 
 const StyledAudioActions = styled.div`
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 `;
 
 interface AudioActionsProps {
-    record: any;
+  record: any;
+  onSuccess: () => Promise<void>;
 }
 
 const AudioActions: React.FC<AudioActionsProps> = (props) => {
-    const [showEdit, setShowEdit] = useState(false);
-    const [showDelete, setShowDelete] = useState(false);
-    
-    return (
-        <StyledAudioActions>
-            <EditButton onClick={() => setShowEdit(true)} />
-            <DeleteButton onClick={() => setShowDelete(true)} />
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
-            <EditAudioModal show={showEdit} setShow={setShowEdit} />
-            <DeleteAudioModal show={showDelete} setShow={setShowDelete} audio={props.record}/>
-        </StyledAudioActions>
-    );
+  return (
+    <StyledAudioActions>
+      <EditButton onClick={() => setShowEdit(true)} />
+      <DeleteButton onClick={() => setShowDelete(true)} />
+
+      {showEdit && (
+        <EditAudioModal
+          show={showEdit}
+          setShow={setShowEdit}
+          onSuccess={props.onSuccess}
+          audio={props.record}
+        />
+      )}
+      {showDelete && (
+        <DeleteAudioModal
+          show={showDelete}
+          setShow={setShowDelete}
+          audio={props.record}
+          onSuccess={props.onSuccess}
+        />
+      )}
+    </StyledAudioActions>
+  );
 };
 
 export default AudioActions;

@@ -8,6 +8,7 @@ import albumRouter from "./routers/albumRouter";
 import seriesRouter from "./routers/seriesRouter";
 import audioRouter from "./routers/audioRouter";
 import authRouter from "./routers/authRouter";
+import userRouter from "./routers/userRouter";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/api/v1/albums", albumRouter);
 app.use("/api/v1/series", seriesRouter);
 app.use("/api/v1/audios", audioRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", userRouter);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

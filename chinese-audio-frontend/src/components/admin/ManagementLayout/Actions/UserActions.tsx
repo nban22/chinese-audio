@@ -6,26 +6,28 @@ import EditUserModal from "../../../Modal/EditUserModal";
 import { useState } from "react";
 
 const StyledUserActions = styled.div`
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 `;
 
 interface UserActionsProps {
-    record: any;
+  record: any;
 }
 
 const UserActions: React.FC<UserActionsProps> = (props) => {
-    const [showEdit, setShowEdit] = useState(false);
-    const [showDelete, setShowDelete] = useState(false);
-    return (
-        <StyledUserActions>
-            <EditButton onClick={() => setShowEdit(true)} />
-            <DeleteButton onClick={() => setShowDelete(true)} />
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  return (
+    <StyledUserActions>
+      <EditButton onClick={() => setShowEdit(true)} />
+      <DeleteButton onClick={() => setShowDelete(true)} />
 
-            <EditUserModal show={showEdit} setShow={setShowEdit} />
-            <DeleteUserModal show={showDelete} setShow={setShowDelete} />
-        </StyledUserActions>
-    );
+      {showEdit && <EditUserModal show={showEdit} setShow={setShowEdit} />}
+      {showDelete && (
+        <DeleteUserModal show={showDelete} setShow={setShowDelete} />
+      )}
+    </StyledUserActions>
+  );
 };
 
 export default UserActions;

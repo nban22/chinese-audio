@@ -4,6 +4,7 @@
 
 html {
   scroll-behavior: smooth;
+  color: #fff;
 }
 
 body {
@@ -29,9 +30,18 @@ code {
 
 :root {
   --vh: 1vh;
-  --primary-color: #32e544;
+  --primary-color: #1ed760;
   --white-color: #ffffffe9;
   --panel-gap: 8px;
+}
+
+.grid-admin-layout {
+  display: grid;
+  grid-template-areas:
+    "left-sidebar global-nav"
+    "left-sidebar main-view";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
 }
 
 .grid-layout {
@@ -97,7 +107,6 @@ code {
   background: transparent;
 }
 
-
 .custom-no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -105,7 +114,6 @@ code {
 .custom-no-scrollbar {
   scrollbar-width: none;
 }
-
 
 .custom-none-display-scrollbar {
   position: relative; /* Thiết lập container */

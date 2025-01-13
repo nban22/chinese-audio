@@ -14,14 +14,13 @@ const TitleText = styled.h1`
 `
 
 interface AdminHeaderProps {
-
 }
 
 const AdminHeader: React.FC<AdminHeaderProps> = (props) => {
     return (
-        <StyledAdminHeader>
+        <div className="">
             <TitleText>Welcome back, nban22</TitleText>
-        </StyledAdminHeader>
+        </div>
     );
 };
 

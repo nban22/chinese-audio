@@ -1,20 +1,17 @@
 import axiosCustom from "../utils/axiosCustomize";
 
 export interface AudioAttributes {
-    id?: string;
+    id: string;
     title: string;
-    description: string;
+    description?: string;
     playCount?: number;
     likeCount?: number;
     isPublic?: boolean;
     duration?: number;
-    fileName: string;
     size: number;
     originalFileName: string;
     url: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    dropboxPath?: string;
+    uploadDate?: Date;
 }
 
 export const getAllAudios = async (): Promise<any> => {
@@ -22,7 +19,6 @@ export const getAllAudios = async (): Promise<any> => {
         const data = await axiosCustom.get("/api/v1/audios");
         return data
     } catch  (error) {
-        console.error("Error in getAllAudios", error);
         throw error;
     }
 }
@@ -32,7 +28,51 @@ export const deleteAudio = async (id: string): Promise<any> => {
         const data = await axiosCustom.delete(`/api/v1/audios/${id}`);
         return data;
     } catch (error) {
-        console.error("Error in deleteAudio", error);
+        throw error;
+    }
+}
+
+export const postUploadAudio = async (formData: FormData): Promise<any> => {
+    const bodyData = {
+        title: formData.get("title") || "",
+        description: formData.get("description") || "",
+        audio: formData.get("audio") || undefined,
+    }
+    try {
+        const data = await axiosCustom.post("/api/v1/audios", bodyData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getAudioById = async (id: string): Promise<any> => {
+    try {
+        const data = await axiosCustom.get(`/api/v1/audios/${id}`);
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const putUpdateAudio = async (id: string, formData: FormData): Promise<any> => {
+    const bodyData = {
+        title: formData.get("title") || "",
+        description: formData.get("description") || "",
+        audio: formData.get("audio") || undefined,
+    }
+    try {
+        const data = await axiosCustom.put(`/api/v1/audios/${id}`, bodyData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return data;
+    } catch (error) {
         throw error;
     }
 }

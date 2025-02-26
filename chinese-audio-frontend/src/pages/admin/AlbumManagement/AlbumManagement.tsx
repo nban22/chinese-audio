@@ -5,28 +5,19 @@ import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { getAllAlbums } from "../../../services/albumService";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import ModalAddNewAlbum from "../../../components/Modal/ModalAddNewAlbum";
 
 interface AlbumManagementProps {}
 
-export const albumLoader: LoaderFunction = async () => {
-  try {
-    const albumsData = await getAllAlbums();
-    return { albumsData };
-  } catch (error: any) {
-    console.error("Error in albumLoader", error);
-    toast.error(error.message || "An error occurred");
-    return { albumsData: null };
-  }
-};
 
 const AlbumManagement: React.FC<AlbumManagementProps> = (props) => {
-  const { albumsData } = useLoaderData() as { albumsData: any };
   const [albums, setAlbums] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
   const columnNames = {
     id: "Id",
     title: "Title",
     description: "Description",
-    audios: "Audios",
+    avatar: "Cover",
     createdAt: "Created At",
     updatedAt: "Updated At",
   };
@@ -34,6 +25,8 @@ const AlbumManagement: React.FC<AlbumManagementProps> = (props) => {
   const fetchAlbums = async () => {
     try {
       const albumsData = await getAllAlbums();
+      console.log("albumsData", albumsData);
+      
       setAlbums(albumsData.albums);
     } catch (error: any) {
       console.error("Error in fetchAlbums", error);
@@ -49,9 +42,22 @@ const AlbumManagement: React.FC<AlbumManagementProps> = (props) => {
       <ManagementLayout
         title="Album Management"
         columnNames={columnNames}
-        data={albumsData.albums}
+        data={albums}
         Actions={AlbumActions}
+        onAddItem={() => setShowAddModal(true)}
+        onFetchData={() => fetchAlbums()}
       />
+      {showAddModal && (
+        <ModalAddNewAlbum
+          onClose={() => setShowAddModal(false)}
+          onSuccess={() => {
+            console.log("onSuccess");
+            
+            fetchAlbums();
+            return Promise.resolve();
+          }}
+        />
+      )}
     </main>
   );
 };

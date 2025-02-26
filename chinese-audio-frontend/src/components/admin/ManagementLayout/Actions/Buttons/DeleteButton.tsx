@@ -1,31 +1,17 @@
-import styled from "styled-components";
-import IconDelete from "../../../../../icons/IconDelete";
+import { TrashIcon } from "@heroicons/react/24/outline";
 
-const StyledDeleteButton = styled.button`
-    background-color: #333;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    color: crimson;
-    aspect-ratio: 1/1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 5px #fff;
-
-    &:hover {
-        background-color: #555;
-    }
-`;
-
-interface DeleteButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+interface DeleteButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const DeleteButton: React.FC<DeleteButtonProps> = (props) => {
-    return (
-        <StyledDeleteButton {...props}>
-            <IconDelete size={25} />
-        </StyledDeleteButton>
-    );
+  return (
+    <button
+      {...props}
+      className="rounded-md bg-red-400 p-1 hover:brightness-75"
+    >
+      <TrashIcon className="h-6 w-6" />
+    </button>
+  );
 };
 
 export default DeleteButton;

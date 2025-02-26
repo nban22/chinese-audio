@@ -1,3 +1,5 @@
+import { NOTFOUND } from "dns";
+
 export const ERROR_CODES = {
     USER: {
         USER_NOT_FOUND: {
@@ -106,5 +108,19 @@ export const ERROR_CODES = {
             message: "Error deleting audio from Dropbox",
             statusCode: 500,
         },
-    }  
+    },
+    IMAGE: {
+        UNSUPPORTED_FORMAT: {
+            code: "IMAGE_4001",
+            message: "Only .jpeg and .png format allowed!",
+            statusCode: 400,
+        }
+    },
+    ALBUM: {
+        NOTFOUND: {
+            code: "ALBUM_4041",
+            message: "Album not found",
+            statusCode: 404,
+        }
+    }
 };

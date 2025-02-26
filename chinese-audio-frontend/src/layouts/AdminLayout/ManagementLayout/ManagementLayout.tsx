@@ -1,6 +1,4 @@
-import styled from "styled-components";
 import DataTable from "../../../components/admin/ManagementLayout/DataTable";
-import IconPlusCircle from "../../../icons/IconPlusCircle";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 interface ManagementLayoutProps {
@@ -8,7 +6,8 @@ interface ManagementLayoutProps {
   columnNames: object;
   data: object[];
   onAddItem?: () => void;
-  Actions?: React.FC<{ record: any }>;
+  Actions?: React.FC<{ record: any, onSuccess?: () => void }>;
+  onFetchData?: () => void;
 }
 
 const ManagementLayout: React.FC<ManagementLayoutProps> = (props) => {
@@ -31,6 +30,7 @@ const ManagementLayout: React.FC<ManagementLayoutProps> = (props) => {
         columns={props.columnNames}
         data={props.data}
         Actions={props.Actions}
+        onFetchData={props.onFetchData}
       />
     </div>
   );

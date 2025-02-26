@@ -70,7 +70,7 @@ const ModalAddNewAudio: React.FC<ModalAddNewAudioProps> = (props) => {
               label="Audio File"
               id="audio"
               name="audio"
-              accept="audio/*"
+              accept="audio/mp3"
             />
           </div>
         </BodyModal>

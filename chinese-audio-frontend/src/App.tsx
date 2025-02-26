@@ -12,7 +12,7 @@ import LoginContainer, {
 import SignupContainer, {
   SignupContainerLoader,
 } from "./pages/auth/Signup/SignupContainer";
-import ErrorPage from "./pages/error/ErrorPage";
+// import ErrorPage from "./pages/error/ErrorPage";
 import HomePage, { albumListsLoader } from "./pages/default/Home/HomePage";
 import PlaylistPage, {
   albumDetailLoader,
@@ -25,13 +25,11 @@ import UserManagement, {
   UserManagementLoader,
 } from "./pages/admin/UserManagement/UserManagement";
 import AudioManagement from "./pages/admin/AudioManagement/AudioManagement";
-import AlbumManagement, {
-  albumLoader,
-} from "./pages/admin/AlbumManagement/AlbumManagement";
+import AlbumManagement from "./pages/admin/AlbumManagement/AlbumManagement";
 import Settings from "./pages/admin/Setting/Settings";
 import AccountProfile from "./pages/admin/AccountProfile/AccountProfile";
-import { albumDeletionAction } from "./components/Modal/DeleteAlbumModal";
 import Test from "./pages/Test";
+import ErrorPage from "./pages/Error/ErrorPage";
 
 const router = createBrowserRouter(
   [
@@ -111,11 +109,9 @@ const router = createBrowserRouter(
             {
               path: "album",
               element: <AlbumManagement />,
-              loader: albumLoader,
               children: [
                 {
                   path: ":id/delete",
-                  action: albumDeletionAction,
                   errorElement: <ErrorPage />,
                 },
               ],

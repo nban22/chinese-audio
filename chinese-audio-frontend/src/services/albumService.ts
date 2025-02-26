@@ -43,3 +43,27 @@ export const deleteAlbumById = async (id: string): Promise<any> => {
         throw error;
     }
 }
+
+export const postCreateAlbum = async (formData: FormData): Promise<any> => {    
+    try {
+        const data = await axiosCustom.post("api/v1/albums", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        return data;
+    } catch (error) {
+        console.error("Error in postCreateAlbum", error);
+        throw error;
+    }
+}
+
+export const putUpdateAlbum = async (id: string, formData: any): Promise<any> => { 
+    try {
+        const data = await axiosCustom.put(`api/v1/albums/${id}`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        return data;
+    } catch (error) {
+        console.error("Error in putUpdateAlbum", error);
+        throw error;
+    }
+}

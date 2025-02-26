@@ -7,6 +7,7 @@ import {
     InferCreationAttributes,
 } from "sequelize";
 import sequelize from "./connection";
+import Image from "./image";
 
 class Album extends Model<InferAttributes<Album>, InferCreationAttributes<Album>> {
     declare id: CreationOptional<number>;
@@ -15,6 +16,8 @@ class Album extends Model<InferAttributes<Album>, InferCreationAttributes<Album>
     declare avatar: CreationOptional<string>;
     declare releaseDate: CreationOptional<Date>;
     declare isPublic: CreationOptional<boolean>;
+
+    public image?: Image;
 }
 Album.init(
     {

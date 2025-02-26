@@ -4,7 +4,7 @@ import { ERROR_CODES } from "../constants/errorCodes";
 
 const storage = multer.memoryStorage();
 
-const upload = multer({
+export const uploadAudio = multer({
     storage: storage,
     fileFilter: function (req, file, cb) {
         const acceptableFieldNames = ['audio', 'audios', 'avatar', 'image'];
@@ -22,4 +22,23 @@ const upload = multer({
     },
 })
 
-export default upload;
+export const uploadImage = multer({
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        const acceptableFieldNames = ['avatar', 'image'];
+        if (!acceptableFieldNames.includes(file.fieldname)) {
+            cb(null, false);
+            return cb(new AppError(ERROR_CODES.GENERAL.INVALID_FIELDNAME));
+        }
+        
+        if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new AppError(ERROR_CODES.IMAGE.UNSUPPORTED_FORMAT));
+        }
+    },
+    limits: {
+        fileSize: 1024 * 1024 * 5,
+    },
+});

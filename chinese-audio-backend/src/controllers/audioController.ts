@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Audio from "../models/audio";
 import AppError from "../utils/appError";
 import { isRequired } from "../utils/isRequired";
-import { deleteAudioFromDropbox, uploadAudioToDropbox } from "../services/dropboxServices";
+import { dropboxService } from "../services/dropboxServices";
 import { catchAsync } from "../utils/catchAsync";
 import * as mm from "music-metadata";
 import { ERROR_CODES } from "../constants/errorCodes";
@@ -37,7 +37,7 @@ export const uploadAudio = catchAsync(async (req: Request, res: Response, next: 
     }
     const { buffer, originalname } = file;
 
-    const dataFromDropboxAPI = await uploadAudioToDropbox(buffer, originalname);
+    const dataFromDropboxAPI = await dropboxService.uploadAudio(buffer, originalname);
 
     const metadata = await mm.parseBuffer(buffer);
 
@@ -100,7 +100,7 @@ export const deleteAudio = async (req: Request, res: Response, next: NextFunctio
     if (!existingAudio) {
         return next(new AppError(ERROR_CODES.AUDIO.AUDIO_NOT_FOUND));
     }
-    const dataFromDropboxAPI = await deleteAudioFromDropbox(existingAudio.dropboxPath);
+    const dataFromDropboxAPI = await dropboxService.deleteFile(existingAudio.dropboxPath);
     if (!dataFromDropboxAPI) {
         return next(new AppError(ERROR_CODES.DROPBOX.DROPBOX_DELETE_ERROR));
     }
@@ -125,38 +125,12 @@ export const updateAudio = catchAsync(async (req: Request, res: Response, next: 
     const { title, description } = req.body;
     isRequired(title, "title");
 
-    const file = Array.isArray(req.files) ? req.files.find((file) => file.fieldname === 'audio' && ['audio/mpeg', 'audio/wav'].includes(file.mimetype)) : undefined;
-
     const audio = await Audio.findByPk(id);
     if (!audio) {
         return next(new AppError(ERROR_CODES.AUDIO.AUDIO_NOT_FOUND));
     }
 
-    if (file) {
-        const { buffer, originalname } = file;    
-        
-        const dataFromDropboxAPI = await uploadAudioToDropbox(buffer, originalname);
-        
-        const metadata = await mm.parseBuffer(buffer);
-
-        if (audio.dropboxPath) {
-            await deleteAudioFromDropbox(audio.dropboxPath);
-        }
-
-        await audio.update({
-            title,
-            description,
-            originalFileName: originalname,
-            fileName: dataFromDropboxAPI.name || "",
-            dropboxPath: dataFromDropboxAPI.path_display || "",
-            size: dataFromDropboxAPI.size || 0,
-            url: dataFromDropboxAPI.url || "",
-            duration: metadata.format.duration || 0,
-            updateDate: new Date(),
-        });        
-    } else {
-        await audio.update({ title, description });
-    }
+    await audio.update({ title, description });
 
     res.status(200).json({
         status: "success",

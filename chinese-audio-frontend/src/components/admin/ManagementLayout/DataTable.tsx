@@ -1,31 +1,11 @@
 import React from "react";
-import styled from "styled-components";
-import { AudioAttributes } from "../../../services/audioService";
 import { formatDistanceToNow } from "date-fns";
-import CustomAudioPlayer from "../../utitils/CustomAudioPlayer";
-
-const StyledDataTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-
-  th {
-    background-color: #333;
-    border-bottom: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-
-  td {
-    border-bottom: 1px solid #ddd;
-    padding: 8px;
-    align-content: center;
-  }
-`;
 
 interface DataTableProps {
   columns: object;
   data: any;
-  Actions?: React.FC<{ record: any }>;
+  Actions?: React.FC<{ record: any; onSuccess: () => void }>;
+  onFetchData?: () => void;
 }
 
 const DataTable: React.FC<DataTableProps> = (props) => {
@@ -37,6 +17,11 @@ const DataTable: React.FC<DataTableProps> = (props) => {
             <source src={data} type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
+        );
+      }
+      if (data.includes("http") && (data.includes(".jpg") || data.includes(".png"))) {
+        return (
+          <img src={data} alt="preview" className="w-20 h-20 object-cover" />
         );
       }
     }
@@ -58,7 +43,12 @@ const DataTable: React.FC<DataTableProps> = (props) => {
               return <td key={dataIndex}>{filterDataRender(row[key])}</td>;
             })}
             {props.Actions && (
-              <td>{props.Actions({ record: row }) as React.ReactNode}</td>
+              <td>
+                <props.Actions
+                  record={row}
+                  onSuccess={props.onFetchData || (() => {})}
+                />
+              </td>
             )}
           </tr>
         ))}

@@ -1,3 +1,6 @@
 .vscode
 /audio
 /#tmp
+.export-ignore
+.export-include
+export.md

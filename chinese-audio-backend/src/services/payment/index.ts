@@ -1,24 +1,6 @@
-// // backend/src/services/payment/index.ts
-// import { PaymentService } from './PaymentService';
-// import { 
-//   IPaymentService, 
-//   SubscriptionCreateData, 
-//   CouponCreateData, 
-//   SubscriptionPlanType,
-//   PaymentMethodType,
-//   PaymentStatusType,
-//   SubscriptionStatusType
-// } from './IPaymentService';
+// src/services/payment/index.ts
+import { IPaymentService } from './IPaymentService';
+import { PaymentService } from './PaymentService';
 
-// export {
-//   PaymentService,
-//   IPaymentService,
-//   SubscriptionCreateData,
-//   CouponCreateData,
-//   SubscriptionPlanType,
-//   PaymentMethodType,
-//   PaymentStatusType,
-//   SubscriptionStatusType
-// };
-
-// export default PaymentService;
+export { IPaymentService, PaymentService };
+export default PaymentService;

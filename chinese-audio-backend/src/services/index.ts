@@ -60,18 +60,11 @@ export const services = {
   userService,
   artistService,
   audioService,
+  playlistService,
+  courseService,
+  adminService,
+  paymentService,
   dropboxService,
-  // paymentService,
-};
-
-// Export service types
-export {
-  IAuthService,
-  IUserService,
-  IArtistService,
-  IAudioService,
-  IDropboxService,
-  // IPaymentService,
 };
 
 // Export service classes
@@ -80,8 +73,10 @@ export {
   UserService,
   ArtistService,
   AudioService,
+  PlaylistService,
+  CourseService,
+  AdminService,
+  PaymentService,
   DropboxService,
-  // PaymentService,
 };
-
 export default services;

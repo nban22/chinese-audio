@@ -1,30 +1,52 @@
+// src/app.ts
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
-
-import AppError from "./utils/appError";
-import { globalErrorHandler } from "./controllers/errorController";
-import albumRouter from "./routers/albumRouter";
-import seriesRouter from "./routers/seriesRouter";
-import audioRouter from "./routers/audioRouter";
-import authRouter from "./routers/authRouter";
-import userRouter from "./routers/userRouter";
+// import AppError from "./utils/appError";
+import config from "./config";
+import helmet from "helmet";
+import { errorHandler, notFoundHandler } from "./api/middlewares";
+// import apiRoutes from "./api"; // Import API routes
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+// Apply server configuration
+if (config.server.trustProxy) {
+  app.set('trust proxy', 1);
+}
+
+// Apply middleware
+app.use(helmet({
+  contentSecurityPolicy: config.server.helmet.contentSecurityPolicy,
+  xssFilter: config.server.helmet.xssFilter,
+  noSniff: config.server.helmet.noSniff,
+  referrerPolicy: config.server.helmet.referrerPolicy
+}));
+
+app.use(cors({
+  origin: config.server.corsOrigin,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
+
+app.use(express.json({ limit: config.server.bodyLimit }));
 app.use(morgan("dev"));
 
-app.use("/api/v1/albums", albumRouter);
-app.use("/api/v1/series", seriesRouter);
-app.use("/api/v1/audios", audioRouter);
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", userRouter);
-
-app.all("*", (req: Request, res: Response, next: NextFunction) => {
-    next(new AppError(`Can't find ${req.originalUrl} with ${req.method} method on this server!`, 404));
+// Health check endpoint
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    environment: config.server.env,
+    timestamp: new Date().toISOString()
+  });
 });
-app.use(globalErrorHandler);
+
+// API routes
+// app.use(config.server.apiPrefix, apiRoutes);
+
+// Error handling
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 export default app;

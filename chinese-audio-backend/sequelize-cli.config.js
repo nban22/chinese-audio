@@ -1,3 +1,4 @@
+// sequelize-cli.config.js
 require('ts-node/register');
 const config = require('./src/config/database');
 console.log(config.default);

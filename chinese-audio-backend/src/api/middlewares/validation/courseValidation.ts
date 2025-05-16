@@ -1,16 +1,16 @@
-// backend/src/api/middlewares/validation/audioValidation.ts
+// backend/src/api/middlewares/validation/courseValidation.ts
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
 import ApiResponse from '../../../utils/response';
 
 /**
- * Audio validation middleware
+ * Course validation middleware
  */
-export const audioValidation = {
+export const courseValidation = {
   /**
-   * Validate create audio
+   * Validate create course
    */
-  createAudio: (req: Request, res: Response, next: NextFunction) => {
+  createCourse: (req: Request, res: Response, next: NextFunction) => {
     const schema = Joi.object({
       title: Joi.string().required().min(2).max(100)
         .messages({
@@ -20,9 +20,16 @@ export const audioValidation = {
           'any.required': 'Title is required'
         }),
       
-      description: Joi.string().max(1000).allow('', null)
+      description: Joi.string().max(2000).allow('', null)
         .messages({
-          'string.max': 'Description cannot exceed 1000 characters'
+          'string.max': 'Description cannot exceed 2000 characters'
+        }),
+      
+      difficultyLevel: Joi.string().required().valid('beginner', 'intermediate', 'advanced')
+        .messages({
+          'string.empty': 'Difficulty level is required',
+          'any.only': 'Difficulty level must be one of: beginner, intermediate, advanced',
+          'any.required': 'Difficulty level is required'
         }),
       
       categoryId: Joi.number().integer().positive().allow(null)
@@ -32,27 +39,29 @@ export const audioValidation = {
           'number.positive': 'Category ID must be a positive number'
         }),
       
-      tags: Joi.array().items(Joi.number().integer().positive())
-        .messages({
-          'array.base': 'Tags must be an array',
-          'number.base': 'Tag ID must be a number',
-          'number.integer': 'Tag ID must be an integer',
-          'number.positive': 'Tag ID must be a positive number'
-        }),
-      
       isPremium: Joi.boolean()
         .messages({
           'boolean.base': 'Premium status must be a boolean'
         }),
       
+      price: Joi.number().min(0).when('isPremium', {
+        is: true,
+        then: Joi.required(),
+        otherwise: Joi.optional()
+      }).messages({
+        'number.base': 'Price must be a number',
+        'number.min': 'Price must be greater than or equal to 0',
+        'any.required': 'Price is required for premium courses'
+      }),
+      
+      thumbnail: Joi.string().uri().allow('', null)
+        .messages({
+          'string.uri': 'Thumbnail must be a valid URL'
+        }),
+      
       language: Joi.string().max(30)
         .messages({
           'string.max': 'Language cannot exceed 30 characters'
-        }),
-      
-      transcript: Joi.string().max(10000).allow('', null)
-        .messages({
-          'string.max': 'Transcript cannot exceed 10000 characters'
         })
     });
     
@@ -65,26 +74,16 @@ export const audioValidation = {
         return acc;
       }, {} as Record<string, string>);
       
-      // Check if audio file is provided
-      if (!req.file) {
-        validationErrors.audioFile = 'Audio file is required';
-      }
-      
       return ApiResponse.fail(res, validationErrors, 'Validation failed');
-    }
-    
-    // Check if audio file is provided
-    if (!req.file) {
-      return ApiResponse.fail(res, { audioFile: 'Audio file is required' }, 'Validation failed');
     }
     
     next();
   },
   
   /**
-   * Validate update audio
+   * Validate update course
    */
-  updateAudio: (req: Request, res: Response, next: NextFunction) => {
+  updateCourse: (req: Request, res: Response, next: NextFunction) => {
     const schema = Joi.object({
       title: Joi.string().min(2).max(100)
         .messages({
@@ -92,9 +91,14 @@ export const audioValidation = {
           'string.max': 'Title cannot exceed 100 characters'
         }),
       
-      description: Joi.string().max(1000).allow('', null)
+      description: Joi.string().max(2000).allow('', null)
         .messages({
-          'string.max': 'Description cannot exceed 1000 characters'
+          'string.max': 'Description cannot exceed 2000 characters'
+        }),
+      
+      difficultyLevel: Joi.string().valid('beginner', 'intermediate', 'advanced')
+        .messages({
+          'any.only': 'Difficulty level must be one of: beginner, intermediate, advanced'
         }),
       
       categoryId: Joi.number().integer().positive().allow(null)
@@ -104,17 +108,25 @@ export const audioValidation = {
           'number.positive': 'Category ID must be a positive number'
         }),
       
-      tags: Joi.array().items(Joi.number().integer().positive())
-        .messages({
-          'array.base': 'Tags must be an array',
-          'number.base': 'Tag ID must be a number',
-          'number.integer': 'Tag ID must be an integer',
-          'number.positive': 'Tag ID must be a positive number'
-        }),
-      
       isPremium: Joi.boolean()
         .messages({
           'boolean.base': 'Premium status must be a boolean'
+        }),
+      
+      price: Joi.number().min(0)
+        .messages({
+          'number.base': 'Price must be a number',
+          'number.min': 'Price must be greater than or equal to 0'
+        }),
+      
+      thumbnail: Joi.string().uri().allow('', null)
+        .messages({
+          'string.uri': 'Thumbnail must be a valid URL'
+        }),
+      
+      isApproved: Joi.boolean()
+        .messages({
+          'boolean.base': 'Approval status must be a boolean'
         }),
       
       language: Joi.string().max(30)
@@ -141,22 +153,28 @@ export const audioValidation = {
   },
   
   /**
-   * Validate add transcript
+   * Validate add audio to course
    */
-  addTranscript: (req: Request, res: Response, next: NextFunction) => {
+  addAudioToCourse: (req: Request, res: Response, next: NextFunction) => {
     const schema = Joi.object({
-      content: Joi.string().required().max(10000)
+      audioId: Joi.number().integer().positive().required()
         .messages({
-          'string.empty': 'Content is required',
-          'string.max': 'Content cannot exceed 10000 characters',
-          'any.required': 'Content is required'
+          'number.base': 'Audio ID must be a number',
+          'number.integer': 'Audio ID must be an integer',
+          'number.positive': 'Audio ID must be a positive number',
+          'any.required': 'Audio ID is required'
         }),
       
-      language: Joi.string().required().max(30)
+      position: Joi.number().integer().min(0)
         .messages({
-          'string.empty': 'Language is required',
-          'string.max': 'Language cannot exceed 30 characters',
-          'any.required': 'Language is required'
+          'number.base': 'Position must be a number',
+          'number.integer': 'Position must be an integer',
+          'number.min': 'Position must be greater than or equal to 0'
+        }),
+      
+      sectionTitle: Joi.string().max(100).allow('', null)
+        .messages({
+          'string.max': 'Section title cannot exceed 100 characters'
         })
     });
     
@@ -176,15 +194,21 @@ export const audioValidation = {
   },
   
   /**
-   * Validate update transcript
+   * Validate reorder course audio
    */
-  updateTranscript: (req: Request, res: Response, next: NextFunction) => {
+  reorderCourseAudio: (req: Request, res: Response, next: NextFunction) => {
     const schema = Joi.object({
-      content: Joi.string().required().max(10000)
+      position: Joi.number().integer().min(0).required()
         .messages({
-          'string.empty': 'Content is required',
-          'string.max': 'Content cannot exceed 10000 characters',
-          'any.required': 'Content is required'
+          'number.base': 'Position must be a number',
+          'number.integer': 'Position must be an integer',
+          'number.min': 'Position must be greater than or equal to 0',
+          'any.required': 'Position is required'
+        }),
+      
+      sectionTitle: Joi.string().max(100).allow('', null)
+        .messages({
+          'string.max': 'Section title cannot exceed 100 characters'
         })
     });
     
@@ -204,4 +228,4 @@ export const audioValidation = {
   }
 };
 
-export default audioValidation;
+export default courseValidation;

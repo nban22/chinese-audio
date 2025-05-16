@@ -72,8 +72,7 @@ const sequelize = new Sequelize({
 });
 
 // Initialize repositories
-import { createRepositories } from './repositories';
-export const repositories = createRepositories();
+export { repositories } from './repositories';
 
 // Export sequelize instance
 export const getSequelize = () => sequelize;

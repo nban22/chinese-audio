@@ -7,6 +7,10 @@ import { DropboxService, IDropboxService } from './dropbox';
 
 import { repositories } from '../db';
 import config from '../config';
+import PlaylistService from './playlist';
+import CourseService from './course';
+import AdminService from './admin';
+import PaymentService from './payment';
 
 // Create service instances with dependencies
 const dropboxService = new DropboxService();
@@ -21,12 +25,34 @@ const audioService = new AudioService(
   repositories.audioRepository,
   dropboxService
 );
-// const paymentService = new PaymentService(
-//   repositories.userRepository,
-//   repositories.subscriptionRepository,
-//   repositories.transactionRepository,
-//   repositories.couponRepository
-// );
+
+const playlistService = new PlaylistService(
+  repositories.playlistRepository,
+  repositories.playlistAudioRepository,
+  repositories.audioRepository
+);
+
+const courseService = new CourseService(
+  repositories.courseRepository,
+  repositories.courseAudioRepository,
+  repositories.audioRepository
+);
+
+const adminService = new AdminService(
+  repositories.courseRepository,
+  repositories.feedbackRepository,
+  repositories.couponRepository,
+  repositories.transactionRepository,
+  repositories.userRepository,
+  repositories.audioRepository
+);
+
+
+const paymentService = new PaymentService(
+  repositories.subscriptionRepository,
+  repositories.transactionRepository,
+  repositories.couponRepository
+);
 
 // Export service instances
 export const services = {

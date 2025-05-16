@@ -1,14 +1,34 @@
-import dotenv from "dotenv";
-dotenv.config({ path: ".env" });
+// src/server.ts
+import config from "./config";
+import { initDatabase } from "./db";
 import app from "./app";
-import { syncModels } from "./models";
-const port = parseInt(process.env.PORT || "3001");
-const hostname = process.env.HOST || "localhost";
 
-(async () => {
-    await syncModels();
-})();
+// Initialize database and start server
+const startServer = async (): Promise<void> => {
+  try {
+    console.log('Starting server...');
+    
+    // Connect to the database
+    await initDatabase();
+    
+    // Start the server
+    const PORT = config.server.port;
+    const HOST = config.server.host;
+    
+    app.listen(PORT, () => {
+      console.log(`Server started on ${HOST}:${PORT} in ${config.server.env} mode`);
+      console.log(`API available at ${config.server.apiPrefix}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+};
 
-app.listen(port, hostname, () => {
-    console.log(`Server is running in port ${port} http://${hostname}:${port}`);
-});
+// Start server if this file is run directly
+if (require.main === module) {
+  startServer();
+}
+
+// Export for testing purposes
+export { app, startServer };
